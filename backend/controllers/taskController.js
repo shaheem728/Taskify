@@ -1,5 +1,5 @@
 const Task = require("../models/Task");
-
+const User = require("../models/User")
 //@desc GET all Tasks (Admin:all,User:only assigned tasks)
 //@route GET /api/tasks/
 //@access Private
@@ -104,33 +104,58 @@ const createTask = async (req, res) => {
     }
 };
 
+
 //@desc Update task detail
 //@route PUT /api/tasks/:id
 //@access Private
 const updateTask = async (req, res) => {
     try {
-        const task = await Task.findByIdAndUpdate(req.params.id);
+        // Find task by ID
+        const task = await Task.findById(req.params.id);
         if (!task) {
             return res.status(404).json({ message: 'Task not found' });
         }
+
+        // Update task fields
         task.title = req.body.title || task.title;
         task.description = req.body.description || task.description;
         task.priority = req.body.priority || task.priority;
-        task.dueDate = req.body.dueDate || task.dueDate;
+        task.dueDate = req.body.dueDate ? new Date(req.body.dueDate) : task.dueDate;
         task.todoChecklist = req.body.todoChecklist || task.todoChecklist;
         task.attachments = req.body.attachments || task.attachments;
 
-        if(req.body.assignedTo){
-            if(!Array.isArray(req.body.assignedTo)){
-                return res.status(400).json({ message: "assignedTo must be an array of user IDs"})
+        // Validate and update `assignedTo` field
+        if (req.body.assignedTo) {
+            if (!Array.isArray(req.body.assignedTo)) {
+                return res
+                    .status(400)
+                    .json({ message: 'assignedTo must be an array of user IDs' });
             }
+
+            // Optionally validate assignedTo user IDs here
+            // Example: Validate that all IDs exist in the User model
+            const assignedUsers = await User.find({
+                _id: { $in: req.body.assignedTo },
+            });
+            if (assignedUsers.length !== req.body.assignedTo.length) {
+                return res.status(400).json({ message: 'One or more user IDs are invalid' });
+            }
+
             task.assignedTo = req.body.assignedTo;
         }
+
+        // Save changes to the database
+        const updatedTask = await task.save();
+
+        // Send the updated task back to the client
+        return res.status(200).json({ message: 'Task updated successfully', updatedTask });
     } catch (error) {
+        console.error('Error updating task:', error);
         return res.status(500).json({ message: 'Server Error', error: error.message });
     }
 };
 
+ 
 //@desc Delete Task status
 //@route DELETE /api/tasks/:id
 //@access Private
@@ -180,10 +205,10 @@ const getDashboardData = async (req, res) => {
                 },
             },
         ]);
+
         const taskDistribution = taskStatus.reduce((acc,status)=>{
             const  formattedKey = status.replace(/\s+/g,""); //Remove spaces for response key;
-            acc[formattedKey]=
-            taskDistributionRaw.find((item)=> item.id === status)?.count || 0;
+            acc[formattedKey]= taskDistributionRaw.find((item)=> item._id === status)?.count || 0;
             return acc;
         },{})
         taskDistribution["All"] = totalTasks; //Add total count to  taskDistribution
@@ -198,7 +223,7 @@ const getDashboardData = async (req, res) => {
         },])
         const taskPriorityLevels = taskPriorities.reduce((acc,priority)=>{
             acc[priority] = 
-            taskPriorityLevelsRaw.find((item)=> item.id === priority)?.count ||0;
+            taskPriorityLevelsRaw.find((item)=> item._id === priority)?.count ||0;
             return acc;
         },{})
         //Fetch Recent 10 tasks
@@ -230,11 +255,12 @@ const getDashboardData = async (req, res) => {
 //@access Private
 const getUserDashboardData = async (req, res) => {
     try {
-        const userId = req.user.id; //only fetch data for logged-in user
+        const userId = req.user._id; //only fetch data for logged-in user
         //Fetch statistic for user-specific tasks
-        const totalTasks = await Task.countDocuments();
-        const pendingTasks = await Task.countDocuments({status:"Pending"});
-        const completedTasks = await Task.countDocuments({status:"Completed"});
+        console.log(userId)
+        const totalTasks = await Task.countDocuments({assignedTo:userId});
+        const pendingTasks = await Task.countDocuments({assignedTo:userId,status:"Pending"});
+        const completedTasks = await Task.countDocuments({assignedTo:userId,status:"Completed"});
         const overdueTasks = await Task.countDocuments({
             assignedTo:userId,
             status:{$ne:"Completed"},
@@ -242,12 +268,12 @@ const getUserDashboardData = async (req, res) => {
         })
 
         //Task distribution by status
-        const taskStatuses = ["Pending","In Progress","Completed"];
+        const taskStatus = ["Pending","In Progress","Completed"];
         const taskDistributionRaw = await Task.aggregate([
-            {$match:{assignedTo:userId}},
-            {$group:{_id:"$status",count:{$sum:1}}}
-        ])
-        const  taskDistribution = taskStatuses.reduce((acc,status)=>{
+            { $match: { assignedTo: userId }  },
+            { $group: { _id: "$status", count: { $sum: 1 } } }
+        ]);
+        const  taskDistribution = taskStatus.reduce((acc,status)=>{
             const formattedKey = status.replace(/\s+/g,"");
             acc[formattedKey] = taskDistributionRaw.find((item)=>item._id === status)?.count || 0;
             return acc;
@@ -257,7 +283,7 @@ const getUserDashboardData = async (req, res) => {
         //Task distribution by priority
         const taskPriorities = ["Low","Medium","High"];
         const taskPriorityLevelsRaw = await Task.aggregate([
-            {$match:{assignedTo:userId}},
+            { $match: { assignedTo: userId }  },
             {$group:{_id:"$priority",count:{$sum:1}}}
         ])
         const taskPriorityLevels = taskPriorities.reduce((acc,priority)=>{
@@ -291,7 +317,6 @@ const getUserDashboardData = async (req, res) => {
 //@roue PUT /api/tasks/:id/status
 //@access Private
 const updateTaskStatus = async (req, res) => {
-    console.log(req)
     try {
         const task = await Task.findById(req.params.id);
         if (!task) return res.status(404).json({ message: 'Task not found'})
