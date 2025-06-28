@@ -1,4 +1,6 @@
-export const BASE_URL = 'http://localhost:8800'
+
+const {VITE_URL} = import.meta.env
+export const BASE_URL = VITE_URL
 
 
 //utils/apiPaths.js

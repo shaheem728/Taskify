@@ -44,6 +44,4 @@ axiosInstance.interceptors.response.use(
 )
 
 
-     
-
 export default axiosInstance
