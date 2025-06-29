@@ -8,9 +8,9 @@ import CreateTask from './pages/Admin/CreateTask';
 import ManageUsers from './pages/Admin/ManageUsers';
 import MyTasks from "./pages/User/MyTasks";
 import PrivateRoute from './routes/PrivateRoute';
-import ViewTaskDetail from "./pages/User/ViewTaskDetail";
-import UserDashboard from "./pages/User/UserDashboard";
-import UserProvider,{ UserContext } from "./context/useContext";
+import ViewTaskDetail from './pages/User/ViewTaskDetail';
+import UserDashboard from './pages/User/UserDashboard';
+import UserProvider,{ UserContext } from './context/useContext';
 import { Toaster } from "react-hot-toast";
 function App() {
 
