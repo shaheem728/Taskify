@@ -4,7 +4,7 @@ import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
 import moment from 'moment';
 import AvatarGroup from '../../components/AvatarGroup';
-import { LuSquareArrowDownRight, LuSquareArrowOutUpRight } from 'react-icons/lu';
+import { LuSquareArrowOutUpRight } from 'react-icons/lu';
 import DashboardLayout from '../../components/layouts/DashboardLayout';
 
 const ViewTaskDetail = () => {
