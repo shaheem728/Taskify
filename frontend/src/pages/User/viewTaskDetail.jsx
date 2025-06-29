@@ -148,7 +148,7 @@ const ViewTaskDetail = () => {
   )
 }
 
-export default ViewTaskDetail
+
 
 
 const InfoBox = ({value,label})=>{
@@ -182,3 +182,5 @@ const Attachments = ({link,index,onClick})=>{
        <LuSquareArrowOutUpRight className='text-gray-400'/>
   </div>
 }
+
+export default ViewTaskDetail
