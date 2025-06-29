@@ -11,6 +11,7 @@ import PrivateRoute from './routes/PrivateRoute';
 import UserProvider,{ UserContext } from './context/useContext';
 import { Toaster } from "react-hot-toast";
 import UserDashboard from "./pages/User/UserDashboard";
+import ViewTaskDetail from "./pages/User/ViewTaskDetail";
 function App() {
 
   return (
@@ -32,7 +33,7 @@ function App() {
         <Route element={<PrivateRoute allowedRoles={['admin']}/>}>
         <Route path="/user/dashboard"element={<UserDashboard/>}/>
         <Route path="/user/tasks" element={<MyTasks/>}/>
-        {/* <Route path="/user/task-details/:id" element={<ViewTaskDetail/>}/> */}
+        <Route path="/user/task-details/:id" element={<ViewTaskDetail/>}/>
         </Route>
         
         {/* Default Route */}
