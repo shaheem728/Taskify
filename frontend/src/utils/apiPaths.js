@@ -1,7 +1,4 @@
-
-const {VITE_URL} = import.meta.env
-export const BASE_URL = VITE_URL
-
+export const BASE_URL =  'https://taskify-iekk.onrender.com'
 
 //utils/apiPaths.js
 export const API_PATHS = {
