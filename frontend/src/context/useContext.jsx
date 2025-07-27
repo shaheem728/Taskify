@@ -7,6 +7,7 @@ export const UserContext = createContext();
 const UserProvider = ({children})=>{
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);//New state to track loading
+    const [edit,setEditing] = useState(false)
 
     useEffect(()=>{
         if(user)return;
@@ -38,7 +39,7 @@ const UserProvider = ({children})=>{
         localStorage.removeItem("token");
     };
     return(
-        <UserContext.Provider value={{user,loading,updateUser,clearUser}}>
+        <UserContext.Provider value={{user,loading,updateUser,clearUser,edit,setEditing}}>
             {children}
         </UserContext.Provider>
     )

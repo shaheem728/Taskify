@@ -41,8 +41,6 @@ const MyTasks = () => {
     navigate(`/user/task-details/${taskId}`)
   }
 
-
-
   useEffect(()=>{
     getAllTasks(filterStatus);
     return ()=>{};

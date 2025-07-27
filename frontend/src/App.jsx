@@ -13,7 +13,6 @@ import { Toaster } from "react-hot-toast";
 import UserDashboard from "./pages/User/UserDashboard";
 import ViewTaskDetail from "./pages/User/ViewTaskDetail";
 function App() {
-
   return (
     <UserProvider>
     <Router>
