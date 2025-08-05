@@ -103,8 +103,6 @@ const createTask = async (req, res) => {
         return res.status(500).json({ message: 'Server Error', error: error.message });
     }
 };
-
-
 //@desc Update task detail
 //@route PUT /api/tasks/:id
 //@access Private

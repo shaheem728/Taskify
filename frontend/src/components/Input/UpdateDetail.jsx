@@ -8,34 +8,35 @@ import { UserContext } from '../../context/useContext'
 import uploadImage from '../../utils/uploadimage'
 import { IoClose } from "react-icons/io5";
 const UpdateDetail = () => {
- const[profilePic,setProfilePic] = useState(null);
-    const[fullName,setFullName] = useState("");
-    const[email,setEmail] = useState("");
-    const[adminInviteToken,setAdminInviteToken]=useState("")
-
     const[error,setError] = useState(null)
-    const {user,updateUser,setEditing} = useContext(UserContext)
+    const {user,updateUser,setEditing,fetchUser} = useContext(UserContext)
+    const[fullName,setFullName] = useState(user?.name||null);
+    const[email,setEmail] = useState(user?.email||null);
+    const[profilePic,setProfilePic] = useState(user?.profileImageUrl || null);
     const navigate = useNavigate()
     //Handle SignUp Form Submit
     const handleSubmit = async (e) =>{
       e.preventDefault()
-      let profileImageUrl = ""
+      let profileImageUrl = user?.profileImageUrl || ""
     try{
       //Upload Image if present
-      if(profilePic){
+      if(profilePic != user?.profileImageUrl && profilePic != null ){
        const imgUploadRes = await uploadImage(profilePic);
        profileImageUrl = imgUploadRes.imageUrl || ''
+      }else if (profilePic == null){
+         profileImageUrl = " "
       }
       const response = await axiosInstance.patch(API_PATHS.AUTH.UPDATE_PROFILE,{
         name:fullName,
         email,
-        profileImageUrl,
-        adminInviteToken
+        profileImageUrl
       })
       const{role,token} = response.data;
       if(token){
         localStorage.setItem("token",token);
         updateUser(response.data)
+        setEditing(false)
+        fetchUser()
       }
        //Redirect based on role
         if(role === 'admin'){
@@ -59,27 +60,20 @@ const UpdateDetail = () => {
         </div>
         <h3 className='font-semibold text-xl text-black mb-3'>Profile</h3>
         <form onSubmit={handleSubmit}>
-            <ProfilePhotoSelector image={user?.profileImageUrl||profilePic} setImage={setProfilePic}/>
+            <ProfilePhotoSelector image={profilePic} setImage={setProfilePic}/>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
         <Input 
-         value={user?.name||fullName}
+         value={fullName}
          onChange={(e)=>setFullName(e.target.value)}
          label="Full Name"
          placeholder='john'
          type="text"
          />
             <Input 
-         value={user?.email||email}
+         value={email}
          onChange={(e)=>setEmail(e.target.value)}
          label="Email Address"
          placeholder='johnexample@gmail.com'
-         type="text"
-         />
-         <Input 
-         value={adminInviteToken}
-         onChange={(e)=>setAdminInviteToken(e.target.value)}
-         label="Admin Invite Token"
-         placeholder='6 Digit Code'
          type="text"
          />
          </div>

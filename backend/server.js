@@ -11,7 +11,7 @@ const app = express()
 //middleware to handle cros
 app.use(cors({
     origin: process.env.CLIENT_URL || '*',
-    methods:['GET','POST','PUT','DELETE'],
+    methods:['GET','POST','PUT','DELETE','PATCH'],
     allowedHeaders:['Content-Type','Authorization']
 }))
 

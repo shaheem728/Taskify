@@ -1,4 +1,5 @@
 export const BASE_URL =  'https://taskify-iekk.onrender.com'
+// export const BASE_URL =  'http://localhost:8800'
 
 //utils/apiPaths.js
 export const API_PATHS = {
@@ -6,7 +7,7 @@ export const API_PATHS = {
         REGISTER:"/api/auth/register",//Register a new user(Admin or Member)
         LOGIN:"/api/auth/login",//Authenticate user  & return JWT Token
         GET_PROFILE:"/api/auth/profile",//Get Logged-in user detail
-        UPDATE_PROFILE:"/api/auth/update-profile",//Update user profile
+        UPDATE_PROFILE:"/api/auth/profile",//Update user profile
     },
     USER:{
         GET_ALL_USER:"/api/users",//Get All users (Admin only)

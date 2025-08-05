@@ -5,7 +5,7 @@ const AuthLayout = ({children}) => {
   return (
     <div className='flex h-[100vh] overflow-y-hidden'>
        <div className="hidden md:flex w-[40vw]  items-center justify-center bg-blue-50 bg-[url('/bg_image.jpg')] bg-cover bg-no-repeat bg-center overflow-hidden">
-            <img src={assets.login} className='w-64 lg:w-[90%]'/>
+            <img src={assets.login} className='w-64 lg:w-[80%]'/>
         </div>
        <div className='w-screen h-auto md:w-[60vw] px-12 pt-8 pb-12'>
       <div className='flex flex-col leading-tight'>

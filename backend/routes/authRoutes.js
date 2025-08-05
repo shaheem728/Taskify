@@ -7,7 +7,7 @@ const { protect } = require("../middlewares/authMiddleware")
 router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.get('/profile',protect, getUserProfile); //Get user Profile
-router.put('/profile',protect , updateUserProfile); //Update Profile
+router.patch('/profile',protect , updateUserProfile); //Update Profile
 
 router.post("/upload-image", upload.single("image"),(req,res)=>{
     if(!req.file){

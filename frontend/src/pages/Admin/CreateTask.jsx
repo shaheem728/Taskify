@@ -172,7 +172,7 @@ const CreateTask = () => {
   },[taskId])
   return (
     <DashboardLayout activeMenu="Create Task">
-      <div className='mt-5'>
+      <div className='mt-5 w-screen'>
         <div className='grid grid-cols-1 md:grid-cols-4 mt-4'>
           <div className='form-card col-span-3'>
             <div className='flex items-center justify-between'>
