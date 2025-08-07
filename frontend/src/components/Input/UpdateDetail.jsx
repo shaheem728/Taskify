@@ -14,6 +14,14 @@ const UpdateDetail = () => {
     const[email,setEmail] = useState(user?.email||null);
     const[profilePic,setProfilePic] = useState(user?.profileImageUrl || null);
     const navigate = useNavigate()
+    //Close the panel
+    const closePanel = () => {
+      setEditing(false)
+      setFullName(user?.name||null)
+      setEmail(user?.email||null)
+      setProfilePic(user?.profileImageUrl || null)
+      setError(null)
+    }
     //Handle SignUp Form Submit
     const handleSubmit = async (e) =>{
       e.preventDefault()
@@ -56,7 +64,7 @@ const UpdateDetail = () => {
     <div className='fixed bg-black/50 min-h-screen z-10 w-screen  flex flex-col  justify-center items-center top-0 left-0 '>
       <div className='relative flex flex-col bg-white justify-center items-center p-4 rounded-2xl'>
         <div className='absolute top-2 right-2 cursor-pointer'>
-          <IoClose onClick={()=>setEditing(false)} size={30}/>
+          <IoClose onClick={()=>closePanel()} size={30}/>
         </div>
         <h3 className='font-semibold text-xl text-black mb-3'>Profile</h3>
         <form onSubmit={handleSubmit}>

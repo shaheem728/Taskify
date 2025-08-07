@@ -100,26 +100,40 @@ const getUserProfile = async(req,res)=>{
 //@desc Update user profile
 //@route PUT/api/auth/profile
 //@access Private (Requires JWT)
-const updateUserProfile = async(req,res)=>{
-    try{
+const updateUserProfile = async (req, res) => {
+    try {
         const user = await User.findById(req.user.id);
-        if(!user){
-            return res.status(404).json({message: 'User not found'});
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
         }
-        user.name = req.body.name || user.name;
-        user.email = req.body.email || user.email;
-        user.profileImageUrl = req.body.profileImageUrl || user.profileImageUrl;
-        const updateUser =  await user.save()
+
+        const { name, email, profileImageUrl } = req.body;
+
+        // Check if the new email is already used by another user
+        if (email && email !== user.email) {
+            const emailExists = await User.findOne({ email: email });
+            if (emailExists) {
+                return res.status(400).json({ message: 'Email already in use by another user' });
+            }
+        }
+
+        user.name = name || user.name;
+        user.email = email || user.email;
+        user.profileImageUrl = profileImageUrl || user.profileImageUrl;
+
+        const updatedUser = await user.save();
+
         res.json({
-            _id: updateUser._id,
-            name: updateUser.name,
-            email: updateUser.email,
-            role: updateUser.role,
-            token: generateToken(updateUser._id)
-        })
-    }catch(error){
-        res.status(500).json({message:"Server error",error:error.message})
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            role: updatedUser.role,
+            token: generateToken(updatedUser._id)
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
     }
-}
+};
 
 module.exports = { registerUser, loginUser, getUserProfile, updateUserProfile }
