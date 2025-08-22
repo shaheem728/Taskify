@@ -1,12 +1,11 @@
 import React, { useRef, useState } from 'react'
 import { LuUser,LuUpload,LuTrash } from "react-icons/lu";
+import { assets } from '../../assets/images/assets'
 const ProfilePhotoSelector = ({image,setImage}) => {
     const inputRef = useRef(null);
-    const [previewUrl,setPreviewUrl] = useState(image||null)
-
+    const [previewUrl,setPreviewUrl] = useState(image)
     const handleImageChange = (event) =>{
         const file = event.target.files[0];
-        console.log("file=",file)
         if(file){
             //upload the image state
             setImage(file);
@@ -47,9 +46,9 @@ const ProfilePhotoSelector = ({image,setImage}) => {
             ):(
                 <div className='relative'>
                     <img
-                     src={previewUrl}
+                     src={previewUrl?.length > 1 ?previewUrl:assets.profile_pic}
                      alt="Profile"
-                     className='w-20 h-20  bg-slate-400 rounded-full object-cover'/>
+                     className='w-20 h-20  rounded-full object-cover'/>
                      <button
                      type='button'
                      className='w-8 h-8 flex items-center justify-center bg-red-500 rounded-full text-white absolute -bottom-1 -right-1'

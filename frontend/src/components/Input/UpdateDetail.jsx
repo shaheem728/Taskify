@@ -61,7 +61,7 @@ const UpdateDetail = () => {
     }
     }
   return (
-    <div className='fixed bg-black/50 min-h-screen z-10 w-screen  flex flex-col  justify-center items-center top-0 left-0 '>
+    <div className='fixed bg-black/50 min-h-screen z-30 w-screen  flex flex-col  justify-center items-center top-0 left-0 '>
       <div className='relative flex flex-col bg-white justify-center items-center p-4 rounded-2xl'>
         <div className='absolute top-2 right-2 cursor-pointer'>
           <IoClose onClick={()=>closePanel()} size={30}/>

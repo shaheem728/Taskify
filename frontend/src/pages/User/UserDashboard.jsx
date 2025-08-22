@@ -48,7 +48,6 @@ const prepareChartData = (data) => {
         API_PATHS.TASKS.GET_USER_DASHBOARD_DATA
       );
       if(response.data){
-        console.log(response.data)
         setDashboardData(response.data);
         prepareChartData(response.data?.charts || null);
       }
