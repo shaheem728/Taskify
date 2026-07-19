@@ -1,22 +1,54 @@
-import React from 'react'
-import { assets } from '../../assets/images/assets'
-
-const AuthLayout = ({children}) => {
+import Testimonial from "../Testimonial";
+import { CheckCircle2 } from 'lucide-react'
+import { useNavigate } from "react-router-dom";
+export default function AuthLayout({ children }) {
+    const navigate = useNavigate()
   return (
-    <div className='flex h-[100vh] overflow-y-hidden'>
-       <div className="hidden md:flex w-[40vw]  items-center justify-center bg-blue-50 bg-[url('/bg_image.jpg')] bg-cover bg-no-repeat bg-center overflow-hidden">
-            <img src={assets.login} className='w-64 lg:w-[80%]'/>
-        </div>
-       <div className='w-screen h-auto md:w-[60vw] px-12 pt-8 pb-12'>
-      <div className='flex flex-col leading-tight'>
-        <h2 className='text-lg font-medium text-black m-0 border-0'>Taskify</h2>
-        <span className='text-[9px] text-gray-500'>Task Manager</span>
+    <div className="min-h-screen bg-slate-50 text-black">
+        
+      <div className="mx-auto flex min-h-screen max-w-7xl">
+           {/* Decorative background */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -left-40 -top-40 h-96 w-96 rounded-full bg-emerald-200/40 blur-3xl" />
+        <div className="absolute -right-40 top-20 h-96 w-96 rounded-full bg-teal-200/40 blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-cyan-200/30 blur-3xl" />
       </div>
-      {children}
-    </div>
+        {/* Left Side */}
+        <div className="hidden w-1/2 flex-col justify-between px-20 py-10 lg:flex">
 
+      
+      <div onClick={()=>navigate('/home')} className="flex items-center gap-2.5 cursor-pointer">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 shadow-md shadow-emerald-500/25">
+            <CheckCircle2 className="h-5 w-5 text-white" />
+          </div>
+          <span className="text-3xl font-bold tracking-tight text-slate-900">Taskify</span>
+        </div>
+
+          <div>
+            <h1 className="max-w-md text-6xl font-serif leading-tight">
+              A calmer way to run your day.
+            </h1>
+
+            <p className="mt-8 max-w-lg text-xl text-gray-400">
+              Plan sprints, track progress, and keep every teammate aligned —
+              all in one beautifully focused workspace.
+            </p>
+
+            <Testimonial />
+          </div>
+
+          <p className="text-sm text-gray-500">
+            © 2026 Taskify Inc.
+          </p>
+
+        </div>
+
+        {/* Right */}
+        <div className="flex flex-1 items-center justify-center p-6 text-white">
+          {children}
+        </div>
+
+      </div>
     </div>
-  )
+  );
 }
-
-export default AuthLayout

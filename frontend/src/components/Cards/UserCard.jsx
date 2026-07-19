@@ -1,12 +1,12 @@
 import React from 'react'
-
+import { assets } from '../../assets/images/assets';
 const UserCard = ({userInfo}) => {
   return (
     <div className='user-card p-2'>
         <div className='flex items-center justify-center'>
             <div className='flex items-center gap-3'>
                 <img 
-                   src={userInfo?.profileImageUrl}
+                   src={userInfo?.profileImageUrl?.length > 1 ? userInfo?.profileImageUrl :assets.profile_pic}
                    alt={'Avatar'}
                    className='w-13 h-12 rounded-full border-2 border-white'
                 />

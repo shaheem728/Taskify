@@ -1,7 +1,6 @@
 import React, { useContext } from "react"
 import { BrowserRouter as Router, Routes, Route, Outlet ,Navigate} from 'react-router-dom'
-import Login from './pages/Auth/Login';
-import SignUp from './pages/Auth/SignUp';
+import Home from './pages/Home/Home';
 import Dashboard from './pages/Admin/Dashboard';
 import ManageTasks from './pages/Admin/ManageTasks';
 import CreateTask from './pages/Admin/CreateTask';
@@ -12,13 +11,15 @@ import UserProvider,{ UserContext } from './context/useContext';
 import { Toaster } from "react-hot-toast";
 import UserDashboard from "./pages/User/UserDashboard";
 import ViewTaskDetail from "./pages/User/ViewTaskDetail";
+import Auth from "./pages/Auth/Auth";
 function App() {
   return (
     <UserProvider>
     <Router>
       <Routes>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/signup" element={<SignUp/>}/>
+        <Route path="/home" element={<Home/>}/>
+        <Route path="/auth/:method" element={<Auth/>}/>
+
 
         {/* Admin Routes */}
         <Route element={<PrivateRoute allowedRoles={['admin']}/>}>
@@ -57,7 +58,7 @@ const Root = () =>{
   const {user,loading} = useContext(UserContext);
   if(loading)return<Outlet/>
   if(!user){
-    return <Navigate to='/login' />
+    return <Navigate to='/Home' />
   }
   return user.role === "admin" ? <Navigate to='/admin/dashboard' /> : <Navigate to='/user/dashboard'/>
 }
