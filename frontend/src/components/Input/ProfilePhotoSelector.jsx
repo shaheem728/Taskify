@@ -48,7 +48,7 @@ const ProfilePhotoSelector = ({image,setImage}) => {
                     <img
                      src={previewUrl?.length > 1 ?previewUrl:assets.profile_pic}
                      alt="Profile"
-                     className='w-20 h-20  rounded-full object-cover'/>
+                     className='w-20 h-20  rounded-full object-fit'/>
                      <button
                      type='button'
                      className='w-8 h-8 flex items-center justify-center bg-red-500 rounded-full text-white absolute -bottom-1 -right-1'

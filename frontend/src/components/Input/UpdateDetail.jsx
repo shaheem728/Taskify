@@ -32,7 +32,7 @@ const UpdateDetail = () => {
        const imgUploadRes = await uploadImage(profilePic);
        profileImageUrl = imgUploadRes.imageUrl || ''
       }else if (profilePic == null){
-         profileImageUrl = " "
+         profileImageUrl = ""
       }
       const response = await axiosInstance.patch(API_PATHS.AUTH.UPDATE_PROFILE,{
         name:fullName,
@@ -64,7 +64,7 @@ const UpdateDetail = () => {
     <div className='fixed bg-black/50 min-h-screen z-30 w-screen  flex flex-col  justify-center items-center top-0 left-0 '>
       <div className='relative flex flex-col bg-white justify-center items-center p-4 rounded-2xl'>
         <div className='absolute top-2 right-2 cursor-pointer'>
-          <IoClose onClick={()=>closePanel()} size={30}/>
+          <IoClose className='text-primary' onClick={()=>closePanel()} size={20}/>
         </div>
         <h3 className='font-semibold text-xl text-black mb-3'>Profile</h3>
         <form onSubmit={handleSubmit}>

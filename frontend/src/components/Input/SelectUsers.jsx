@@ -4,6 +4,8 @@ import { API_PATHS } from '../../utils/apiPaths'
 import { LuUsers } from 'react-icons/lu'
 import Model from '../Model'
 import AvatarGroup from '../AvatarGroup'
+import { CirclePlus } from 'lucide-react';
+
 const SelectUsers = ({selectedUsers,setSelectedUsers}) => {
   const [allUsers, setAllUsers] = useState([])
   const [isModalOpen,setIsModalOpen]= useState(false)
@@ -22,6 +24,12 @@ const SelectUsers = ({selectedUsers,setSelectedUsers}) => {
       setTempSelectedUsers((prev)=>prev.includes(userId) ? prev.filter((id)=> id !== userId):[...prev,userId])
     };
     
+    const openUserSelector = ()=>{
+      // Start each edit with the users already assigned to the task.
+      setTempSelectedUsers([...selectedUsers])
+      setIsModalOpen(true)
+    }
+
     const selectedUserAvatars = allUsers.filter((user)=>selectedUsers.includes(user._id))
     .map((user)=>user.profileImageUrl)
     useEffect(()=>{
@@ -34,18 +42,11 @@ const SelectUsers = ({selectedUsers,setSelectedUsers}) => {
     }
 
 
-    useEffect(()=>{
-      if(selectedUsers.length === 0){
-        setTempSelectedUsers([])
-      }
-      return ()=>{}
-    },[selectedUsers])
-
   return (
     <div className='space-y-4 mt-2'>
       {
         selectedUserAvatars.length == 0 && (
-          <button className='card-btn' onClick={()=>setIsModalOpen(true)}>
+          <button className='card-btn' onClick={openUserSelector}>
             <LuUsers className='text-sm'/> Add Members
           </button>
         )
@@ -53,8 +54,9 @@ const SelectUsers = ({selectedUsers,setSelectedUsers}) => {
 
       {
         selectedUserAvatars.length > 0 &&(
-          <div className='cursor-pointer' onClick={()=>setIsModalOpen(true)}>
-            <AvatarGroup avatars={selectedUserAvatars} maxVisible={3}/>
+          <div className='cursor-pointer flex justify-between' onClick={openUserSelector}>
+            <AvatarGroup avatars={selectedUserAvatars} maxVisible={5}/>
+            <CirclePlus className=' text-slate-500 hover:text-primary h-4' />
           </div>
         )
       }
@@ -69,7 +71,7 @@ const SelectUsers = ({selectedUsers,setSelectedUsers}) => {
             className='flex items-center gap-4 p-3 border-b border-gray-200'
             >
               <img
-              src={user.profileImageUrl}
+              src={user.profileImageUrl }
               alt={user.name}
               className='w-10 h-10 rounded-full'
               />

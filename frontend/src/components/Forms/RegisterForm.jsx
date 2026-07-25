@@ -54,7 +54,6 @@ export default function RegisterForm() {
       />
 
       <AuthInput
-        label="Email"
          value={email}
          onChange={(e)=>setEmail(e.target.value)}
          label="Email Address"

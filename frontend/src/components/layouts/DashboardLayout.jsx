@@ -14,7 +14,7 @@ const DashboardLayout = ({children,activeMenu}) => {
           <div className={`${edit ? '' :'hidden'}`}>
           <UpdateDetail/>
           </div>
-        <div className='max-[1080px]:hidden'>
+        <div className='md:block hidden'>
           <SideMenu activeMenu={activeMenu}/>
         </div>
         <div className='grow mx-5'>{children}</div>
