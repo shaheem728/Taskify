@@ -1,7 +1,7 @@
 import React from 'react'
 import Progress from '../Progress';
 import AvatarGroup from '../AvatarGroup';
-import { LuPaperclip } from 'react-icons/lu';
+import { LuEye, LuPaperclip } from 'react-icons/lu';
 import moment from "moment";
 const TaskCard = ({
   title,
@@ -11,6 +11,7 @@ const TaskCard = ({
   progress,
   createdAt,
   dueDate,
+  updatedAt,
   assignedTo,
   attachmentCount,
   completedTodoCount,
@@ -39,15 +40,12 @@ const TaskCard = ({
   }
 }
   return (
-    <div className='bg-white rounded-xl py-4 shadow-md shadow-gray-100 border border-gray-200/50 cursor-pointer'
-    onClick={onClick}
-    >
+    <div className='bg-blue-50 rounded-xl py-4 shadow-md shadow-gray-100 border border-gray-200/50'>
       <div className='flex items-end gap-3 px-4'>
         <div className={`text-[11px] font-medium ${getStatusTagColor()} px-4 py-0.5 rounded`}>{status}</div>
-        <div className={`text-[11px] font-medium ${getPriorityTagColor()} px-4 py-0.5 rounded`}>{priority}Priority
-        </div>
+        <div className={`text-[11px] font-medium ${getPriorityTagColor()} px-4 py-0.5 rounded`}>{priority}Priority</div>
       </div>
-      <div className={`px-4 border-l-[3px] ${ status === "In Progress" 
+      <div className={`px-4 border-l-[3px] bg-white ${ status === "In Progress" 
         ? "border-cyan-500":status ==="Completed"
         ?"border-indigo-500"
         :"border-violet-500"}`}>
@@ -85,6 +83,15 @@ const TaskCard = ({
               {moment(dueDate).format("Do MMM YYYY")}
             </p>
           </div>
+
+          <div>
+            <label className='text-xs text-gray-500'>
+             Updated Date
+            </label>
+            <p className='text-[13px] font-medium text-gray-900'>
+              {moment(updatedAt).format("Do MMM YYYY")}
+            </p>
+          </div>
           </div>
           <div className='flex items-center justify-between mt-3'>
             <AvatarGroup avatars={assignedTo || {}}/>
@@ -96,6 +103,13 @@ const TaskCard = ({
                 </div>
               )}
           </div>
+
+          <button
+            type='button'
+            className='w-full flex items-center justify-center gap-1.5 text-xs font-medium text-white bg-primary hover:bg-primary/50 rounded-lg py-2 mt-4 cursor-pointer'
+            onClick={onClick}>
+            <LuEye className='text-sm' /> View Task
+          </button>
 
         </div>
       </div>

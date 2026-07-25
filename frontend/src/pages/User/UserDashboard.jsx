@@ -8,7 +8,7 @@ import { API_PATHS } from '../../utils/apiPaths'
 import moment from "moment"
 import { addThousandsSeparator } from '../../utils/helper'
 import InfoCard from "../../components/Cards/InfoCard"
-import { LuArrowRight } from 'react-icons/lu'
+import { LuArrowRight, LuFileSpreadsheet } from 'react-icons/lu'
 import TaskLisTable from '../../components/TaskLisTable'
 import CustomPieChart from '../../components/Charts/CustomPieChart'
 import CustomBarChart from '../../components/Charts/CustomBarChart'
@@ -22,6 +22,9 @@ const UserDashboard = () => {
   const [dashboardData,setDashboardData] = useState(null);
   const [pieChartData,setPieChartData] = useState([]);
   const [barChartData,setBarChartData] = useState([]);
+  const hasDistributionData = pieChartData.some((item) => Number(item.count) > 0);
+  const hasPriorityData = barChartData.some((item) => Number(item.count) > 0);
+  const recentTasks = dashboardData?.recentTasks || [];
   
 //Prpare Chart Data
 const prepareChartData = (data) => {
@@ -106,9 +109,16 @@ const prepareChartData = (data) => {
               <h5 className='font-medium'>Task Distribution</h5>
             </div>
             
-            <CustomPieChart 
-            data={pieChartData}
-            colors={COLORS}/>
+            {hasDistributionData ? (
+              <CustomPieChart 
+              data={pieChartData}
+              colors={COLORS}/>
+            ) : (
+              <EmptyState
+                title="No task distribution found"
+                message="Assigned tasks will appear here by status."
+              />
+            )}
 
           </div>
         </div>
@@ -119,9 +129,16 @@ const prepareChartData = (data) => {
               <h5 className='font-medium'>Task Priority Levels</h5>
             </div>
             
-            <CustomBarChart 
-            data={barChartData}
-            colors={COLORS}/>
+            {hasPriorityData ? (
+              <CustomBarChart 
+              data={barChartData}
+              colors={COLORS}/>
+            ) : (
+              <EmptyState
+                title="No task priority data found"
+                message="Assigned tasks will appear here by priority."
+              />
+            )}
 
           </div>
         </div>
@@ -136,13 +153,28 @@ const prepareChartData = (data) => {
               </button>
             </div>
 
-            <TaskLisTable tableData={dashboardData?.recentTasks || []}/>
+            {recentTasks.length > 0 ? (
+              <TaskLisTable tableData={recentTasks}/>
+            ) : (
+              <EmptyState
+                title="No recent tasks found"
+                message="Your recently assigned tasks will appear here."
+              />
+            )}
           </div>
         </div>
       </div>
     </DashboardLayout>
   )
 }
+
+const EmptyState = ({ title, message }) => (
+  <div className='flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-300 bg-white py-16 mt-4 text-center'>
+    <LuFileSpreadsheet className='text-4xl text-slate-300 mb-3' />
+    <h3 className='text-base font-medium text-slate-700'>{title}</h3>
+    <p className='text-sm text-slate-500 mt-1'>{message}</p>
+  </div>
+);
 
 export default UserDashboard
 

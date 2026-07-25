@@ -1,12 +1,12 @@
 import React from 'react'
-
-const AvatarGroup = ({avatars,maxVisible = 3}) => {
+import { assets } from '../assets/images/assets';
+const AvatarGroup = ({avatars = [],maxVisible = 3}) => {
   return (
     <div className='flex items-center'>
-        {avatars.slice(0,maxVisible).map((avatars,index)=>(
+        {avatars.slice(0,maxVisible).map((avatar,index)=>(
             <img
-            key={index}
-            src={avatars}
+            key={avatar?._id || index}
+            src={typeof avatar === 'string' && avatar.trim() ? avatar : avatar?.profileImageUrl?.trim() || assets.profile_pic}
             alt={`Avatar-${index}`}
             className='w-9 h-9 rounded-full border-2 border-white -ml-3 first:ml-0'
             />

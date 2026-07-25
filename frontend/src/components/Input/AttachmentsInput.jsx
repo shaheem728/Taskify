@@ -24,9 +24,9 @@ const AttachmentsInput = ({attachments,setAttachments}) => {
         key={item}
         className='flex justify-between bg-gray-50 border border-gray-100 px-3 py-2 rounded-md mb-3 mt-2 '
         >
-            <div className='flex-1 items-center gap-3 border border-gray-100'>
+            <div className='flex flex-1 items-center gap-3 min-w-0'>
                 <LuPaperclip className='text-gray-400'/>
-                <p className='text-xs text-black'>{item}</p>
+                <p className='text-xs text-black break-all'>{item}</p>
             </div>
             <button
             className='cursor-pointer'
