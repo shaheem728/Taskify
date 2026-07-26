@@ -6,15 +6,18 @@ import DashboardLayout from '../../components/layouts/DashboardLayout';
 import { LuFileSpreadsheet } from 'react-icons/lu';
 import TaskStatusTabs from '../../components/TaskStatusTabs';
 import TaskCard from '../../components/Cards/TaskCard';
+import Loading from '../../components/Loading';
 
 const ManageTasks = () => {
   const [allTasks,setAllTasks] = useState([]);
   const [tabs,setTabs] =useState([]);
   const [filterStatus,setFilterStatus] = useState("All");
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
 
   const getAllTasks = async()=>{
+     setIsLoading(true);
      try{
       const response = await axiosInstance.get(API_PATHS.TASKS.GET_ALL_TASKS,{
         params:{
@@ -33,7 +36,9 @@ const ManageTasks = () => {
       ]
       setTabs(statusArray);
      }catch(error){
-      console.error("Error fetching users",error);
+      console.error("Error fetching tasks",error);
+     } finally {
+      setIsLoading(false);
      }
   }
 
@@ -97,6 +102,9 @@ const ManageTasks = () => {
         }
        </div>
 
+       {isLoading ? (
+         <Loading/>
+       ) : (
        <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mt-4'>
         {allTasks?.map((item,index)=>(
           <TaskCard
@@ -119,6 +127,7 @@ const ManageTasks = () => {
           />
         ))}
        </div>
+       )}
       </div>
     </DashboardLayout>
   )

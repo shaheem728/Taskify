@@ -5,16 +5,20 @@ import { API_PATHS } from '../../utils/apiPaths';
 import { LuFileSpreadsheet } from 'react-icons/lu';
 import UserCard from '../../components/Cards/UserCard';
 import toast from 'react-hot-toast';
+import Loading from '../../components/Loading';
 const ManageUsers = () => {
   const [allUsers,setAllUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const getAllUsers = async ()=>{
+    setIsLoading(true);
     try{
       const response = await axiosInstance.get(API_PATHS.USER.GET_ALL_USER);
-      if(response.data?.length > 0){
-        setAllUsers(response.data);
-      }
+      setAllUsers(response.data?.length > 0 ? response.data : []);
     }catch(error){
       console.log("Error fetching users:",error)
+    } finally {
+      setIsLoading(false);
     }
   }
   //download task report
@@ -51,6 +55,9 @@ const ManageUsers = () => {
             Download Report</button>
         </div>
 
+        {isLoading ? (
+         <Loading/>
+        ) : (
         <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mt-4'>
          {
           allUsers?.map((user)=>(
@@ -58,6 +65,7 @@ const ManageUsers = () => {
           ))
          }
         </div>
+        )}
       </div>
     </DashboardLayout>
   )
