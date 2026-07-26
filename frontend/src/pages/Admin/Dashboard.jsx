@@ -12,6 +12,7 @@ import { LuArrowRight } from 'react-icons/lu'
 import TaskLisTable from '../../components/TaskLisTable'
 import CustomPieChart from '../../components/Charts/CustomPieChart'
 import CustomBarChart from '../../components/Charts/CustomBarChart'
+import Loading from '../../components/Loading';
 
 const COLORS = ["#8D51FF","#00B8DB","#7BCE00"]
 
@@ -22,6 +23,7 @@ const Dashboard = () => {
   const [dashboardData,setDashboardData] = useState(null);
   const [pieChartData,setPieChartData] = useState([]);
   const [barChartData,setBarChartData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   
 //Prpare Chart Data
 const prepareChartData = (data) => {
@@ -43,6 +45,7 @@ const prepareChartData = (data) => {
 }
 
   const getDashboardData = async()=>{
+    setIsLoading(true);
     try{
       const response = await axiosInstance.get(
         API_PATHS.TASKS.GET_DASHBOARD_DATA
@@ -52,7 +55,9 @@ const prepareChartData = (data) => {
         prepareChartData(response.data?.charts || null);
       }
     }catch(error){
-      console.error("Error fetching users:",error)
+      console.error("Error fetching dashboard data:",error)
+    } finally {
+      setIsLoading(false);
     }
   }
   const onSeeMore =()=>{
@@ -64,6 +69,10 @@ const prepareChartData = (data) => {
   },[]);
   return (
     <DashboardLayout activeMenu="Dashboard">
+      {isLoading ? (
+        <Loading/>
+      ) : (
+        <>
       <div className='card my-5'>
         <div>
         <div className='col-span-3'>
@@ -140,8 +149,11 @@ const prepareChartData = (data) => {
           </div>
         </div>
       </div>
+        </>
+      )}
     </DashboardLayout>
   )
 }
+
 
 export default Dashboard
