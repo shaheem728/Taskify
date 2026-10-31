@@ -1,4 +1,7 @@
+const mongoose = require('mongoose');
 const User = require('../models/User');
+const Organization = require('../models/Organization');
+const Membership = require('../models/Membership');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
@@ -14,43 +17,143 @@ const generateToken = (userId) => {
 //@route POST /api/auth/register
 //@access Public
 const registerUser = async (req, res) => {
+    // Use a Mongoose session for transaction safety so that if any step fails, changes roll back
+    const session = await mongoose.startSession();
+    session.startTransaction()
+
     try {
-        const { name, email, password, profileImageUrl, adminInviteToken } = req.body;
-        //check if user already exists
-        const userExists = await User.findOne({ email });
+        const { name, email, password, profileImageUrl, organizationName } = req.body;
+
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: "Name, email, and password are required" });
+        }
+
+        // 1. Check if user already exists
+        const userExists = await User.findOne({ email }).session(session);
         if (userExists) {
+            await session.abortTransaction();
+            session.endSession();
             return res.status(400).json({ message: 'User already exists' });
         }
-        // Determine User role: Admin if correct token  is  provided, otherwise Member
-        let role = 'member';
-        if (adminInviteToken && adminInviteToken == process.env.ADMIN_INVITE_TOKEN) {
-            role = 'admin'
-        }
+
         //Hash password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        //Create new user
-        const user = await User.create({
+        // 3. Determine role & validate organizationName if creating a new org
+        const role = organizationName ? 'admin' : 'member';
+
+        // 4. Create new user
+        const [user] = await User.create([{
             name,
             email,
             password: hashedPassword,
             profileImageUrl,
             role,
-        });
+        }], { session });
 
-        //Return user data with JWT
-        res.status(201).json({
+
+        let organization = null;
+        // 5. Create Organization & Membership
+        if (organizationName) {
+            [organization] = await Organization.create([{
+                orgname: organizationName,
+                ownerId: user._id,
+            }], { session });
+            await Membership.create([{
+                userId: user._id,
+                organizationId: organization._id,
+                role: 'admin',
+            }], { session });
+        }
+
+        // Commit transaction
+        await session.commitTransaction();
+        session.endSession();
+
+        // 6. Return response
+        return res.status(201).json({
             _id: user._id,
             name: user.name,
             email: user.email,
             role: user.role,
             profileImageUrl: user.profileImageUrl,
-            token: generateToken(user._id)
-        })
+            token: generateToken(user._id),
+        });
 
     } catch (error) {
-        return res.status(500).json({ message: "Server error", message: error.message });
+        await session.abortTransaction();
+        session.endSession();
+        return res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
+
+//@desc Register a new member in the admin's organization
+//@route POST /api/auth/register-member
+//@access Private (Admin only)
+const registerMember = async (req, res) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+        const { name, email, password } = req.body;
+
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: "Name, email, and password are required" });
+        }
+
+        // Validate that admin belongs to an organization
+        const organizationId = req.user.organizationId;
+        if (!organizationId) {
+            await session.abortTransaction();
+            session.endSession();
+            return res.status(400).json({ message: "Admin is not associated with any organization" });
+        }
+
+        // 1. Check if user already exists
+        const userExists = await User.findOne({ email }).session(session);
+        if (userExists) {
+            await session.abortTransaction();
+            session.endSession();
+            return res.status(400).json({ message: "User already exists" });
+        }
+
+        // 2. Hash password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        // 3. Create new user
+        const [user] = await User.create([{
+            name,
+            email,
+            password: hashedPassword,
+            role: 'member',
+        }], { session });
+
+        // 4. Create Membership linking the new user to the admin's organization
+        await Membership.create([{
+            userId: user._id,
+            organizationId: organizationId,
+            role: 'member',
+        }], { session });
+
+        // Commit transaction
+        await session.commitTransaction();
+        session.endSession();
+
+        // 5. Return response
+        return res.status(201).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            organizationId,
+        });
+
+    } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+        return res.status(500).json({ message: "Server error", error: error.message });
     }
 };
 
@@ -64,7 +167,6 @@ const loginUser = async (req, res) => {
         if (!user) {
             return res.status(401).json({ message: 'Invalid email & password' });
         }
-
         //compare password
         const isMatch = await bcrypt.compare(password, user.password)
         if (!isMatch) {
@@ -142,16 +244,25 @@ const resetPassword = async (req, res) => {
 //@access Private (Requires JWT)
 const getUserProfile = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select("-password");
+        // 1. Fetch user first
+        const user = await User.findById(req.user._id || req.user.id).select("-password");
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        console.log("user=", user)
-        res.json(user);
+
+        // 2. Fetch membership and populate the organization in one query
+        const member = await Membership.findOne({ userId: user._id })
+            .populate('organizationId', 'orgname');
+
+        res.json({
+            user,
+            role: member ? member.role : user.role,
+            organization: member && member.organizationId ? member.organizationId : null
+        });
     } catch (error) {
-        res.status(500).json({ message: "Server error", error: error.message })
+        res.status(500).json({ message: "Server error", error: error.message });
     }
-}
+};
 
 //@desc Update user profile
 //@route PUT/api/auth/profile
@@ -194,4 +305,4 @@ const updateUserProfile = async (req, res) => {
 
 
 
-module.exports = { registerUser, loginUser, verifyEmail, verifyResetOtp, resetPassword, getUserProfile, updateUserProfile }
+module.exports = { registerUser, registerMember, loginUser, verifyEmail, verifyResetOtp, resetPassword, getUserProfile, updateUserProfile }

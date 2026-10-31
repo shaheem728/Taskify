@@ -3,10 +3,10 @@ import { CheckCircle2, LogOut, Plus, ListTodo, Clock, CheckCircle, Trash2 } from
 import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
- const navigate = useNavigate()
+  const navigate = useNavigate()
 
   return (
-       <div className="relative min-h-screen overflow-hidden bg-slate-50">
+    <div className="relative min-h-screen overflow-hidden bg-slate-50">
       {/* Decorative background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -left-40 -top-40 h-96 w-96 rounded-full bg-emerald-200/40 blur-3xl" />
@@ -15,7 +15,7 @@ export default function Home() {
       </div>
 
       {/* Nav */}
-      <nav className="relative z-10 mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
+      <nav className="relative z-10 mx-auto flex max-w-5xl items-center justify-between px-6 pt-2">
         <div className="flex items-center gap-2.5">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 shadow-md shadow-emerald-500/25">
             <CheckCircle2 className="h-5 w-5 text-white" />

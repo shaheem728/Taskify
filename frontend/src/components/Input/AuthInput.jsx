@@ -7,7 +7,8 @@ export default function AuthInput({
   placeholder,
   value,
   onChange,
-  required
+  required,
+  minLength
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === "password";
@@ -24,8 +25,9 @@ export default function AuthInput({
           type={isPassword && showPassword ? "text" : type}
           placeholder={placeholder}
           value={value}
-          onChange={(e)=>onChange(e)}
+          onChange={(e) => onChange(e)}
           required={required}
+          minLength={minLength}
           className="w-full rounded-xl border border-white/10 bg-[#101822] px-4 py-3 pr-12 outline-none focus:border-emerald-400"
         />
 

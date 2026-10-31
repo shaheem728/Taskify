@@ -1,5 +1,6 @@
 const Task = require('../models/Task');
 const User = require('../models/User');
+const Membership = require('../models/Membership');
 const excelJS = require('exceljs');
 
 //@desc Export all tasks as an Excel file
@@ -7,7 +8,8 @@ const excelJS = require('exceljs');
 //@access Private (Admin)
 const exportTasksReport = async (req, res) => {
   try {
-    const tasks = await Task.find().populate("assignedTo", "name email");
+    // Scope report to the requester's organization (data isolation)
+    const tasks = await Task.find({ organizationId: req.user.organizationId }).populate("assignedTo", "name email");
     const workbook = new excelJS.Workbook();
     const worksheet = workbook.addWorksheet('Tasks Report');
 
@@ -61,8 +63,10 @@ const exportTasksReport = async (req, res) => {
 //@access Private (Admin)
 const exportUserReport = async (req, res) => {
   try {
-    const users = await User.find().select("name email").lean();
-    const tasks = await Task.find().populate("assignedTo", "name email _id");
+    // Scope report to the requester's organization (data isolation)
+    const memberships = await Membership.find({ organizationId: req.user.organizationId }).populate('userId', 'name email');
+    const users = memberships.map((m) => m.userId).filter(Boolean);
+    const tasks = await Task.find({ organizationId: req.user.organizationId }).populate("assignedTo", "name email _id");
     const userTaskMap = {};
 
     users.forEach((user) => {

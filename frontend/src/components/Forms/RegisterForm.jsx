@@ -21,7 +21,7 @@ export default function RegisterForm() {
         name: fullName,
         email,
         password,
-        adminInviteToken
+        organizationName
       })
       const { role, token } = response.data;
       if (token) {
@@ -68,6 +68,7 @@ export default function RegisterForm() {
         placeholder='Min 8 characters'
         type="password"
         required={true}
+        minLength={8}
       />
 
       <AuthInput
@@ -76,6 +77,7 @@ export default function RegisterForm() {
         label="Organization Name"
         placeholder='Organization Name'
         type="text"
+        minLength={4}
         required={false}
       />
       {error && <p className='text-red-500 text-xs pb-2.5'>{error}</p>}

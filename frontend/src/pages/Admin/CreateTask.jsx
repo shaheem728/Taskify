@@ -276,7 +276,14 @@ const CreateTask = () => {
                 <p className='text-xs font-medium text-red-500 mt-5'>{error}</p>
               )
             }
-            <div className='flex justify-end mt-7'>
+            <div className='flex justify-end mt-7 gap-2'>
+              <button
+                className='cancel-btn'
+                onClick={() => navigate(-1)}
+                disabled={loading}
+              >
+                CANCEL
+              </button>
               <button
                 className='add-btn'
                 onClick={handleSubmit}

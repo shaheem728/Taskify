@@ -14,7 +14,7 @@ export default function LoginForm() {
   //Handle Login Form Submit
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (validateEmail(email)) {
+    if (!validateEmail(email)) {
       setError("Please Enter a valid Email Address");
       return;
     }
@@ -67,6 +67,7 @@ export default function LoginForm() {
         label="Password"
         type="password"
         required={true}
+        minLength={8}
       />
       {error && <p className='text-red-500 text-xs pb-2.5'>{error}</p>}
 
