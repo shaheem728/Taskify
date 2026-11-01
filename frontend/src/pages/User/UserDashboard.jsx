@@ -8,11 +8,13 @@ import { API_PATHS } from '../../utils/apiPaths'
 import moment from "moment"
 import { addThousandsSeparator } from '../../utils/helper'
 import InfoCard from "../../components/Cards/InfoCard"
-import { LuArrowRight, LuFileSpreadsheet } from 'react-icons/lu'
+import { LuArrowRight } from 'react-icons/lu'
 import TaskLisTable from '../../components/TaskLisTable'
 import CustomPieChart from '../../components/Charts/CustomPieChart'
 import CustomBarChart from '../../components/Charts/CustomBarChart'
 import Loading from '../../components/Loading'
+import EmptyState from '../../components/Ui/EmptyState';
+import { Building2 } from 'lucide-react';
 
 const COLORS = ["#8D51FF", "#00B8DB", "#7BCE00"]
 
@@ -79,7 +81,10 @@ const UserDashboard = () => {
           <div className='card my-5'>
             <div>
               <div className='col-span-3'>
-                <h2 className='text-xl md:text-2xl'>Good Morning!{user?.name}</h2>
+                <div className='flex items-center'>
+                  <Building2 />
+                  <h2 className='text-xl md:text-2xl'>{user.organization?.orgname}</h2>
+                </div>
                 <p className='text-xs md:text-[13px] text-gray-400 mt-1.5'>
                   {moment().format("dddd Do MM YYYY")}
                 </p>
@@ -178,16 +183,6 @@ const UserDashboard = () => {
     </DashboardLayout>
   )
 }
-
-
-
-const EmptyState = ({ title, message }) => (
-  <div className='flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-300 bg-white py-16 mt-4 text-center'>
-    <LuFileSpreadsheet className='text-4xl text-slate-300 mb-3' />
-    <h3 className='text-base font-medium text-slate-700'>{title}</h3>
-    <p className='text-sm text-slate-500 mt-1'>{message}</p>
-  </div>
-);
 
 export default UserDashboard
 

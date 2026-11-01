@@ -5,6 +5,7 @@ import Dashboard from './pages/Admin/Dashboard';
 import ManageTasks from './pages/Admin/ManageTasks';
 import CreateTask from './pages/Admin/CreateTask';
 import ManageUsers from './pages/Admin/ManageUsers';
+import Reports from './pages/Admin/Reports';
 import MyTasks from "./pages/User/MyTasks";
 import PrivateRoute from './routes/PrivateRoute';
 import UserProvider, { UserContext } from './context/useContext';
@@ -27,6 +28,7 @@ function App() {
             <Route path="/admin/tasks" element={<ManageTasks />} />
             <Route path="/admin/create-task" element={<CreateTask />} />
             <Route path="/admin/users" element={<ManageUsers />} />
+            <Route path="/admin/reports" element={<Reports />} />
           </Route>
 
           {/* User Routes */}

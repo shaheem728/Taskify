@@ -88,74 +88,7 @@ const registerUser = async (req, res) => {
     }
 };
 
-//@desc Register a new member in the admin's organization
-//@route POST /api/auth/register-member
-//@access Private (Admin only)
-const registerMember = async (req, res) => {
-    const session = await mongoose.startSession();
-    session.startTransaction();
 
-    try {
-        const { name, email, password } = req.body;
-
-        if (!name || !email || !password) {
-            return res.status(400).json({ message: "Name, email, and password are required" });
-        }
-
-        // Validate that admin belongs to an organization
-        const organizationId = req.user.organizationId;
-        if (!organizationId) {
-            await session.abortTransaction();
-            session.endSession();
-            return res.status(400).json({ message: "Admin is not associated with any organization" });
-        }
-
-        // 1. Check if user already exists
-        const userExists = await User.findOne({ email }).session(session);
-        if (userExists) {
-            await session.abortTransaction();
-            session.endSession();
-            return res.status(400).json({ message: "User already exists" });
-        }
-
-        // 2. Hash password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        // 3. Create new user
-        const [user] = await User.create([{
-            name,
-            email,
-            password: hashedPassword,
-            role: 'member',
-        }], { session });
-
-        // 4. Create Membership linking the new user to the admin's organization
-        await Membership.create([{
-            userId: user._id,
-            organizationId: organizationId,
-            role: 'member',
-        }], { session });
-
-        // Commit transaction
-        await session.commitTransaction();
-        session.endSession();
-
-        // 5. Return response
-        return res.status(201).json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            organizationId,
-        });
-
-    } catch (error) {
-        await session.abortTransaction();
-        session.endSession();
-        return res.status(500).json({ message: "Server error", error: error.message });
-    }
-};
 
 //@desc Login user
 //@route POST /api/auth/login
@@ -274,7 +207,7 @@ const updateUserProfile = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const { name, email, profileImageUrl } = req.body;
+        const { email, profileImageUrl } = req.body;
 
         // Check if the new email is already used by another user
         if (email && email !== user.email) {
@@ -284,8 +217,6 @@ const updateUserProfile = async (req, res) => {
             }
         }
 
-        user.name = name || user.name;
-        user.email = email || user.email;
         user.profileImageUrl = profileImageUrl || user.profileImageUrl;
 
         const updatedUser = await user.save();
@@ -305,4 +236,4 @@ const updateUserProfile = async (req, res) => {
 
 
 
-module.exports = { registerUser, registerMember, loginUser, verifyEmail, verifyResetOtp, resetPassword, getUserProfile, updateUserProfile }
+module.exports = { registerUser, loginUser, verifyEmail, verifyResetOtp, resetPassword, getUserProfile, updateUserProfile }

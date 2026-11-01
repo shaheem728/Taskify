@@ -4,6 +4,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 export default function AuthInput({
   label,
   type = "text",
+  className = '',
   placeholder,
   value,
   onChange,
@@ -28,7 +29,7 @@ export default function AuthInput({
           onChange={(e) => onChange(e)}
           required={required}
           minLength={minLength}
-          className="w-full rounded-xl border border-white/10 bg-[#101822] px-4 py-3 pr-12 outline-none focus:border-emerald-400"
+          className={`w-full rounded-xl border border-white/10 bg-[#101822] px-4 py-3 pr-12 outline-none focus:border-emerald-400 ${className}`}
         />
 
         {isPassword && (

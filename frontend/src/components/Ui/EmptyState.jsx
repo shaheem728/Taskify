@@ -1,6 +1,6 @@
 import React from 'react';
 import { LuFileSpreadsheet } from 'react-icons/lu';
-
+import Button from './Button';
 const EmptyState = ({
     title = 'No data found',
     message,
@@ -31,13 +31,13 @@ const EmptyState = ({
             {title && <h3 className='text-base font-medium text-slate-700'>{title}</h3>}
             {message && <p className='text-sm text-slate-500'>{message}</p>}
             {action || (actionLabel && onAction) ? (
-                <button
+                <Button
                     type='button'
                     onClick={onAction}
-                    className='btn-primary mt-4 flex items-center justify-center gap-2 text-sm font-medium'
+                    className=' mt-4 flex items-center justify-center gap-2 text-sm font-medium'
                 >
                     {action || actionLabel}
-                </button>
+                </Button>
             ) : null}
         </div>
     );

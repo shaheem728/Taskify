@@ -64,6 +64,7 @@ const CreateTask = () => {
       });
       toast.success("Task Created Successfully")
       clearData();
+      navigate(-1)
     } catch (error) {
       console.error("Error creating task", error)
       setLoading(false)
@@ -90,6 +91,7 @@ const CreateTask = () => {
         todoChecklist: todolist,
       });
       toast.success("Task Updated Successfully")
+      navigate(-1)
     } catch (error) {
       console.error("Error updating task", error)
       setLoading(false)

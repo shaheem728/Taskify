@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthInput from "../Input/AuthInput";
 import { validateEmail } from "../../utils/helper";
-import { verifyEmail, verifyResetOtp, resetPassword } from "../../api/AuthApi/AuthApi";
+import { verifyEmail, verifyResetOtp, resetPassword } from "../../api/AuthApi";
 
 export default function ForgotPasswordForm() {
   const [step, setStep] = useState(1);

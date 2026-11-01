@@ -3,7 +3,7 @@ import AuthInput from "../Input/AuthInput";
 import { validateEmail } from '../../utils/helper'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../../context/useContext'
-import { loginUser } from '../../api/AuthApi/AuthApi'
+import { loginUser } from '../../api/AuthApi'
 export default function LoginForm() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")

@@ -1,11 +1,10 @@
 const express = require('express')
 const upload = require('../middlewares/uploadMiddleware')
 const router = express.Router();
-const { registerUser, loginUser, registerMember, verifyEmail, verifyResetOtp, resetPassword, getUserProfile, updateUserProfile } = require("../controllers/authController")
-const { protect, adminOnly } = require("../middlewares/authMiddleware")
+const { registerUser, loginUser, verifyEmail, verifyResetOtp, resetPassword, getUserProfile, updateUserProfile } = require("../controllers/authController")
+const { protect } = require("../middlewares/authMiddleware")
 // Auth Routes
 router.post('/register', registerUser);
-router.post('/register-member', adminOnly, registerMember);
 router.post('/login', loginUser);
 router.post('/verify-email', verifyEmail);
 router.post('/verify-reset-otp', verifyResetOtp);

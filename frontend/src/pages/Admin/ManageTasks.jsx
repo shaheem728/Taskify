@@ -10,6 +10,7 @@ import TaskCard from '../../components/Cards/TaskCard';
 import Loading from '../../components/Loading';
 import EmptyState from '../../components/Ui/EmptyState';
 import { ListChecks } from 'lucide-react';
+import Button from '../../components/Ui/Button';
 
 const ManageTasks = () => {
   const [allTasks, setAllTasks] = useState([]);
@@ -49,27 +50,6 @@ const ManageTasks = () => {
     navigate(`/admin/create-task`, { state: { taskId: taskData._id } })
   }
 
-  // download task report
-  const handleDownloadReport = async () => {
-    try {
-      const response = await axiosInstance.get(API_PATHS.REPORT.EXPORT_TASK, {
-        responseType: "blob"
-      });
-      //Create a URL for the blob
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "Task_details.xlsx")
-      document.body.appendChild(link)
-      link.click();
-      link.parentNode.removeChild(link);
-      window.URL.revokeObjectURL(url)
-    } catch (error) {
-      console.log("Error downloading expense details:", error)
-      toast.error("Failed to download expense details.Please try again.")
-    }
-  }
-
   useEffect(() => {
     getAllTasks(filterStatus);
     return () => { };
@@ -81,35 +61,31 @@ const ManageTasks = () => {
           <div className='flex items-center justify-between gap-3 w-full'>
             <h2 className='text-xl font-medium'>My Task</h2>
 
-            <button
-              className='btn-primary flex items-center w-30!'
-              onClick={() => navigate('/admin/create-task')}>
-              <FaPlus className="text-lg mx-2" />
+            <Button
+              onClick={() => navigate('/admin/create-task')}
+              leftIcon={<FaPlus className="text-lg" />}
+            >
               New Task
-            </button>
+            </Button>
           </div>
-
-          {
-            tabs?.[0]?.count > 0 && (
-              <div className='flex items-center gap-3'>
-                <TaskStatusTabs
-                  tabs={tabs}
-                  activeTab={filterStatus}
-                  setActiveTab={setFilterStatus}
-                />
-                <button className='hidden lg:flex download-btn' onClick={handleDownloadReport}>
-                  <LuFileSpreadsheet className='text-lg' />
-                  Download Report
-                </button>
-              </div>
-            )
-          }
         </div>
+
+        {
+          tabs?.[0]?.count > 0 && (
+            <div className='flex items-center gap-3 my-3'>
+              <TaskStatusTabs
+                tabs={tabs}
+                activeTab={filterStatus}
+                setActiveTab={setFilterStatus}
+              />
+            </div>
+          )
+        }
 
         {isLoading ? (
           <Loading />
         ) : allTasks.length > 0 ? (
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mt-4'>
+          <div className='flex flex-wrap  gap-4 mt-4'>
             {allTasks.map((item) => (
               <TaskCard
                 key={item._id}
@@ -133,7 +109,7 @@ const ManageTasks = () => {
           </div>
         ) : (
           <EmptyState
-            className='mt-4'
+            className='mt-4 h-[75vh]'
             title='No tasks found'
             message='Create a new task to get started.'
             icon={<ListChecks className='text-4xl text-slate-500 mb-3' />}

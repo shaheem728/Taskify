@@ -13,19 +13,23 @@ import TaskLisTable from '../../components/TaskLisTable'
 import CustomPieChart from '../../components/Charts/CustomPieChart'
 import CustomBarChart from '../../components/Charts/CustomBarChart'
 import Loading from '../../components/Loading';
-import { Building2 } from 'lucide-react';
+import { Building2, PieChart, BarChart3, ListChecks } from 'lucide-react';
+import EmptyState from '../../components/Ui/EmptyState';
+
 
 const COLORS = ["#8D51FF", "#00B8DB", "#7BCE00"]
 
 const Dashboard = () => {
   useUserAuth()
   const { user } = useContext(UserContext)
-  console.log("user=", user)
   const navigate = useNavigate()
   const [dashboardData, setDashboardData] = useState(null);
   const [pieChartData, setPieChartData] = useState([]);
   const [barChartData, setBarChartData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const hasDistributionData = pieChartData.some((item) => Number(item.count) > 0);
+  const hasPriorityData = barChartData.some((item) => Number(item.count) > 0);
+  const recentTasks = dashboardData?.recentTasks || [];
 
   //Prpare Chart Data
   const prepareChartData = (data) => {
@@ -70,7 +74,6 @@ const Dashboard = () => {
     return () => { }
   }, []);
 
-  console.log("dashboardData?.recentTasks=", dashboardData?.recentTasks)
   return (
     <DashboardLayout activeMenu="Dashboard">
       {isLoading ? (
@@ -122,9 +125,18 @@ const Dashboard = () => {
                   <h5 className='font-medium'>Task Distribution</h5>
                 </div>
 
-                <CustomPieChart
-                  data={pieChartData}
-                  colors={COLORS} />
+                {hasDistributionData ? (
+                  <CustomPieChart
+                    data={pieChartData}
+                    colors={COLORS} />
+                ) : (
+                  <EmptyState
+                    title="No task distribution found"
+                    className='mt-4 min-h-[260px]'
+                    icon={<PieChart className='w-10 h-10 text-slate-300 mb-3' />}
+                    message="Tasks created for your organization will appear here by status."
+                  />
+                )}
 
               </div>
             </div>
@@ -135,9 +147,18 @@ const Dashboard = () => {
                   <h5 className='font-medium'>Task Priority Levels</h5>
                 </div>
 
-                <CustomBarChart
-                  data={barChartData}
-                  colors={COLORS} />
+                {hasPriorityData ? (
+                  <CustomBarChart
+                    data={barChartData}
+                    colors={COLORS} />
+                ) : (
+                  <EmptyState
+                    title="No task priority data found"
+                    className='mt-4 min-h-[260px]'
+                    icon={<BarChart3 className='w-10 h-10 text-slate-300 mb-3' />}
+                    message="Tasks created for your organization will appear here by priority."
+                  />
+                )}
 
               </div>
             </div>
@@ -151,11 +172,18 @@ const Dashboard = () => {
                     See All<LuArrowRight className='text-base' />
                   </button>
                 </div>
-                {
-                  dashboardData?.recentTasks.length > 0 && (
-                    <TaskLisTable tableData={dashboardData?.recentTasks || []} />
-                  )
-                }
+                {recentTasks.length > 0 ? (
+                  <TaskLisTable tableData={recentTasks} />
+                ) : (
+                  <EmptyState
+                    title="No recent tasks found"
+                    className='mt-4'
+                    icon={<ListChecks className='w-10 h-10 text-slate-300 mb-3' />}
+                    message="No tasks created yet. Create a task to get started."
+                    actionLabel="Create Task"
+                    onAction={() => navigate('/admin/create-task')}
+                  />
+                )}
 
               </div>
             </div>

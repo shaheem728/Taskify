@@ -2,7 +2,7 @@ import {
     LuLayoutDashboard,
     LuUsers,
     LuClipboardCheck,
-    LuSquarePlus,
+    LuFileSpreadsheet,
     LuLogOut
 } from "react-icons/lu";
 
@@ -27,6 +27,12 @@ export const SIDE_MENU_DATA = [
     },
     {
         id: "04",
+        label: "Reports",
+        icon: LuFileSpreadsheet,
+        path: "/admin/reports",
+    },
+    {
+        id: "05",
         label: "Logout",
         icon: LuLogOut,
         path: "logout",

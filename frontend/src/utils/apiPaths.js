@@ -3,7 +3,7 @@ export const BASE_URL = import.meta.env.VITE_API_URL;
 //utils/apiPaths.js
 export const API_PATHS = {
     AUTH: {
-        REGISTER: "/api/auth/register",//Register a new user(Admin or Member)
+        REGISTER: "/api/auth/register",//Register a new user(Admin)
         LOGIN: "/api/auth/login",//Authenticate user  & return JWT Token
         VERIFY_EMAIL: "/api/auth/verify-email",//Verify Email for password reset
         VERIFY_RESET_OTP: "/api/auth/verify-reset-otp",//Verify Reset OTP
@@ -14,7 +14,7 @@ export const API_PATHS = {
     USER: {
         GET_ALL_USER: "/api/users",//Get All users (Admin only)
         GET_USER_BY_ID: (userId) => `/api/users/${userId}`,//Get user by id 
-        CREAT_USER: "/api/users",//Create A new User (Admin only)
+        CREAT_USER: "/api/users/create",//Create A new User (Admin only)
         UPDATE_USER: (userId) => `/api/users/${userId}`,//Update user details
         DELETE_USER: (userId) => `/api/users/${userId}`,//Delete a user
     },

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import AuthInput from "../Input/AuthInput";
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../../context/useContext'
-import { registerUser } from '../../api/AuthApi/AuthApi'
+import { registerUser } from '../../api/AuthApi'
 
 export default function RegisterForm() {
   const [fullName, setFullName] = useState("");
