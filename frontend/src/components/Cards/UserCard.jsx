@@ -1,39 +1,39 @@
 import React from 'react'
 import { assets } from '../../assets/images/assets';
-const UserCard = ({userInfo}) => {
+const UserCard = ({ userInfo }) => {
   return (
     <div className='user-card p-2'>
-        <div className='flex items-center justify-center'>
-            <div className='flex items-center gap-3'>
-                <img 
-                   src={userInfo?.profileImageUrl?.length > 1 ? userInfo?.profileImageUrl :assets.profile_pic}
-                   alt={'Avatar'}
-                   className='w-13 h-12 rounded-full border-2 border-white'
-                />
-                <div>
-                    <p className='text-sm font-medium'>{userInfo?.name}</p>
-                    <p className='text-xs text-gray-500'>{userInfo?.email}</p>
-                </div>
-            </div>
+      <div className='flex items-center justify-center'>
+        <div className='flex items-center gap-3'>
+          <img
+            src={userInfo?.profileImageUrl?.length > 1 ? userInfo?.profileImageUrl : assets.profile_pic}
+            alt={'Avatar'}
+            className='w-13 h-12 rounded-full border-2 border-white'
+          />
+          <div>
+            <p className='text-sm font-medium'>{userInfo?.name}</p>
+            <p className='text-xs text-gray-500'>{userInfo?.email}</p>
+          </div>
         </div>
+      </div>
 
-        <div className='flex items-end gap-3 mt-5'>
-           <StatCard 
-            label="Pending"
-            count={userInfo?.pendingTasks || 0}
-            status="Pending"
-           />
-           <StatCard 
-            label="In Progress"
-            count={userInfo?.inProgressTasks || 0}
-            status="In Progress"
-           />
-           <StatCard 
-            label="Completed"
-            count={userInfo?.completedTasks || 0}
-            status="Completed"
-           />
-        </div>
+      <div className='flex items-end gap-3 mt-5'>
+        <StatCard
+          label="Pending"
+          count={userInfo?.pendingTasks || 0}
+          status="Pending"
+        />
+        <StatCard
+          label="In Progress"
+          count={userInfo?.inProgressTasks || 0}
+          status="In Progress"
+        />
+        <StatCard
+          label="Completed"
+          count={userInfo?.completedTasks || 0}
+          status="Completed"
+        />
+      </div>
     </div>
   )
 }
@@ -41,8 +41,8 @@ const UserCard = ({userInfo}) => {
 export default UserCard
 
 
- const StatCard =({label,count, status})=>{
- const getStatusTagColor = ()=>{
+const StatCard = ({ label, count, status }) => {
+  const getStatusTagColor = () => {
     switch (status) {
       case 'In Progress':
         return 'text-cyan-500 bg-gray-50';
@@ -52,9 +52,10 @@ export default UserCard
         return 'text-violet-500 bg-gray-50';
     }
   };
-  return(
-    <div className={`flex-1 text-[10px] font-medium ${getStatusTagColor()} px-4 py-0.5 rounded`}>
-        <span className='text-[12px] font-semibold'>{count}</span><br/> {label}
+  return (
+    <div className={`flex items-center flex-col text-[10px] font-medium ${getStatusTagColor()} px-4 py-0.5 rounded`}>
+      <div className='text-[12px] font-semibold'>{count}</div>
+      <div>{label}</div>
     </div>
   )
 };
