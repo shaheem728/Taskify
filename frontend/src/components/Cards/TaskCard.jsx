@@ -40,7 +40,7 @@ const TaskCard = ({
     }
   }
   return (
-    <div className='bg-blue-50 rounded-xl py-4 shadow-md shadow-gray-100 border border-gray-200/50 w-[30%]'>
+    <div className='bg-blue-50 rounded-xl py-4 shadow-md shadow-gray-100 border border-gray-200/50 w-auto '>
       <div className='flex items-end gap-3 px-4'>
         <div className={`text-[11px] font-medium ${getStatusTagColor()} px-4 py-0.5 rounded`}>{status}</div>
         <div className={`text-[11px] font-medium ${getPriorityTagColor()} px-4 py-0.5 rounded`}>{priority}Priority</div>
@@ -65,7 +65,7 @@ const TaskCard = ({
       </div>
 
       <div className='px-4'>
-        <div className='flex items-center justify-between my-1'>
+        <div className='flex items-center justify-between gap-10 my-1'>
           <div>
             <label className='text-xs text-gray-500 '>
               Start Date

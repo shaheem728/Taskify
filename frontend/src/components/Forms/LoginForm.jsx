@@ -8,7 +8,7 @@ export default function LoginForm() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState(null)
-  const { updateUser } = useContext(UserContext)
+  const { updateUser, fetchUser } = useContext(UserContext)
   const navigate = useNavigate()
 
   //Handle Login Form Submit
@@ -36,8 +36,10 @@ export default function LoginForm() {
         //Redirect based on role
         if (role === 'admin') {
           navigate('/admin/dashboard')
+          fetchUser()
         } else {
           navigate('/user/dashboard')
+          fetchUser()
         }
       }
     } catch (error) {

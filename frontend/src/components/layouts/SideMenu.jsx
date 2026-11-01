@@ -30,7 +30,7 @@ const SideMenu = ({ activeMenu }) => {
     return () => { };
   }, [user])
   return (
-    <div className='w-64 h-[calc(100vh-75px)] bg-blue-50 border-r border-gray-200/50 sticky top-[50px] left-10 rounded-3xl z-10'>
+    <div className='w-64 h-[calc(100vh-85px)] bg-blue-50 border border-gray-200/50 rounded-3xl z-10 overflow-y-auto'>
       <div className='flex items-end justify-end pt-2 pr-2'>
         <button type='button' onClick={() => setEditing(true)} className='text-primary hover:text-blue-500 h-4 cursor-pointer' ><FaEdit /></button>
       </div>

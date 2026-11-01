@@ -11,7 +11,7 @@ export default function RegisterForm() {
   const [organizationName, setOrganizationName] = useState("")
 
   const [error, setError] = useState(null)
-  const { updateUser } = useContext(UserContext)
+  const { updateUser, fetchUser } = useContext(UserContext)
   const navigate = useNavigate()
   //Handle SignUp Form Submit
   const handleSubmit = async (e) => {
@@ -31,8 +31,10 @@ export default function RegisterForm() {
       //Redirect based on role
       if (role === 'admin') {
         navigate('/admin/dashboard')
+        fetchUser()
       } else {
         navigate('/user/dashboard')
+        fetchUser()
       }
     } catch (error) {
       if (error.response && error.response.data.message) {
