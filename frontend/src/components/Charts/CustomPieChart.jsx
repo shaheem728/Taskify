@@ -22,11 +22,10 @@ const CustomPieChart = ({ data, colors }) => {
                     cy="50%"
                     outerRadius={130}
                     innerRadius={100}
-                    label={({ status }) => status} // Display status name as label
                     labelLine={false}
                 >
                     {data.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={colors[index % colors.length]}/>
+                        <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
                     ))}
                 </Pie>
                 <Tooltip content={<CustomTooltip />} />
@@ -37,3 +36,5 @@ const CustomPieChart = ({ data, colors }) => {
 };
 
 export default CustomPieChart;
+
+

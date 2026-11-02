@@ -5,6 +5,7 @@
     --font-display: "Outfit", sans-serif;
     --breakpoint-3xl: 1920px;
     --color-primary: oklch(76.5% 0.177 163.223);
+    --color-secondary: oklch(36.936% 0.0987 294.789);
 }
 
 @layer base {

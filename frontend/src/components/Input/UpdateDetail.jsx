@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import ProfilePhotoSelector from '../../components/Input/ProfilePhotoSelector'
 import Input from '../../components/Input/Input'
-import { useNavigate } from 'react-router-dom'
 import axiosInstance from '../../utils/axiosInstance'
 import { API_PATHS } from '../../utils/apiPaths'
 import { UserContext } from '../../context/useContext'
@@ -10,10 +9,9 @@ import { IoClose } from "react-icons/io5";
 const UpdateDetail = () => {
   const [error, setError] = useState(null)
   const { user, updateUser, setEditing, fetchUser } = useContext(UserContext)
-  const [fullName, setFullName] = useState(user?.user?.name || null);
-  const [email, setEmail] = useState(user?.user?.email || null);
+  const [fullName] = useState(user?.user?.name || null);
+  const [email] = useState(user?.user?.email || null);
   const [profilePic, setProfilePic] = useState(user?.user?.profileImageUrl || null);
-  const navigate = useNavigate()
   //Close the panel
   const closePanel = () => {
     setEditing(false)
@@ -29,25 +27,20 @@ const UpdateDetail = () => {
         const imgUploadRes = await uploadImage(profilePic);
         profileImageUrl = imgUploadRes.imageUrl || ''
       } else if (profilePic == null) {
-        profileImageUrl = ""
+        profileImageUrl = "/uploads/default-avatar.png"
       }
       const response = await axiosInstance.patch(API_PATHS.AUTH.UPDATE_PROFILE, {
         email,
         profileImageUrl
       })
-      const { role, token } = response.data;
+      const { token } = response.data;
       if (token) {
         localStorage.setItem("token", token);
         updateUser(response.data)
         setEditing(false)
         fetchUser()
       }
-      //Redirect based on role
-      if (role === 'admin') {
-        navigate('/admin/dashboard')
-      } else {
-        navigate('/user/dashboard')
-      }
+
     } catch (error) {
       if (error.response && error.response.data.message) {
         setError(error.response.data.message)
