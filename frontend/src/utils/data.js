@@ -3,7 +3,6 @@ import {
     LuUsers,
     LuClipboardCheck,
     LuFileSpreadsheet,
-    LuLogOut
 } from "react-icons/lu";
 
 export const SIDE_MENU_DATA = [
@@ -31,12 +30,6 @@ export const SIDE_MENU_DATA = [
         icon: LuFileSpreadsheet,
         path: "/admin/reports",
     },
-    {
-        id: "05",
-        label: "Logout",
-        icon: LuLogOut,
-        path: "logout",
-    }
 ]
 export const SIDE_MENU_USER_DATA = [
     {
@@ -51,12 +44,6 @@ export const SIDE_MENU_USER_DATA = [
         icon: LuClipboardCheck,
         path: "/user/tasks",
     },
-    {
-        id: "03",
-        label: "Logout",
-        icon: LuLogOut,
-        path: "logout",
-    }
 ]
 export const PRIORITY_DATA = [
     { label: "Low", value: "Low" },

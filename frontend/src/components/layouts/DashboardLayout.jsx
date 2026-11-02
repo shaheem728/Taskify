@@ -13,11 +13,13 @@ const DashboardLayout = ({ children, activeMenu }) => {
           <div className='flex'>
             <div className={`${edit ? '' : 'hidden'}`}>
               <UpdateDetail />
-            </div>
-            <div className='md:block hidden ml-3 mt-2'>
-              <SideMenu activeMenu={activeMenu} />
-            </div>
-            <div className='grow mx-5'>{children}</div>
+              </div>
+            <div className='hidden md:block w-64 shrink-0 ml-4 mt-2'>
+              <div className='fixed top-[70px] w-64 z-20'>
+                <SideMenu activeMenu={activeMenu} />
+              </div>
+              </div>
+            <div className='grow min-w-0 mx-5'>{children}</div>
           </div>
 
         )

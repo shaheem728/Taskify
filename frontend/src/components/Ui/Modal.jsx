@@ -21,7 +21,7 @@ const Modal = ({
 
   return (
     <div
-      className='fixed inset-0 z-50 flex justify-center items-center h-[calc(100%-1rem)]  overflow-y-auto overflow-x-hidden bg-black/20 bg-opacity-50'
+      className='fixed inset-0 z-50 flex justify-center items-center  h-screen overflow-y-auto overflow-x-hidden bg-black/20 bg-opacity-50'
     >
       <div className='flex justify-center items-center   w-full  max-h-full'>
         <div
