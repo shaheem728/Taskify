@@ -126,11 +126,29 @@ const getUserById = async (req, res) => {
 //@desc Delete a user (Admin only)
 //@route Delete /api/users/:id
 //@access Private (Admin)
-// const deleteUser = async(req,res)=>{
-//     try {
-
-//     }catch(error){
-//      res.status(500).json({message:"Server error",error:error.message})
-//     }
-// };
-module.exports = { createUser, getUser, getUserById };
+const deleteUser = async (req, res) => {
+    try {
+        // Find the user (exclude password) and ensure it exists
+        const user = await User.findById(req.params.id).select("-password");
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        // Verify the user belongs to the same organization as the requester
+        const membership = await Membership.findOne({
+            userId: user._id,
+            organizationId: req.user.organizationId,
+        });
+        if (!membership) {
+            return res.status(403).json({ message: "Forbidden: user not in your organization" });
+        }
+        // Delete the membership record first (optional, depending on cascade rules)
+        await Membership.deleteOne({ _id: membership._id });
+        // Delete the user document itself
+        await User.deleteOne({ _id: user._id });
+        return res.status(200).json({ message: "User deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
+module.exports = { createUser, deleteUser, getUser, getUserById };

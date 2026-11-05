@@ -161,10 +161,11 @@ const CreateTask = () => {
     try {
       await axiosInstance.delete(API_PATHS.TASKS.DELETE_TASK(taskId));
       setOpenDeleteAlert(false);
-      toast.success("Expense details deleted successfully");
+      toast.success("Task deleted successfully");
       navigate('/admin/tasks')
     } catch (error) {
-      console.log("Error deleting expense:", error.response?.data?.message || error.message);
+      toast.error(error.response?.data?.message || "Error deleting Task")
+      console.log("Error deleting Task:", error.response?.data?.message || error.message);
     }
   };
 
