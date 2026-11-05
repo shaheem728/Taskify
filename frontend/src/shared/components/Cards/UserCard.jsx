@@ -1,8 +1,8 @@
 import React from 'react'
-import { assets } from '../../assets/images/assets';
+import { assets } from '../../../assets/images/assets';
 const UserCard = ({ userInfo }) => {
   return (
-    <div className='user-card p-2'>
+    <div className='user-card flex items-center justify-center p-2'>
       <div className='flex items-center justify-center'>
         <div className='flex items-center gap-3'>
           <img
@@ -17,7 +17,7 @@ const UserCard = ({ userInfo }) => {
         </div>
       </div>
 
-      <div className='flex items-end gap-3 mt-5'>
+      <div className='flex items-end gap-3 '>
         <StatCard
           label="Pending"
           count={userInfo?.pendingTasks || 0}

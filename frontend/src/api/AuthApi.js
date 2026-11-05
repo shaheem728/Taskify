@@ -1,5 +1,5 @@
-import axiosInstance from '../utils/axiosInstance'
-import { API_PATHS } from '../utils/apiPaths'
+import axiosInstance from '../shared/api/axiosInstance'
+import { API_PATHS } from '../shared/api/apiPaths'
 
 // Sends credentials to the login endpoint and returns the Axios response.
 export const loginUser = (userData) => {

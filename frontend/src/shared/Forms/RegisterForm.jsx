@@ -1,14 +1,16 @@
 import React, { useContext, useState } from 'react'
-import AuthInput from "../Input/AuthInput";
+import AuthInput from "../components/input/AuthInput";
 import { useNavigate } from 'react-router-dom'
-import { UserContext } from '../../context/useContext'
+import { UserContext } from '../context/useContext'
 import { registerUser } from '../../api/AuthApi'
+import toast from 'react-hot-toast';
 
 export default function RegisterForm() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [organizationName, setOrganizationName] = useState("")
+  const [isLoading, setIsLoading] = useState(false);
 
   const [error, setError] = useState(null)
   const { updateUser, fetchUser } = useContext(UserContext)
@@ -16,6 +18,7 @@ export default function RegisterForm() {
   //Handle SignUp Form Submit
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setIsLoading(true);
     try {
       const response = await registerUser({
         name: fullName,
@@ -28,6 +31,7 @@ export default function RegisterForm() {
         localStorage.setItem("token", token);
         updateUser(response.data)
       }
+      toast.success("Organization registered successfully");
       //Redirect based on role
       if (role === 'admin') {
         navigate('/admin/dashboard')
@@ -42,6 +46,8 @@ export default function RegisterForm() {
       } else {
         setError("Something went wrong . please try again")
       }
+    } finally {
+      setIsLoading(false);
     }
   }
   return (
@@ -84,8 +90,8 @@ export default function RegisterForm() {
       />
       {error && <p className='text-red-500 text-xs pb-2.5'>{error}</p>}
 
-      <button className="w-full rounded-xl bg-emerald-400 py-3 font-semibold text-black">
-        Create account
+      <button disabled={isLoading} className="w-full rounded-xl bg-emerald-400 py-3 font-semibold text-black">
+        {isLoading ? 'Creating account ...' : 'Create a ccount'}
       </button>
     </form>
   );

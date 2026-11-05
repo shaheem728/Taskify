@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import DashboardLayout from '../../components/layouts/DashboardLayout'
-import axiosInstance from '../../utils/axiosInstance';
-import { API_PATHS } from '../../utils/apiPaths';
-import UserCard from '../../components/Cards/UserCard';
-import EmptyState from '../../components/Ui/EmptyState';
+import DashboardLayout from '../../shared/layouts/DashboardLayout'
+import axiosInstance from '../../shared/api/axiosInstance';
+import { API_PATHS } from '../../shared/api/apiPaths';
+import UserCard from '../../shared/components/cards/UserCard';
+import EmptyState from '../../shared/components/ui/EmptyState';
 import toast from 'react-hot-toast';
-import Loading from '../../components/Loading';
+import Loading from '../../shared/components/ui/Loading';
 import { FaPlus } from "react-icons/fa6";
-import Button from '../../components/Ui/Button';
+import Button from '../../shared/components/ui/Button';
 import { createUser } from '../../api/UserApi';
-import Modal from '../../components/Ui/Modal';
-import AuthInput from '../../components/Input/AuthInput';
+import Modal from '../../shared/components/ui/Modal';
+import AuthInput from '../../shared/components/input/AuthInput';
 
 const ManageUsers = () => {
   const [allUsers, setAllUsers] = useState([]);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { assets } from '../assets/images/assets';
+import { assets } from '../../../assets/images/assets';
 
 const AssignedUserList = ({ users = [] }) => {
   if (!users.length) {

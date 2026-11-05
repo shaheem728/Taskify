@@ -1,18 +1,22 @@
 import { useParams } from 'react-router-dom'
-import React, { useEffect, useState } from 'react'
-import axiosInstance from '../../utils/axiosInstance';
-import { API_PATHS } from '../../utils/apiPaths';
+import React, { useEffect, useState, useContext } from 'react'
+import axiosInstance from '../../shared/api/axiosInstance';
+import { API_PATHS } from '../../shared/api/apiPaths';
 import moment from 'moment';
-import AssignedUserList from '../../components/AssignedUserList';
+import AssignedUserList from '../components/profile/AssignedUserList';
 import { LuSquareArrowOutUpRight, LuArrowLeft, } from 'react-icons/lu';
-import DashboardLayout from '../../components/layouts/DashboardLayout';
-import {useNavigate} from 'react-router-dom'
-import {TodoCheckList} from './TodoCheckList'
+import DashboardLayout from '../../shared/layouts/DashboardLayout';
+import { useNavigate } from 'react-router-dom'
+import { TodoCheckList } from '../components/todo/TodoCheckList'
+import { UserContext } from '../context/useContext'
+import toast from "react-hot-toast";
+
 
 const ViewTaskDetail = () => {
   const { id } = useParams();
   const [task, setTask] = useState(null);
-   const navigate = useNavigate();
+  const { user } = useContext(UserContext)
+  const navigate = useNavigate();
   const getStatusTagColor = (status) => {
     switch (status) {
       case 'In Progress':
@@ -52,9 +56,11 @@ const ViewTaskDetail = () => {
         { todoChecklist }
       );
       setTask(response.data?.task || previousTask);
+      toast.success("Todo updated successfully");
     } catch (error) {
       setTask(previousTask);
       console.error('Error updating todo status', error);
+      toast.error("Todo updated failed");
     }
   };
 
@@ -74,14 +80,14 @@ const ViewTaskDetail = () => {
     return () => { };
   }, [id])
 
-  
+
   return (
-    <DashboardLayout activeMenu="My Tasks">
+    <DashboardLayout activeMenu={user?.role === "admin" ? "Manage Tasks" : " My Tasks"}>
       <div className='mt-5'>
         {task && (
-          <div className='grid grid-cols-1 md:grid-cols-4 mt-4'>
-            <div className='form-card col-span-3'>
-              <div className='flex item-center justify-between'>
+          <div className='flex flex-wrap mt-4'>
+            <div className='form-card'>
+              <div className='flex  item-center justify-between'>
                 <h2 className='text-sm md:text-xl font-medium'>
                   {task?.title}
                 </h2>
@@ -89,7 +95,7 @@ const ViewTaskDetail = () => {
                   <button
                     type='button'
                     className='flex items-center gap-1.5 text-[13px] font-medium text-slate-600 bg-slate-50 rounded px-2 py-1 border border-slate-200 cursor-pointer'
-                    onClick={() => navigate('/user/tasks')}>
+                    onClick={() => navigate(-1)}>
                     <LuArrowLeft className='text-base' /> Back
                   </button>
                   <div className={`text-[11px] md:text-[13px] font-medium ${getStatusTagColor(task?.status)} px-4 py-0.5 rounded`}>
@@ -103,7 +109,7 @@ const ViewTaskDetail = () => {
                 <InfoBox label="Description" value={task?.description} />
               </div>
 
-              <div className='grid grid-cols-12 gap-4 mt-4'>
+              <div className='flex justify-around gap-4 mt-4'>
                 <div className='col-span-6 md:col-span-3'>
                   <InfoBox label="Priority" value={task?.priority} />
                 </div>
@@ -123,7 +129,7 @@ const ViewTaskDetail = () => {
                 </div>
               </div>
 
-                  {
+              {
                 task?.attachments?.length > 0 && (
                   <div className='mt-2'>
                     <label className='text-xs font-medium text-slate-500'>Attachments</label>
@@ -144,7 +150,7 @@ const ViewTaskDetail = () => {
                 />
               </div>
 
-          
+
             </div>
           </div>
         )}
@@ -162,18 +168,6 @@ const InfoBox = ({ value, label }) => {
     <p className='text-[12px] md:text-[13px] font-medium text-gray-700 mt-0.5'>{value}</p>
   </>
 }
-
-// const TodoCheckList = ({ text, isChecked, onChange }) => {
-//   return <div className='flex items-center gap-3 p-3'>
-//     <input
-//       type='checkbox'
-//       checked={isChecked}
-//       onChange={onChange}
-//       className='w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded-sm outline-none cursor-pointer'
-//     />
-//     <p className='text-[13px] text-gray-800'>{text}</p>
-//   </div>
-// }
 
 const Attachments = ({ link, index, onClick }) => {
   return <div className='flex justify-between bg-blue-100 px-3 py-2 rounded-md mt-2 mb-3 cursor-pointer'

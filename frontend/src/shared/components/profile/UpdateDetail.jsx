@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react'
-import ProfilePhotoSelector from '../../components/Input/ProfilePhotoSelector'
-import Input from '../../components/Input/Input'
-import axiosInstance from '../../utils/axiosInstance'
-import { API_PATHS } from '../../utils/apiPaths'
+import ProfilePhotoSelector from '../../components/input/ProfilePhotoSelector'
+import Input from '../../components/input/Input'
+import axiosInstance from '../../api/axiosInstance'
+import { API_PATHS } from '../../api/apiPaths'
 import { UserContext } from '../../context/useContext'
 import uploadImage from '../../utils/uploadimage'
 import { IoClose } from "react-icons/io5";
+import toast from 'react-hot-toast'
+
 const UpdateDetail = () => {
   const [error, setError] = useState(null)
   const { user, updateUser, setEditing, fetchUser } = useContext(UserContext)
@@ -40,7 +42,7 @@ const UpdateDetail = () => {
         setEditing(false)
         fetchUser()
       }
-
+      toast.success("Profile updated successfully");
     } catch (error) {
       if (error.response && error.response.data.message) {
         setError(error.response.data.message)

@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../utils/axiosInstance';
-import { API_PATHS } from '../../utils/apiPaths';
-import DashboardLayout from '../../components/layouts/DashboardLayout';
-import { LuFileSpreadsheet } from 'react-icons/lu';
+import axiosInstance from '../../shared/api/axiosInstance';
+import { API_PATHS } from '../../shared/api/apiPaths';
+import DashboardLayout from '../../shared/layouts/DashboardLayout';
 import { FaPlus } from "react-icons/fa6";
-import TaskStatusTabs from '../../components/TaskStatusTabs';
-import TaskCard from '../../components/Cards/TaskCard';
-import Loading from '../../components/Loading';
-import EmptyState from '../../components/Ui/EmptyState';
+import TaskStatusTabs from '../../shared/components/task/TaskStatusTabs';
+import TaskCard from '../../shared/components/cards/TaskCard';
+import Loading from '../../shared/components/ui/Loading';
+import EmptyState from '../../shared/components/ui/EmptyState';
 import { ListChecks } from 'lucide-react';
-import Button from '../../components/Ui/Button';
+import Button from '../../shared/components/ui/Button';
 
 const ManageTasks = () => {
   const [allTasks, setAllTasks] = useState([]);
@@ -48,6 +47,10 @@ const ManageTasks = () => {
 
   const handleClick = (taskData) => {
     navigate(`/admin/create-task`, { state: { taskId: taskData._id } })
+  }
+
+  const handleView = (taskData) => {
+    navigate(`/admin/view-task/${taskData._id}`)
   }
 
   useEffect(() => {
@@ -103,6 +106,9 @@ const ManageTasks = () => {
                 todoChecklist={item.todoChecklist || {}}
                 onClick={() => {
                   handleClick(item);
+                }}
+                onView={() => {
+                  handleView(item)
                 }}
               />
             ))}

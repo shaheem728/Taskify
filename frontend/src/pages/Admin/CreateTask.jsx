@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import DashboardLayout from '../../components/layouts/DashboardLayout'
-import { PRIORITY_DATA } from '../../utils/data';
-import axiosInstance from '../../utils/axiosInstance';
-import { API_PATHS } from '../../utils/apiPaths';
+import DashboardLayout from '../../shared/layouts/DashboardLayout'
+import { PRIORITY_DATA } from '../../shared/utils/data';
+import axiosInstance from '../../shared/api/axiosInstance';
+import { API_PATHS } from '../../shared/api/apiPaths';
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { LuArrowLeft, LuTrash } from 'react-icons/lu';
-import SelectDropdown from '../../components/Input/SelectDropdown';
-import SelectUsers from '../../components/Input/SelectUsers';
-import TodoListInput from '../../components/Input/TodoListInput';
-import AttachmentsInput from '../../components/Input/AttachmentsInput';
-import Model from '../../components/Model';
-import DeleteAlert from '../../components/DeleteAlert';
+import SelectDropdown from '../../shared/components/input/SelectDropdown';
+import SelectUsers from '../../shared/components/input/SelectUsers';
+import TodoListInput from '../../shared/components/input/TodoListInput';
+import AttachmentsInput from '../../shared/components/input/AttachmentsInput';
+import Model from '../../shared/components/Model';
+import DeleteAlert from '../../shared/components/ui/DeleteAlert';
 const CreateTask = () => {
 
   const location = useLocation();
@@ -175,7 +175,7 @@ const CreateTask = () => {
     return () => { }
   }, [taskId])
   return (
-    <DashboardLayout activeMenu="Create Task">
+    <DashboardLayout activeMenu="Manage Tasks">
       <div className='mt-5 w-screen'>
         <div className='grid grid-cols-1 md:grid-cols-4 mt-4'>
           <div className='form-card col-span-3'>

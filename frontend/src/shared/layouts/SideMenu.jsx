@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UserContext } from '../../context/useContext'
+import { UserContext } from '../context/useContext'
 import { Building2, LogOut } from 'lucide-react';
-import { SIDE_MENU_DATA, SIDE_MENU_USER_DATA } from '../../utils/data'
-import ConfirmModal from '../Ui/ConfirmModal';
+import { SIDE_MENU_DATA, SIDE_MENU_USER_DATA } from '../utils/data'
+import ConfirmModal from '../components/ui/ConfirmModal';
 
 const SideMenu = ({ activeMenu }) => {
   const { user, clearUser } = useContext(UserContext);

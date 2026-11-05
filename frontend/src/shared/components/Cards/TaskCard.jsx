@@ -1,8 +1,9 @@
-import React from 'react'
-import Progress from '../Progress';
-import AvatarGroup from '../AvatarGroup';
+import React, { useContext } from 'react'
+import Progress from '../task/Progress';
+import AvatarGroup from '../profile/AvatarGroup';
 import { LuEye, LuPaperclip } from 'react-icons/lu';
 import moment from "moment";
+import { UserContext } from '../../context/useContext'
 const TaskCard = ({
   title,
   description,
@@ -16,7 +17,8 @@ const TaskCard = ({
   attachmentCount,
   completedTodoCount,
   todoChecklist,
-  onClick
+  onClick,
+  onView
 }) => {
   const getStatusTagColor = () => {
     switch (status) {
@@ -39,6 +41,8 @@ const TaskCard = ({
         return 'bg-rose-500 bg-rose-50 border border-rose-500/10';
     }
   }
+
+  const { user } = useContext(UserContext)
   return (
     <div className='bg-blue-50 rounded-xl py-4 shadow-md shadow-gray-100 border border-gray-200/50 w-auto '>
       <div className='flex items-end gap-3 px-4'>
@@ -103,14 +107,22 @@ const TaskCard = ({
               </div>
             )}
         </div>
-
-        <button
-          type='button'
-          className='w-full flex items-center justify-center gap-1.5 text-xs font-medium text-white bg-primary hover:bg-primary/50 rounded-lg py-2 mt-4 cursor-pointer'
-          onClick={onClick}>
-          <LuEye className='text-sm' /> View Task
-        </button>
-
+        <div className='flex items-center gap-2'>
+          {
+            user?.role === "admin" && <button
+              type='button'
+              className='w-full flex items-center justify-center gap-1.5 text-xs font-medium  text-primary border border-primary hover:bg-primary/10 rounded-lg py-2 mt-4 cursor-pointer'
+              onClick={onView}>
+              <LuEye className='text-sm' /> View Task
+            </button>
+          }
+          <button
+            type='button'
+            className='w-full flex items-center justify-center gap-1.5 text-xs font-medium text-white bg-primary hover:bg-primary/50 rounded-lg py-2 mt-4 cursor-pointer'
+            onClick={onClick}>
+            <LuEye className='text-sm' /> Update Task
+          </button>
+        </div>
       </div>
     </div>
   )

@@ -26,8 +26,8 @@ export function TodoCheckList({ items = [], onDrop }) {
 
   return (
     <DragDropProvider onDragEnd={handleDragEnd}>
-      <div className='mt-2 overflow-x-auto rounded-xl border border-slate-200 bg-white'>
-        <div className='grid min-w-[720px] grid-cols-3 divide-x divide-slate-200'>
+      <div className='mt-2  rounded-xl border border-slate-200 bg-white'>
+        <div className='lg:grid lg:min-w-[720px] grid-cols-3 divide-x divide-slate-200'>
           {STATUSES.map((status) => {
             const todos = items.filter((item) => item.status === status);
 
@@ -40,7 +40,7 @@ export function TodoCheckList({ items = [], onDrop }) {
                   </span>
                 </header>
 
-                <Droppable id={status} className='min-h-[164px] space-y-2 p-3'>
+                <Droppable id={status} className='min-h-[300px] space-y-2 p-3'>
                   {todos.length ? todos.map((item) => (
                     <Draggable key={item._id} id={item._id} data={item}>
                       <p className='text-sm font-medium text-slate-700'>{item.text}</p>

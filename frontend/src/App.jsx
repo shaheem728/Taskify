@@ -1,18 +1,18 @@
 import React, { useContext } from "react"
 import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from 'react-router-dom'
-import Home from './pages/Home/Home';
-import Dashboard from './pages/Admin/Dashboard';
-import ManageTasks from './pages/Admin/ManageTasks';
-import CreateTask from './pages/Admin/CreateTask';
-import ManageUsers from './pages/Admin/ManageUsers';
-import Reports from './pages/Admin/Reports';
-import MyTasks from "./pages/User/MyTasks";
-import PrivateRoute from './routes/PrivateRoute';
-import UserProvider, { UserContext } from './context/useContext';
+import Home from './pages/home/Home';
+import Dashboard from './pages/admin/Dashboard';
+import ManageTasks from './pages/admin/ManageTasks';
+import CreateTask from './pages/admin/CreateTask';
+import ManageUsers from './pages/admin/ManageUsers';
+import Reports from './pages/admin/Reports';
+import MyTasks from "./pages/user/MyTasks";
+import PrivateRoute from './shared/routes/PrivateRoute';
+import UserProvider, { UserContext } from './shared/context/useContext';
 import { Toaster } from "react-hot-toast";
-import UserDashboard from "./pages/User/UserDashboard";
-import ViewTaskDetail from "./pages/User/ViewTaskDetail";
-import Auth from "./pages/Auth/Auth";
+import UserDashboard from "./pages/user/UserDashboard";
+import ViewTaskDetail from "./shared/pages/ViewTaskDetail";
+import Auth from "./pages/auth/Auth";
 function App() {
   return (
     <UserProvider>
@@ -27,6 +27,7 @@ function App() {
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/tasks" element={<ManageTasks />} />
             <Route path="/admin/create-task" element={<CreateTask />} />
+            <Route path="/admin/view-task/:id" element={<ViewTaskDetail />} />
             <Route path="/admin/users" element={<ManageUsers />} />
             <Route path="/admin/reports" element={<Reports />} />
           </Route>

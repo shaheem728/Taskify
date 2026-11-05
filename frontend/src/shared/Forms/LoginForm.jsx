@@ -1,14 +1,17 @@
 import React, { useContext, useState } from 'react'
-import AuthInput from "../Input/AuthInput";
-import { validateEmail } from '../../utils/helper'
+import AuthInput from "../components/input/AuthInput";
+import { validateEmail } from '../utils/helper'
 import { useNavigate } from 'react-router-dom'
-import { UserContext } from '../../context/useContext'
+import { UserContext } from '../context/useContext'
 import { loginUser } from '../../api/AuthApi'
+
 export default function LoginForm() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState(null)
   const { updateUser, fetchUser } = useContext(UserContext)
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate()
 
   //Handle Login Form Submit
@@ -23,6 +26,7 @@ export default function LoginForm() {
       return;
     }
     setError("")
+    setIsLoading(true);
     //Login Api Call
     try {
       const response = await loginUser({
@@ -48,6 +52,8 @@ export default function LoginForm() {
       } else {
         setError("Something went wrong . please try again")
       }
+    } finally {
+      setIsLoading(false);
     }
   }
   return (
@@ -73,8 +79,8 @@ export default function LoginForm() {
       />
       {error && <p className='text-red-500 text-xs pb-2.5'>{error}</p>}
 
-      <button className="w-full rounded-xl bg-emerald-400 py-3 font-semibold text-black">
-        Sign in
+      <button disabled={isLoading} className="w-full rounded-xl bg-emerald-400 py-3 font-semibold text-black">
+        {isLoading ? 'Sign in ..' : 'Sign in'}
       </button>
       <div className="mt-2 flex items-center justify-end">
 
