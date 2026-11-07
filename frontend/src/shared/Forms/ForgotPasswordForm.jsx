@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthInput from "../Input/AuthInput";
-import { validateEmail } from "../../utils/helper";
+import AuthInput from "../components/input/AuthInput";
+import { validateEmail } from "../utils/helper";
 import { verifyEmail, verifyResetOtp, resetPassword } from "../../api/AuthApi";
+import toast from "react-hot-toast";
 
 export default function ForgotPasswordForm() {
   const [step, setStep] = useState(1);
@@ -107,7 +108,7 @@ export default function ForgotPasswordForm() {
     try {
       // Simulate API call to reset password
       await resetPassword({ email, otp, newPassword })
-      setMessage("Password reset successfully! Redirecting to login...");
+      toast.success("Password reset successfully! Redirecting to login...");
 
       // Give the user a moment to read the success message before redirecting
       setTimeout(() => {

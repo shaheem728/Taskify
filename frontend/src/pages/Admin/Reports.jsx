@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import DashboardLayout from '../../components/layouts/DashboardLayout';
-import { useUserAuth } from '../../hooks/useUserAuth';
-import axiosInstance from '../../utils/axiosInstance';
-import { API_PATHS } from '../../utils/apiPaths';
+import DashboardLayout from '../../shared/layouts/DashboardLayout';
+import { useUserAuth } from '../../shared/hooks/useUserAuth';
+import axiosInstance from '../../shared/api/axiosInstance';
+import { API_PATHS } from '../../shared/api/apiPaths';
 import toast from 'react-hot-toast';
-import Button from '../../components/Ui/Button';
+import Button from '../../shared/components/ui/Button';
 import {
     LuFileSpreadsheet,
     LuDownload,

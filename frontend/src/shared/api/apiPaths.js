@@ -16,7 +16,7 @@ export const API_PATHS = {
         GET_USER_BY_ID: (userId) => `/api/users/${userId}`,//Get user by id 
         CREAT_USER: "/api/users/create",//Create A new User (Admin only)
         UPDATE_USER: (userId) => `/api/users/${userId}`,//Update user details
-        DELETE_USER: (userId) => `/api/users/${userId}`,//Delete a user
+        DELETE_USER: `/api/users/`,//Delete a user
     },
     TASKS: {
         GET_DASHBOARD_DATA: "/api/tasks/dashboard-data",//Get Dashboard Data

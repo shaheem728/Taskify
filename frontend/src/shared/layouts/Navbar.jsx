@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { CheckCircle2 } from 'lucide-react'
 import { HiOutlineMenu, HiOutlineX } from 'react-icons/hi'
 import SideMenu from './SideMenu'
-import { UserContext } from '../../context/useContext'
+import { UserContext } from '../../shared/context/useContext'
 import { assets } from '../../assets/images/assets'
 
 const Navbar = ({ activeMenu }) => {
@@ -41,9 +41,6 @@ const Navbar = ({ activeMenu }) => {
             alt="profile"
             className='w-9 h-9 object-cover rounded-full border-2 border-primary'
           />
-          {/* <span className='hidden sm:block text-sm font-medium text-gray-800 leading-tight'>
-            {user?.user?.name || ""}
-          </span> */}
         </button>
       )}
 

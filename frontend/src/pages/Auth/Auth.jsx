@@ -1,8 +1,8 @@
-import AuthLayout from "../../components/layouts/AuthLayout";
-import AuthCard from "../../components/Cards/AuthCard";
-import LoginForm from "../../components/Forms/LoginForm";
-import RegisterForm from "../../components/Forms/RegisterForm";
-import ForgotPasswordForm from "../../components/Forms/ForgotPasswordForm";
+import AuthLayout from "../../shared/layouts/AuthLayout";
+import AuthCard from "../../shared/components/cards/AuthCard";
+import LoginForm from "../../shared/Forms/LoginForm";
+import RegisterForm from "../../shared/Forms/RegisterForm";
+import ForgotPasswordForm from "../../shared/Forms/ForgotPasswordForm";
 import { useNavigate, useParams } from "react-router-dom";
 export default function Auth() {
   const { method } = useParams();
@@ -18,15 +18,15 @@ export default function Auth() {
           mode === "login"
             ? "Welcome back"
             : mode === "register"
-            ? "Create your account"
-            : "Reset Password"
+              ? "Create your account"
+              : "Reset Password"
         }
         subtitle={
           mode === "login"
             ? "Sign in to continue to your workspace."
             : mode === "register"
-            ? "Start organizing your work in minutes."
-            : "Enter your email to receive a reset link."
+              ? "Start organizing your work in minutes."
+              : "Enter your email to receive a reset link."
         }
       >
         {mode === "login" ? (

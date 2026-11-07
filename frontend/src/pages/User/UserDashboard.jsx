@@ -1,19 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useUserAuth } from '../../hooks/useUserAuth'
-import { UserContext } from '../../context/useContext'
-import DashboardLayout from '../../components/layouts/DashboardLayout'
+import { useUserAuth } from '../../shared/hooks/useUserAuth'
+import { UserContext } from '../../shared/context/useContext'
+import DashboardLayout from '../../shared/layouts/DashboardLayout'
 import { useNavigate } from 'react-router-dom'
-import axiosInstance from '../../utils/axiosInstance'
-import { API_PATHS } from '../../utils/apiPaths'
+import axiosInstance from '../../shared/api/axiosInstance'
+import { API_PATHS } from '../../shared/api/apiPaths'
 import moment from "moment"
-import { addThousandsSeparator } from '../../utils/helper'
-import InfoCard from "../../components/Cards/InfoCard"
+import { addThousandsSeparator } from '../../shared/utils/helper'
+import InfoCard from "../../shared/components/cards/InfoCard"
 import { LuArrowRight } from 'react-icons/lu'
-import TaskLisTable from '../../components/TaskLisTable'
-import CustomPieChart from '../../components/Charts/CustomPieChart'
-import CustomBarChart from '../../components/Charts/CustomBarChart'
-import Loading from '../../components/Loading'
-import EmptyState from '../../components/Ui/EmptyState';
+import TaskLisTable from '../../shared/components/task/TaskLisTable'
+import CustomPieChart from '../../shared/components/charts/CustomPieChart'
+import CustomBarChart from '../../shared/components/charts/CustomBarChart'
+import Loading from '../../shared/components/ui/Loading'
+import EmptyState from '../../shared/components/ui/EmptyState';
 import { Building2, UserCheck, Sparkles, Calendar } from 'lucide-react';
 
 const COLORS = ["#8D51FF", "#00B8DB", "#7BCE00"]
@@ -74,125 +74,120 @@ const UserDashboard = () => {
   }, []);
   return (
     <DashboardLayout activeMenu="Dashboard">
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <div className='card my-5'>
-            <div className='relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white p-6 shadow-md'>
-              <div className='absolute -right-8 -bottom-10 opacity-10 pointer-events-none'>
-                <Building2 size={160} />
+      <div className='card my-5'>
+        <div className='relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white p-6 shadow-md'>
+          <div className='absolute -right-8 -bottom-10 opacity-10 pointer-events-none'>
+            <Building2 size={160} />
+          </div>
+          <div className='relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4'>
+            <div>
+              <div className='inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm text-xs font-medium text-emerald-100 mb-2.5 border border-white/10'>
+                <UserCheck size={14} className='text-emerald-300' />
+                <span>Member Workspace</span>
               </div>
-              <div className='relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4'>
-                <div>
-                  <div className='inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm text-xs font-medium text-emerald-100 mb-2.5 border border-white/10'>
-                    <UserCheck size={14} className='text-emerald-300' />
-                    <span>Member Workspace</span>
-                  </div>
-                  <h2 className='text-2xl md:text-3xl font-bold tracking-tight text-white flex items-center gap-2'>
-                    Welcome to {user?.organization?.orgname || 'your Organization'}
-                    <Sparkles size={22} className='text-amber-300 shrink-0' />
-                  </h2>
-                  <p className='text-sm md:text-base text-emerald-50/90 mt-1 max-w-xl leading-relaxed'>
-                    You are viewing your workspace for <span className='font-semibold text-white'>{user?.organization?.orgname}</span> as a Member. Stay on top of your tasks, update progress, and collaborate seamlessly.
-                  </p>
-                </div>
-                <div className='self-start md:self-auto shrink-0 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black/15 backdrop-blur-sm border border-white/10 text-xs font-medium text-emerald-100'>
-                  <Calendar size={14} />
-                  <span>{moment().format("dddd, Do MMMM YYYY")}</span>
-                </div>
-              </div>
+              <h2 className='text-2xl md:text-3xl font-bold tracking-tight text-white flex items-center gap-2'>
+                Welcome to {user?.organization?.orgname || 'your Organization'}
+                <Sparkles size={22} className='text-amber-300 shrink-0' />
+              </h2>
+              <p className='text-sm md:text-base text-emerald-50/90 mt-1 max-w-xl leading-relaxed'>
+                You are viewing your workspace for <span className='font-semibold text-white'>{user?.organization?.orgname}</span> as a Member. Stay on top of your tasks, update progress, and collaborate seamlessly.
+              </p>
             </div>
-
-            <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mt-5'>
-              <InfoCard
-                label="Total Tasks"
-                value={addThousandsSeparator(dashboardData?.charts?.taskDistribution?.All || 0)}
-                color="bg-primary"
-              />
-              <InfoCard
-                label="Pending Tasks"
-                value={addThousandsSeparator(dashboardData?.charts?.taskDistribution?.Pending || 0)}
-                color="bg-violet-500"
-              />
-              <InfoCard
-                label="In Progress Tasks"
-                value={addThousandsSeparator(dashboardData?.charts?.taskDistribution?.InProgress || 0)}
-                color="bg-cyan-500"
-              />
-              <InfoCard
-                label="Completed Tasks"
-                value={addThousandsSeparator(dashboardData?.charts?.taskDistribution?.Completed || 0)}
-                color="bg-lime-500"
-              />
+            <div className='self-start md:self-auto shrink-0 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black/15 backdrop-blur-sm border border-white/10 text-xs font-medium text-emerald-100'>
+              <Calendar size={14} />
+              <span>{moment().format("dddd, Do MMMM YYYY")}</span>
             </div>
           </div>
+        </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-6 my-4 md:my-6'>
+        <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mt-5'>
+          <InfoCard
+            label="Total Tasks"
+            value={addThousandsSeparator(dashboardData?.charts?.taskDistribution?.All || 0)}
+            color="bg-primary"
+          />
+          <InfoCard
+            label="Pending Tasks"
+            value={addThousandsSeparator(dashboardData?.charts?.taskDistribution?.Pending || 0)}
+            color="bg-violet-500"
+          />
+          <InfoCard
+            label="In Progress Tasks"
+            value={addThousandsSeparator(dashboardData?.charts?.taskDistribution?.InProgress || 0)}
+            color="bg-cyan-500"
+          />
+          <InfoCard
+            label="Completed Tasks"
+            value={addThousandsSeparator(dashboardData?.charts?.taskDistribution?.Completed || 0)}
+            color="bg-lime-500"
+          />
+        </div>
+      </div>
 
-            <div>
-              <div className='card'>
-                <div className='flex items-center justify-between'>
-                  <h5 className='font-medium'>Task Distribution</h5>
-                </div>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-6 my-4 md:my-6'>
 
-                {hasDistributionData ? (
-                  <CustomPieChart
-                    data={pieChartData}
-                    colors={COLORS} />
-                ) : (
-                  <EmptyState
-                    title="No task distribution found"
-                    message="Assigned tasks will appear here by status."
-                  />
-                )}
-
-              </div>
+        <div>
+          <div className='card'>
+            <div className='flex items-center justify-between'>
+              <h5 className='font-medium'>Task Distribution</h5>
             </div>
 
-            <div>
-              <div className='card'>
-                <div className='flex items-center justify-between'>
-                  <h5 className='font-medium'>Task Priority Levels</h5>
-                </div>
+            {isLoading ? <Loading /> : hasDistributionData ? (
+              <CustomPieChart
+                data={pieChartData}
+                colors={COLORS} />
+            ) : (
+              <EmptyState
+                title="No task distribution found"
+                message="Assigned tasks will appear here by status."
+              />
+            )}
 
-                {hasPriorityData ? (
-                  <CustomBarChart
-                    data={barChartData}
-                    colors={COLORS} />
-                ) : (
-                  <EmptyState
-                    title="No task priority data found"
-                    message="Assigned tasks will appear here by priority."
-                  />
-                )}
-
-              </div>
-            </div>
-
-            <div className='md:col-span-2'>
-              <div className='card'>
-                <div className='flex items-center justify-between'>
-                  <h5 className='text-lg'>Recent Tasks</h5>
-
-                  <button className='card-btn' onClick={onSeeMore}>
-                    See All<LuArrowRight className='text-base' />
-                  </button>
-                </div>
-
-                {recentTasks.length > 0 ? (
-                  <TaskLisTable tableData={recentTasks} />
-                ) : (
-                  <EmptyState
-                    title="No recent tasks found"
-                    message="Your recently assigned tasks will appear here."
-                  />
-                )}
-              </div>
-            </div>
           </div>
-        </>
-      )}
+        </div>
+
+        <div>
+          <div className='card'>
+            <div className='flex items-center justify-between'>
+              <h5 className='font-medium'>Task Priority Levels</h5>
+            </div>
+
+            {isLoading ? <Loading /> : hasPriorityData ? (
+              <CustomBarChart
+                data={barChartData}
+                colors={COLORS} />
+            ) : (
+              <EmptyState
+                title="No task priority data found"
+                message="Assigned tasks will appear here by priority."
+              />
+            )}
+
+          </div>
+        </div>
+
+        <div className='md:col-span-2'>
+          <div className='card'>
+            <div className='flex items-center justify-between'>
+              <h5 className='text-lg'>Recent Tasks</h5>
+
+              <button className='card-btn' onClick={onSeeMore}>
+                See All<LuArrowRight className='text-base' />
+              </button>
+            </div>
+
+            {isLoading ? <Loading /> : recentTasks.length > 0 ? (
+              <TaskLisTable tableData={recentTasks} />
+            ) : (
+              <EmptyState
+                title="No recent tasks found"
+                message="Your recently assigned tasks will appear here."
+              />
+            )}
+          </div>
+        </div>
+      </div>
+
     </DashboardLayout>
   )
 }
