@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const todoSchema = new mongoose.Schema({
     text: { type: String, required: true },
     status: { type: String, enum: ['Pending', 'In Progress', 'Completed'], default: 'Pending' },
-    updateBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", default: null }
 })
 
 const taskSchema = new mongoose.Schema({
@@ -14,6 +13,7 @@ const taskSchema = new mongoose.Schema({
     dueDate: { type: Date, required: true },
     assignedTo: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    organizationId: { type: mongoose.Types.ObjectId, ref: "Organization" },
     attachments: [{ type: String }],
     todoChecklist: [todoSchema],
     progress: { type: Number, default: 0 }

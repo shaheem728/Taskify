@@ -17,7 +17,6 @@ const ViewTaskDetail = () => {
   const [task, setTask] = useState(null);
   const { user } = useContext(UserContext)
   const navigate = useNavigate();
-  console.log("user=", user)
   const getStatusTagColor = (status) => {
     switch (status) {
       case 'In Progress':
@@ -45,7 +44,11 @@ const ViewTaskDetail = () => {
   //handle todo check
   const updateTodoStatus = async (todoId, status) => {
     const todoChecklist = task.todoChecklist.map((item) =>
+<<<<<<< HEAD
       item._id === todoId ? { ...item, status, updateBy: user.user } : item
+=======
+      item._id === todoId ? { ...item, status } : item
+>>>>>>> feature
     );
     const previousTask = task;
 

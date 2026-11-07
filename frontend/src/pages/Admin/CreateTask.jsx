@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import DashboardLayout from '../../components/layouts/DashboardLayout'
-import { PRIORITY_DATA } from '../../utils/data';
-import axiosInstance from '../../utils/axiosInstance';
-import { API_PATHS } from '../../utils/apiPaths';
+import DashboardLayout from '../../shared/layouts/DashboardLayout'
+import { PRIORITY_DATA } from '../../shared/utils/data';
+import axiosInstance from '../../shared/api/axiosInstance';
+import { API_PATHS } from '../../shared/api/apiPaths';
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from 'react-router-dom';
 import moment from 'moment';
-import { LuTrash } from 'react-icons/lu';
-import SelectDropdown from '../../components/Input/SelectDropdown';
-import SelectUsers from '../../components/Input/SelectUsers';
-import TodoListInput from '../../components/Input/TodoListInput';
-import AttachmentsInput from '../../components/Input/AttachmentsInput';
-import Model from '../../components/Model';
-import DeleteAlert from '../../components/DeleteAlert';
+import { LuArrowLeft, LuTrash } from 'react-icons/lu';
+import SelectDropdown from '../../shared/components/input/SelectDropdown';
+import SelectUsers from '../../shared/components/input/SelectUsers';
+import TodoListInput from '../../shared/components/input/TodoListInput';
+import AttachmentsInput from '../../shared/components/input/AttachmentsInput';
+import Model from '../../shared/components/Model';
+import DeleteAlert from '../../shared/components/ui/DeleteAlert';
 const CreateTask = () => {
 
   const location = useLocation();
@@ -54,7 +54,7 @@ const CreateTask = () => {
     setLoading(true)
     try {
       const todolist = taskData.todoChecklist?.map((item) => ({
-        text: item.text,
+        text: item,
         status: "Pending",
       }));
       const response = await axiosInstance.post(API_PATHS.TASKS.CREATE_TASK, {
@@ -67,7 +67,6 @@ const CreateTask = () => {
       navigate(-1)
     } catch (error) {
       console.error("Error creating task", error)
-      toast.error(error.response?.data?.message || "Failed creating task")
       setLoading(false)
     } finally {
       setLoading(false)
@@ -82,7 +81,7 @@ const CreateTask = () => {
         const matchedTask = prevTodoChecklist.find((task) => task.text == item);
 
         return {
-          text: item.text,
+          text: item,
           status: matchedTask?.status || "Pending",
         };
       })
@@ -95,7 +94,6 @@ const CreateTask = () => {
       navigate(-1)
     } catch (error) {
       console.error("Error updating task", error)
-      toast.error(error.response?.data?.message || "Failed updating task")
       setLoading(false)
     } finally {
       setLoading(false)
@@ -148,7 +146,7 @@ const CreateTask = () => {
           priority: taskInfo.priority,
           dueDate: taskInfo.dueDate ? moment(taskInfo.dueDate).format("YYYY-MM-DD") : null,
           assignedTo: taskInfo?.assignedTo?.map((item) => item?._id) || [],
-          todoChecklist: taskInfo?.todoChecklist?.map((item) => item) || [],
+          todoChecklist: taskInfo?.todoChecklist?.map((item) => item?.text) || [],
           attachments: taskInfo?.attachments
             ?.map((item) => typeof item === 'string' ? item : item?.text)
             .filter(Boolean) || [],
@@ -163,10 +161,11 @@ const CreateTask = () => {
     try {
       await axiosInstance.delete(API_PATHS.TASKS.DELETE_TASK(taskId));
       setOpenDeleteAlert(false);
-      toast.success("Expense details deleted successfully");
+      toast.success("Task deleted successfully");
       navigate('/admin/tasks')
     } catch (error) {
-      console.log("Error deleting expense:", error.response?.data?.message || error.message);
+      toast.error(error.response?.data?.message || "Error deleting Task")
+      console.log("Error deleting Task:", error.response?.data?.message || error.message);
     }
   };
 
@@ -177,26 +176,34 @@ const CreateTask = () => {
     return () => { }
   }, [taskId])
   return (
-    <DashboardLayout activeMenu="Create Task">
+    <DashboardLayout activeMenu="Manage Tasks">
       <div className='mt-5 w-screen'>
         <div className='grid grid-cols-1 md:grid-cols-4 mt-4'>
           <div className='form-card col-span-3'>
             <div className='flex items-center justify-between'>
+
               <h2 className='text-xl md:text-xl font-medium'>
                 {taskId ? "Update Task" : "Create Task"}
               </h2>
-              {
-                taskId && (
+              {taskId && (
+                <div className='flex items-center gap-2'>
                   <button
+                    type='button'
+                    className='flex items-center gap-1.5 text-[13px] font-medium text-slate-600 bg-slate-50 rounded px-2 py-1 border border-slate-200 cursor-pointer'
+                    onClick={() => navigate('/admin/tasks')}>
+                    <LuArrowLeft className='text-base' /> Back
+                  </button>
+                  <button
+                    type='button'
                     className='flex items-center gap-1.5 text-[13px] font-medium text-rose-500 bg-rose-50 rounded px-2 py-1 border border-rose-100 md:border-rose-300 cursor-pointer'
                     onClick={() => setOpenDeleteAlert(true)}>
                     <LuTrash className='text-base' />Delete
                   </button>
-                )
-              }
+                </div>
+              )}
             </div>
 
-            <div className='mt-4'>
+            <div className='mt-4 '>
               <label className='text-xs font-medium text-slate-600'>Task Title</label>
               <input
                 placeholder='Create App UI'
@@ -216,8 +223,8 @@ const CreateTask = () => {
                 onChange={({ target }) => handleValueChange("description", target.value)} />
             </div>
 
-            <div className='grid grid-cols-12 gap-4 mt-2'>
-              <div className='col-span-6 md:col-span-4'>
+            <div className='grid grid-cols-12 gap-4 mt-2 '>
+              <div className='col-span-6 md:col-span-4 bg-blue-50 rounded p-2'>
                 <label className='text-xs font-medium text-slate-600'>Priority</label>
                 <SelectDropdown
                   options={PRIORITY_DATA}
@@ -227,7 +234,7 @@ const CreateTask = () => {
                 />
               </div>
 
-              <div className='col-span-6  md:col-span-4'>
+              <div className='col-span-6  md:col-span-4 bg-blue-50 rounded p-2'>
                 <label className='text-xs font-medium text-slate-600'>Due Data</label>
                 <input
                   placeholder='Create App UI'
@@ -238,7 +245,7 @@ const CreateTask = () => {
                 />
               </div>
 
-              <div className='col-span-12 md:col-span-3'>
+              <div className='col-span-12 md:col-span-3 bg-blue-50 rounded p-2'>
                 <label className='text-xs font-medium text-slate-600'>Assign To</label>
                 <SelectUsers
                   selectedUsers={taskData.assignedTo}
@@ -272,7 +279,14 @@ const CreateTask = () => {
                 <p className='text-xs font-medium text-red-500 mt-5'>{error}</p>
               )
             }
-            <div className='flex justify-end mt-7'>
+            <div className='flex justify-end mt-7 gap-2'>
+              <button
+                className='cancel-btn'
+                onClick={() => navigate(-1)}
+                disabled={loading}
+              >
+                CANCEL
+              </button>
               <button
                 className='add-btn'
                 onClick={handleSubmit}
