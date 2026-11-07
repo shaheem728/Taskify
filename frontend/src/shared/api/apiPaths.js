@@ -16,7 +16,7 @@ export const API_PATHS = {
         GET_USER_BY_ID: (userId) => `/api/users/${userId}`,//Get user by id 
         CREAT_USER: "/api/users/create",//Create A new User (Admin only)
         UPDATE_USER: (userId) => `/api/users/${userId}`,//Update user details
-        DELETE_USER: (userId) => `/api/users/${userId}`,//Delete a user
+        DELETE_USER: `/api/users/`,//Delete a user
     },
     TASKS: {
         GET_DASHBOARD_DATA: "/api/tasks/dashboard-data",//Get Dashboard Data
@@ -25,12 +25,8 @@ export const API_PATHS = {
         GET_TASK_BY_ID: (taskId) => `/api/tasks/${taskId}`, //Get task By Id
         CREATE_TASK: "/api/tasks",//Create a new task(Admin only)
         UPDATE_TASK: (taskId) => `/api/tasks/${taskId}`,//Update task Detail
-<<<<<<< HEAD
         DELETE_TASK: `/api/tasks/`,//Delete a task (Admin only)
 
-=======
-        DELETE_TASK: (taskId) => `/api/tasks/${taskId}`,//Delete a task (Admin only)
->>>>>>> dc00c375c5f0cd15f425a9cfe0ccf62dfba27664
         // UPDATE_TASK_STATUS: (taskId) => `/api/tasks/${taskId}/status`,//Update Task_Status
         UPDATE_TODO_CHECKLIST: (taskId) => `/api/tasks/${taskId}/todo`,//update todo checklist
     },
