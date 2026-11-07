@@ -26,12 +26,7 @@ export const API_PATHS = {
         CREATE_TASK: "/api/tasks",//Create a new task(Admin only)
         UPDATE_TASK: (taskId) => `/api/tasks/${taskId}`,//Update task Detail
         DELETE_TASK: (taskId) => `/api/tasks/${taskId}`,//Delete a task (Admin only)
-
-<<<<<<< HEAD
         // UPDATE_TASK_STATUS: (taskId) => `/api/tasks/${taskId}/status`,//Update Task_Status
-=======
-        UPDATE_TASK_STATUS: (taskId) => `/api/tasks/${taskId}/status`,//Update Task_Status
->>>>>>> feature
         UPDATE_TODO_CHECKLIST: (taskId) => `/api/tasks/${taskId}/todo`,//update todo checklist
     },
     REPORT: {

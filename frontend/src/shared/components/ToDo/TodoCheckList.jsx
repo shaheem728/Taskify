@@ -40,20 +40,6 @@ export function TodoCheckList({ items = [], onDrop }) {
                   </span>
                 </header>
 
-<<<<<<< HEAD
-                {/* <Droppable id={status} className='min-h-[300px] space-y-2 p-3'>
-=======
-                <Droppable id={status} className='min-h-[300px] space-y-2 p-3'>
->>>>>>> feature
-                  {todos.length ? todos.map((item) => (
-                    <Draggable key={item._id} id={item._id} data={item}>
-                      <p className='text-sm font-medium text-slate-700'>{item.text}</p>
-                    </Draggable>
-                  )) : (
-                    <p className='py-8 text-center text-xs text-slate-400'>Drop items here</p>
-                  )}
-<<<<<<< HEAD
-                </Droppable> */}
                 <Droppable id={status} className="min-h-[300px] space-y-2 p-3">
                   {todos.length ? (
                     todos.map((item) => (
@@ -108,8 +94,6 @@ export function TodoCheckList({ items = [], onDrop }) {
                       Drop items here
                     </p>
                   )}
-=======
->>>>>>> feature
                 </Droppable>
               </section>
             );

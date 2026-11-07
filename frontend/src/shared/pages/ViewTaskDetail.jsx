@@ -44,11 +44,7 @@ const ViewTaskDetail = () => {
   //handle todo check
   const updateTodoStatus = async (todoId, status) => {
     const todoChecklist = task.todoChecklist.map((item) =>
-<<<<<<< HEAD
-      item._id === todoId ? { ...item, status, updateBy: user.user } : item
-=======
       item._id === todoId ? { ...item, status } : item
->>>>>>> feature
     );
     const previousTask = task;
 
