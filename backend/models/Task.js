@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const todoSchema = new mongoose.Schema({
     text: { type: String, required: true },
     status: { type: String, enum: ['Pending', 'In Progress', 'Completed'], default: 'Pending' },
+    updateBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
 })
 
 const taskSchema = new mongoose.Schema({

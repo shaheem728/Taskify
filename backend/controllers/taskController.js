@@ -70,9 +70,10 @@ const getTasks = async (req, res) => {
 //@access Private
 const getTaskById = async (req, res) => {
     try {
-        const task = await Task.findOne({ _id: req.params.id, organizationId: req.user.organizationId }).populate(
-            "assignedTo",
-            "name email profileImageUrl")
+        const task = await Task.findOne({ _id: req.params.id, organizationId: req.user.organizationId })
+            .populate("assignedTo", "name email profileImageUrl")
+            .populate("todoChecklist.updateBy", "name email role")
+
         if (!task) {
             return res.status(404).json({ message: 'Task not found' });
         }
@@ -396,10 +397,9 @@ const updateTaskChecklist = async (req, res) => {
             task.status = "Pending";
         }
         await task.save();
-        const updateTask = await Task.findById(req.params.id).populate(
-            "assignedTo",
-            "name email profileImageUrl"
-        )
+        const updateTask = await Task.findById(req.params.id)
+            .populate("assignedTo", "name email profileImageUrl")
+            .populate("todoChecklist.updateBy", "name email role")
         res.json({ message: 'Task checklist updated successfully', task: updateTask });
     } catch (error) {
         return res.status(500).json({ message: 'Server Error', error: error.message });

@@ -54,7 +54,7 @@ const CreateTask = () => {
     setLoading(true)
     try {
       const todolist = taskData.todoChecklist?.map((item) => ({
-        text: item,
+        text: item.text,
         status: "Pending",
       }));
       const response = await axiosInstance.post(API_PATHS.TASKS.CREATE_TASK, {
@@ -78,10 +78,10 @@ const CreateTask = () => {
     try {
       const todolist = taskData.todoChecklist?.map((item) => {
         const prevTodoChecklist = currentTask?.todoChecklist || [];
-        const matchedTask = prevTodoChecklist.find((task) => task.text == item);
+        const matchedTask = prevTodoChecklist.find((task) => task.text == item.text);
 
         return {
-          text: item,
+          text: item.text,
           status: matchedTask?.status || "Pending",
         };
       })
@@ -146,7 +146,7 @@ const CreateTask = () => {
           priority: taskInfo.priority,
           dueDate: taskInfo.dueDate ? moment(taskInfo.dueDate).format("YYYY-MM-DD") : null,
           assignedTo: taskInfo?.assignedTo?.map((item) => item?._id) || [],
-          todoChecklist: taskInfo?.todoChecklist?.map((item) => item?.text) || [],
+          todoChecklist: taskInfo?.todoChecklist?.map((item) => item) || [],
           attachments: taskInfo?.attachments
             ?.map((item) => typeof item === 'string' ? item : item?.text)
             .filter(Boolean) || [],
@@ -161,10 +161,11 @@ const CreateTask = () => {
     try {
       await axiosInstance.delete(API_PATHS.TASKS.DELETE_TASK(taskId));
       setOpenDeleteAlert(false);
-      toast.success("Expense details deleted successfully");
+      toast.success("Task deleted successfully");
       navigate('/admin/tasks')
     } catch (error) {
-      console.log("Error deleting expense:", error.response?.data?.message || error.message);
+      toast.error(error.response?.data?.message || "Error deleting Task")
+      console.log("Error deleting Task:", error.response?.data?.message || error.message);
     }
   };
 

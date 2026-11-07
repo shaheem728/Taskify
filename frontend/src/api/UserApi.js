@@ -6,3 +6,7 @@ export const createUser = (userData) => {
   return axiosInstance.post(API_PATHS.USER.CREAT_USER, userData)
 }
 
+// Delete a user (Admin only)
+export const deleteUser = (userId) => {
+  return axiosInstance.delete(`${API_PATHS.USER.DELETE_USER}${userId}`)
+}
