@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState } from 'react'
 import DashboardLayout from '../../shared/layouts/DashboardLayout'
 import axiosInstance from '../../shared/api/axiosInstance';
 import { API_PATHS } from '../../shared/api/apiPaths';
+import UserCard from '../../shared/components/cards/UserCard';
 import EmptyState from '../../shared/components/ui/EmptyState';
 import toast from 'react-hot-toast';
 import Loading from '../../shared/components/ui/Loading';
@@ -167,25 +168,17 @@ const ManageUsers = () => {
 
           {isLoading ? (
             <Loading />
-          ) : filteredUsers.length > 0 ? (
-            <div className="mt-4 lg:mx-10">
-              <UserTable
-                users={filteredUsers}
-                onDelete={(user) => {
-                  setSelectedUser(user);
-                  setIsDeleteOpen(true);
-                }}
-              />
+          ) : allUsers.length > 0 ? (
+            <div className='flex flex-wrap gap-4 mt-4'>
+              {allUsers.map((user) => (
+                <UserCard key={user._id} userInfo={user} />
+              ))}
             </div>
           ) : (
             <EmptyState
-              className="mt-4 h-[75vh] mx-10"
-              title="No team members found"
-              message={
-                hasActiveFilters
-                  ? "No members match your filters. Try clearing them."
-                  : "Users will appear here once they are added."
-              }
+              className='mt-4 h-[75vh]'
+              title='No team members found'
+              message='Users will appear here once they are added.'
             />
           )}
         </div>
@@ -234,20 +227,6 @@ const ManageUsers = () => {
           </div>
         </form>
       </Modal>
-
-      <ConfirmModal
-        isOpen={isDeleteOpen}
-        onClose={() => setIsDeleteOpen(false)}
-        isLoading={isLoading}
-        title="Delete Team Member"
-        message="Are you sure you want to delete this team member? This action cannot be undone."
-        cancelText="Cancel"
-        confirmText="Delete"
-        maxWidth="xl"
-        confirmButtonVariant="danger"
-        confirmIcon={<Trash size={18} />}
-        onConfirm={handleDelete}
-      />
     </>
   )
 }
