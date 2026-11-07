@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import Progress from '../task/Progress';
 import AvatarGroup from '../profile/AvatarGroup';
 import { LuEye, LuPaperclip } from 'react-icons/lu';
+import { SquarePen } from 'lucide-react';
 import moment from "moment";
 import { UserContext } from '../../context/useContext'
 const TaskCard = ({
@@ -120,7 +121,7 @@ const TaskCard = ({
             type='button'
             className='w-full flex items-center justify-center gap-1.5 text-xs font-medium text-white bg-primary hover:bg-primary/50 rounded-lg py-2 mt-4 cursor-pointer'
             onClick={onClick}>
-            <LuEye className='text-sm' /> Update Task
+            <SquarePen size={15} /> Update Task
           </button>
         </div>
       </div>
