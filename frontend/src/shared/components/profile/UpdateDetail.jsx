@@ -1,0 +1,91 @@
+import React, { useContext, useState } from 'react'
+import ProfilePhotoSelector from '@/shared/components/select/ProfilePhotoSelector'
+import Input from '@/shared/components/input/Input'
+import axiosInstance from '@/shared/api/axios'
+import { UserContext } from '@/shared/context/useContext'
+import uploadImage from '@/shared/utils/uploadimage'
+import { IoClose } from "react-icons/io5";
+import toast from 'react-hot-toast'
+
+const UpdateDetail = () => {
+  const [error, setError] = useState(null)
+  const { user, updateUser, setEditing, fetchUser } = useContext(UserContext)
+  const [fullName] = useState(user?.user?.name || null);
+  const [email] = useState(user?.user?.email || null);
+  const [profilePic, setProfilePic] = useState(user?.user?.profileImageUrl || null);
+  //Close the panel
+  const closePanel = () => {
+    setEditing(false)
+    setError(null)
+  }
+  //Handle SignUp Form Submit
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    let profileImageUrl = user?.profileImageUrl || ""
+    try {
+      //Upload Image if present
+      if (profilePic != user?.profileImageUrl && profilePic != null) {
+        const imgUploadRes = await uploadImage(profilePic);
+        profileImageUrl = imgUploadRes.imageUrl || ''
+      } else if (profilePic == null) {
+        profileImageUrl = "/uploads/default-avatar.png"
+      }
+      const response = await axiosInstance.patch(`/api/auth/profile`, {
+        email,
+        profileImageUrl
+      })
+      const { token } = response.data;
+      if (token) {
+        localStorage.setItem("token", token);
+        updateUser(response.data)
+        setEditing(false)
+        fetchUser()
+      }
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message)
+      } else {
+        setError("Something went wrong . please try again")
+      }
+    }
+  }
+  return (
+    <div className='fixed bg-black/50 min-h-screen z-30 w-screen  flex flex-col  justify-center items-center top-0 left-0 '>
+      <div className='relative flex flex-col bg-white justify-center items-center p-4 rounded-2xl'>
+        <div className='absolute top-2 right-2 cursor-pointer'>
+          <IoClose className='text-primary' onClick={() => closePanel()} size={20} />
+        </div>
+        <h3 className='font-semibold text-xl text-black mb-3'>Profile</h3>
+        <form onSubmit={handleSubmit}>
+          <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+            <Input
+              value={fullName}
+              readOnly={true}
+              label="Full Name"
+              placeholder='Name'
+              type="text"
+              className="cursor-not-allowed"
+            />
+            <Input
+              readOnly={true}
+              value={email}
+              label="Email Address"
+              placeholder='Email Address'
+              type="text"
+              className="cursor-not-allowed"
+            />
+          </div>
+          {error && <p className='text-red-500 text-xs pb-2.5'>{error}</p>}
+          <button type='submit' className='btn-primary'>Submit</button>
+
+        </form>
+      </div>
+    </div>
+  )
+}
+
+export default UpdateDetail
+
+

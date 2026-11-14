@@ -1,0 +1,46 @@
+import { createContext, useState, useEffect } from "react";
+import axiosInstance from "@/shared/api/axios";
+
+export const UserContext = createContext();
+
+const UserProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);//New state to track loading
+    const [edit, setEditing] = useState(false)
+    const fetchUser = async () => {
+        try {
+            const response = await axiosInstance.get(`/api/auth/profile`);
+            setUser(response.data);
+        } catch (error) {
+            console.error("User not authenticated", error);
+            clearUser();
+        } finally {
+            setLoading(false);
+        }
+    }
+    useEffect(() => {
+        if (user) return;
+        const accessToken = localStorage.getItem('token');
+        if (!accessToken) {
+            setLoading(false);
+            return;
+        }
+        fetchUser();
+    }, [])
+    const updateUser = (userData) => {
+        setUser(userData);
+        localStorage.setItem("token", userData.token);//Save token
+        setLoading(false)
+    };
+    const clearUser = () => {
+        setUser(null)
+        localStorage.removeItem("token");
+    };
+    return (
+        <UserContext.Provider value={{ user, loading, updateUser, clearUser, edit, setEditing, fetchUser }}>
+            {children}
+        </UserContext.Provider>
+    )
+}
+
+export default UserProvider
