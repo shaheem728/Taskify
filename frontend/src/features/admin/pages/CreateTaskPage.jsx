@@ -4,10 +4,10 @@ import { Trash } from 'lucide-react';
 import DashboardLayout from '@/shared/layouts/DashboardLayout';
 import { PRIORITY_DATA } from '@/shared/utils/data';
 import { LuArrowLeft, LuTrash } from 'react-icons/lu';
-import SelectDropdown from '@/shared/components/select/SelectDropdown';
-import SelectUsers from '@/shared/components/select/SelectUsers';
-import TodoListInput from '@/shared/components/input/TodoListInput';
-import AttachmentsInput from '@/shared/components/input/AttachmentsInput';
+import SelectDropdown from '@/shared/components/form/select/SelectDropdown';
+import SelectUsers from '@/shared/components/form/select/SelectUsers';
+import TodoListInput from '@/shared/components/form/input/TodoListInput';
+import AttachmentsInput from '@/shared/components/form/input/AttachmentsInput';
 import ConfirmModal from '@/shared/components/ui/ConfirmModal';
 import useTaskForm from '@/features/admin/hooks/useTaskForm';
 import Loading from '@/shared/components/ui/Loading';
@@ -60,8 +60,8 @@ const CreateTaskPage = () => {
               )}
             </div>
 
-            <div className='mt-4'>
-              <label className='text-xs font-medium text-slate-600'>Task Title</label>
+            <div className='mt-4 flex items-center'>
+              <label className='text-sm w-30 font-medium text-slate-600'>Task Title</label>
               <input
                 placeholder='Create App UI'
                 className='form-input'
@@ -70,8 +70,8 @@ const CreateTaskPage = () => {
               />
             </div>
 
-            <div className='mt-3'>
-              <label>Description</label>
+            <div className='mt-3 flex items-center'>
+              <label className='text-sm w-30 font-medium text-slate-600'>Description</label>
               <textarea
                 placeholder='Describe Task'
                 className='form-input'
@@ -81,9 +81,9 @@ const CreateTaskPage = () => {
               />
             </div>
 
-            <div className='grid grid-cols-12 gap-4 mt-2'>
-              <div className='col-span-6 md:col-span-4 bg-blue-50 rounded p-2'>
-                <label className='text-xs font-medium text-slate-600'>Priority</label>
+            <div className='mt-4 flex items-center'>
+              <label className='text-sm w-28 font-medium text-slate-600'>Priority</label>
+              <div className='w-35'>
                 <SelectDropdown
                   options={PRIORITY_DATA}
                   value={taskData.priority}
@@ -91,40 +91,45 @@ const CreateTaskPage = () => {
                   placeholder='Select Priorty'
                 />
               </div>
-
-              <div className='col-span-6 md:col-span-4 bg-blue-50 rounded p-2'>
-                <label className='text-xs font-medium text-slate-600'>Due Data</label>
-                <input
-                  className='form-input'
-                  value={taskData.dueDate || ''}
-                  onChange={({ target }) => handleValueChange('dueDate', target.value)}
-                  type='date'
-                />
-              </div>
-
-              <div className='col-span-12 md:col-span-3 bg-blue-50 rounded p-2'>
-                <label className='text-xs font-medium text-slate-600'>Assign To</label>
-                <SelectUsers
-                  selectedUsers={taskData.assignedTo}
-                  setSelectedUsers={(value) => handleValueChange('assignedTo', value)}
-                />
-              </div>
             </div>
 
-            <div className='mt-3'>
-              <label className='text-xs font-medium text-slate-600'>ToDo Checklist</label>
-              <TodoListInput
-                todoList={taskData.todoChecklist}
-                setTodoList={(value) => handleValueChange('todoChecklist', value)}
+            <div className='mt-4 flex items-center'>
+              <label className='text-sm w-28 font-medium text-slate-600'>Due Data</label>
+              <input
+                className='form-input w-35!'
+                value={taskData.dueDate || ''}
+                onChange={({ target }) => handleValueChange('dueDate', target.value)}
+                type='date'
               />
             </div>
 
-            <div className='mt-3'>
-              <label className='text-xs font-medium text-slate-600'>Add Attachments</label>
-              <AttachmentsInput
-                attachments={taskData.attachments}
-                setAttachments={(value) => handleValueChange('attachments', value)}
+            <div className='mt-4 flex '>
+              <label className='text-sm w-28 font-medium text-slate-600'>Assign To</label>
+              <SelectUsers
+                selectedUsers={taskData.assignedTo}
+                setSelectedUsers={(value) => handleValueChange('assignedTo', value)}
               />
+            </div>
+
+            <div className='mt-4 flex items-center'>
+              <label className='text-sm w-32 font-medium text-slate-600'>ToDo Checklist</label>
+              <div className='w-full'>
+                <TodoListInput
+                  todoList={taskData.todoChecklist}
+                  setTodoList={(value) => handleValueChange('todoChecklist', value)}
+                />
+              </div>
+
+            </div>
+
+            <div className='mt-4 flex items-center'>
+              <label className='text-sm w-32  font-medium text-slate-600 mt-2'>Add Attachments (optional) </label>
+              <div className='w-full'>
+                <AttachmentsInput
+                  attachments={taskData.attachments}
+                  setAttachments={(value) => handleValueChange('attachments', value)}
+                />
+              </div>
             </div>
 
             {error && (

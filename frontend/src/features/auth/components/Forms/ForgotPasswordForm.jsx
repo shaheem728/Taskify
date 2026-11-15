@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthInput from "@/shared/components/Input/AuthInput";
+import AuthInput from "@/shared/components/form/input/AuthInput";
 import { validateEmail } from "@/shared/utils/helper";
 import { verifyEmail, verifyResetOtp, resetPassword } from "@/features/auth/api/authAPI";
 import toast from "react-hot-toast";

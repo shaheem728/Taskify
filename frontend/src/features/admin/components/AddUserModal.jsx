@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from '@/shared/components/ui/Modal';
-import AuthInput from '@/shared/components/input/AuthInput';
+import AuthInput from '@/shared/components/form/input/AuthInput';
 import Button from '@/shared/components/ui/Button';
 
 const AddUserModal = ({ isOpen, onClose, formData, errors, submitting, onChange, onSubmit }) => (

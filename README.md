@@ -33,16 +33,28 @@ cd Taskify
 ```
 ### Step 2: Set Up the Environment Variables
 
-Create a .env file:
+Create a .env in the backend folder file:
 ```
 touch .env
 ```
 Add the following environment variables to the .env file:
 ```
+CLIENT_URL=http://localhost:5173
+EMAIL_USER=
+EMAIL_APP_PASSWORD=
 MONGO_URI=
 JWT_SECRET=saskk123kksslkal334
 ADMIN_INVITE_TOKEN=12345
 PORT=8800
+```
+
+Create a .env in the frontend folder file:
+```
+touch .env
+```
+Add the following environment variables to the .env file:
+```
+VITE_API_URL=http://localhost:8800
 ```
 
 ### Step 3: Build and Run the Application with Docker

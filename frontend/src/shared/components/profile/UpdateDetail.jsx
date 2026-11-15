@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
-import ProfilePhotoSelector from '@/shared/components/select/ProfilePhotoSelector'
-import Input from '@/shared/components/input/Input'
+import ProfilePhotoSelector from '@/shared/components/form/select/ProfilePhotoSelector'
+import Input from '@/shared/components/form/input/Input'
 import axiosInstance from '@/shared/api/axios'
 import { UserContext } from '@/shared/context/useContext'
 import uploadImage from '@/shared/utils/uploadimage'

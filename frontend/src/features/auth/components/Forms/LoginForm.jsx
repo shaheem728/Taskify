@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import AuthInput from "@/shared/components/input/AuthInput";
+import AuthInput from "@/shared/components/form/input/AuthInput";
 import { validateEmail } from '@/shared/utils/helper'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '@/shared/context/useContext'
