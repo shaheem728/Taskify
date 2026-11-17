@@ -11,9 +11,15 @@ import WelcomeBanner from '@/features/dashboard/components/WelcomeBanner';
 
 const DashboardPage = () => {
     useUserAuth();
-    const { user } = useContext(UserContext);
     const navigate = useNavigate();
-    const dashboard = useDashboard(user.role === "admin" ? fetchAdminDashboard : fetchUserDashboard);
+const { user, loading } = useContext(UserContext);
+
+const dashboard = useDashboard(
+    user?.role === "admin" ? fetchAdminDashboard : fetchUserDashboard,
+    !loading && Boolean(user)
+);
+
+if (loading || !user) return null;
     const orgName = user?.organization?.orgname;
 
     return (

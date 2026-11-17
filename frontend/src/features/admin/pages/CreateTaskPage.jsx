@@ -46,7 +46,7 @@ const CreateTaskPage = () => {
                 <div className='flex items-center gap-2'>
                   <button
                     type='button'
-                    className='flex items-center gap-1.5 text-[13px] font-medium text-slate-600 bg-slate-50 rounded px-2 py-1 border border-slate-200 cursor-pointer'
+                    className='flex items-center gap-1.5 text-[13px] font-medium text-muted bg-slate-50 rounded px-2 py-1 border border-slate-200 cursor-pointer'
                     onClick={handleBack}>
                     <LuArrowLeft className='text-base' /> Back
                   </button>
@@ -61,7 +61,7 @@ const CreateTaskPage = () => {
             </div>
 
             <div className='mt-4 flex items-center'>
-              <label className='text-sm w-30 font-medium text-slate-600'>Task Title</label>
+              <label className='text-sm w-30 font-medium text-muted'>Task Title</label>
               <input
                 placeholder='Create App UI'
                 className='form-input'
@@ -71,7 +71,7 @@ const CreateTaskPage = () => {
             </div>
 
             <div className='mt-3 flex items-center'>
-              <label className='text-sm w-30 font-medium text-slate-600'>Description</label>
+              <label className='text-sm w-30 font-medium text-muted'>Description</label>
               <textarea
                 placeholder='Describe Task'
                 className='form-input'
@@ -82,7 +82,7 @@ const CreateTaskPage = () => {
             </div>
 
             <div className='mt-4 flex items-center'>
-              <label className='text-sm w-28 font-medium text-slate-600'>Priority</label>
+              <label className='text-sm w-28 font-medium text-muted'>Priority</label>
               <div className='w-35'>
                 <SelectDropdown
                   options={PRIORITY_DATA}
@@ -94,7 +94,7 @@ const CreateTaskPage = () => {
             </div>
 
             <div className='mt-4 flex items-center'>
-              <label className='text-sm w-28 font-medium text-slate-600'>Due Data</label>
+              <label className='text-sm w-28 font-medium text-muted'>Due Data</label>
               <input
                 className='form-input w-35!'
                 value={taskData.dueDate || ''}
@@ -104,7 +104,7 @@ const CreateTaskPage = () => {
             </div>
 
             <div className='mt-4 flex '>
-              <label className='text-sm w-28 font-medium text-slate-600'>Assign To</label>
+              <label className='text-sm w-28 font-medium text-muted'>Assign To</label>
               <SelectUsers
                 selectedUsers={taskData.assignedTo}
                 setSelectedUsers={(value) => handleValueChange('assignedTo', value)}
@@ -112,7 +112,7 @@ const CreateTaskPage = () => {
             </div>
 
             <div className='mt-4 flex items-center'>
-              <label className='text-sm w-32 font-medium text-slate-600'>ToDo Checklist</label>
+              <label className='text-sm w-32 font-medium text-muted'>ToDo Checklist</label>
               <div className='w-full'>
                 <TodoListInput
                   todoList={taskData.todoChecklist}
@@ -123,7 +123,7 @@ const CreateTaskPage = () => {
             </div>
 
             <div className='mt-4 flex items-center'>
-              <label className='text-sm w-32  font-medium text-slate-600 mt-2'>Add Attachments (optional) </label>
+              <label className='text-sm w-32  font-medium text-muted mt-2'>Add Attachments (optional) </label>
               <div className='w-full'>
                 <AttachmentsInput
                   attachments={taskData.attachments}

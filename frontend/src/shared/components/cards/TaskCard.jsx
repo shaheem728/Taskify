@@ -5,6 +5,8 @@ import { LuEye, LuPaperclip } from 'react-icons/lu';
 import { SquarePen } from 'lucide-react';
 import moment from "moment";
 import { UserContext } from '@/shared/context/useContext'
+import { Users } from 'lucide-react';
+
 const TaskCard = ({
   title,
   description,
@@ -42,7 +44,7 @@ const TaskCard = ({
         return 'bg-rose-500 bg-rose-50 border border-rose-500/10';
     }
   }
-
+  
   const { user } = useContext(UserContext)
   return (
     <div className='bg-blue-50 rounded-xl py-4 shadow-md shadow-gray-100 border border-gray-200/50 w-auto '>
@@ -99,7 +101,9 @@ const TaskCard = ({
           </div>
         </div>
         <div className='flex items-center justify-between mt-3'>
-          <AvatarGroup avatars={assignedTo || {}} />
+         <div className='flex items-center text-sm gap-1 text-gray-400'>
+          <Users size={15}/> {assignedTo}
+         </div>
           {
             attachmentCount > 0 && (
               <div className='flex items-center gap-2 bg-blue-50 px-2.5 py-1.5 rounded-lg'>

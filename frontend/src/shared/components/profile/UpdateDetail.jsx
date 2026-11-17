@@ -3,16 +3,16 @@ import ProfilePhotoSelector from '@/shared/components/form/select/ProfilePhotoSe
 import Input from '@/shared/components/form/input/Input'
 import axiosInstance from '@/shared/api/axios'
 import { UserContext } from '@/shared/context/useContext'
-import uploadImage from '@/shared/utils/uploadimage'
 import { IoClose } from "react-icons/io5";
 import toast from 'react-hot-toast'
 
 const UpdateDetail = () => {
   const [error, setError] = useState(null)
   const { user, updateUser, setEditing, fetchUser } = useContext(UserContext)
-  const [fullName] = useState(user?.user?.name || null);
-  const [email] = useState(user?.user?.email || null);
-  const [profilePic, setProfilePic] = useState(user?.user?.profileImageUrl || null);
+  console.log("user=",user)
+  const [name,setName] = useState(user?.user?.name || 'user');
+  const [email] = useState(user?.user?.email || 'user@gmail.com');
+  // const [profilePic, setProfilePic] = useState(user?.user?.profileImageUrl || null);
   //Close the panel
   const closePanel = () => {
     setEditing(false)
@@ -21,18 +21,18 @@ const UpdateDetail = () => {
   //Handle SignUp Form Submit
   const handleSubmit = async (e) => {
     e.preventDefault()
-    let profileImageUrl = user?.profileImageUrl || ""
+    // let profileImageUrl = user?.profileImageUrl || ""
     try {
       //Upload Image if present
-      if (profilePic != user?.profileImageUrl && profilePic != null) {
-        const imgUploadRes = await uploadImage(profilePic);
-        profileImageUrl = imgUploadRes.imageUrl || ''
-      } else if (profilePic == null) {
-        profileImageUrl = "/uploads/default-avatar.png"
-      }
+      // if (profilePic != user?.profileImageUrl && profilePic != null) {
+      //   const imgUploadRes = await uploadImage(profilePic);
+      //   profileImageUrl = imgUploadRes.imageUrl || ''
+      // } else if (profilePic == null) {
+      //   profileImageUrl = "/uploads/default-avatar.png"
+      // }
       const response = await axiosInstance.patch(`/api/auth/profile`, {
+        name,
         email,
-        profileImageUrl
       })
       const { token } = response.data;
       if (token) {
@@ -58,15 +58,14 @@ const UpdateDetail = () => {
         </div>
         <h3 className='font-semibold text-xl text-black mb-3'>Profile</h3>
         <form onSubmit={handleSubmit}>
-          <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
+          {/* <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} /> */}
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
             <Input
-              value={fullName}
-              readOnly={true}
+              value={name}
               label="Full Name"
               placeholder='Name'
+              onChange={(e)=>setName(e.target.value)}
               type="text"
-              className="cursor-not-allowed"
             />
             <Input
               readOnly={true}

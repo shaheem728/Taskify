@@ -55,7 +55,7 @@ const ViewTaskDetailPage = () => {
                                     <InfoBox label="Updated Date" value={formatTaskDate(task.updatedAt)} />
                                 </div>
                                 <div>
-                                    <label className="text-xs font-medium text-muted">Assigned To</label>
+                                    <label className="text-sm font-medium text-muted">Assigned To</label>
                                     <AssignedUserList users={task.assignedTo || []} />
                                 </div>
                             </div>
@@ -63,7 +63,7 @@ const ViewTaskDetailPage = () => {
                             <TaskAttachments attachments={task.attachments} />
 
                             <div className="mt-2">
-                                <label className="text-xs font-medium text-muted">Todo Checklist</label>
+                                <label className="text-sm font-medium text-muted">Todo Checklist</label>
                                 <TodoCheckList
                                     items={task.todoChecklist || []}
                                     onDrop={updateTodoStatus}

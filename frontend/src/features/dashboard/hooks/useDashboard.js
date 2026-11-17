@@ -6,10 +6,11 @@ import {
     hasChartData,
 } from '@/features/dashboard/utils/dashboard.utils.js';
 
-const useDashboard = (fetcher) => {
+const useDashboard = (fetcher,enabled = true) => {
     const { data, isLoading } = useQuery({
         queryKey: ['dashboard'],
-        queryFn: fetcher
+        queryFn: fetcher,
+        enabled,
     })
     const charts = data?.charts || null;
     const pieChartData = useMemo(() => buildPieChartData(charts), [charts]);

@@ -6,13 +6,10 @@ export const useUserAuth = () => {
     const { user, loading, clearUser } = useContext(UserContext);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (loading) return;
-        if (user) return;
+useEffect(() => {
+    if (loading || user) return;
 
-        if (!user) {
-            clearUser;
-            navigate("/auth/login");
-        }
-    }, [user, loading, clearUser, navigate])
+    clearUser();
+    navigate("/auth/login", { replace: true });
+}, [user, loading, clearUser, navigate]);
 }

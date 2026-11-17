@@ -44,10 +44,10 @@ export function TodoCheckList({ items = [], onDrop }) {
                   {todos.length ? (
                     todos.map((item) => (
                       <Draggable key={item._id} id={item._id} data={item}>
-                        <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm hover:border-blue-300 hover:shadow-md transition-all">
+                        <div className="rounded-xl  bg-white p-3 hover:shadow-md transition-all">
 
                           {/* Todo Text */}
-                          <p className="text-sm font-medium text-slate-700">
+                          <p className="text-sm font-medium text-muted">
                             {item.text}
                           </p>
 

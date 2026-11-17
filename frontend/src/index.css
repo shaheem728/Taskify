@@ -6,6 +6,7 @@
     --breakpoint-3xl: 1920px;
     --color-primary: oklch(76.5% 0.177 163.223);
     --color-secondary: oklch(36.936% 0.0987 294.789);
+    --color-muted: oklch(44.6% 0.043 257.281)
 }
 
 @layer base {

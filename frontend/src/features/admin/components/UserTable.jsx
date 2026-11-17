@@ -16,7 +16,7 @@ const UserTable = ({ users = [], onDelete }) => {
                                 scope="col"
                                 className="sticky left-0 z-10 bg-gray-50 px-4 py-3 font-semibold md:static md:bg-transparent"
                             >
-                                Member
+                                Name
                             </th>
                             <th scope="col" className="pl-10 px-4 py-3 font-semibold">
                                 Email
@@ -61,12 +61,7 @@ const UserRow = ({ user, index, onDelete }) => {
 
             {/* Member */}
             <td className="sticky left-0 z-10 bg-white px-4 py-3 transition-colors group-hover:bg-blue-50 md:static md:bg-transparent md:group-hover:bg-transparent">
-                <div className="flex min-w-[170px] items-center gap-3">
-                    <img
-                        src={avatar}
-                        alt={`${user?.name || "Member"} avatar`}
-                        className="h-10 w-10 shrink-0 rounded-full border-2 border-white object-cover shadow-sm ring-1 ring-gray-200"
-                    />
+                <div className="flex  items-center gap-3">
                     <p className="max-w-[160px] truncate text-md font-medium text-gray-800">
                         {user?.name}
                     </p>

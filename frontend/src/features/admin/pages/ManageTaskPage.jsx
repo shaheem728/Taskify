@@ -62,7 +62,7 @@ const ManageTaskPage = () => {
                 createdAt={item.createdAt}
                 dueDate={item.dueDate}
                 updatedAt={item.updatedAt}
-                assignedTo={item.assignedTo?.map((user) => user.profileImageUrl)}
+                assignedTo={item.assignedTo?.length || 0}
                 attachmentCount={item.attachments?.length || 0}
                 completedTodoCount={item.completedTodoCount || 0}
                 todoChecklist={item.todoChecklist || {}}

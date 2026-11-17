@@ -207,7 +207,7 @@ const updateUserProfile = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const { email, profileImageUrl } = req.body;
+        const { email, profileImageUrl, name } = req.body;
 
         // Check if the new email is already used by another user
         if (email && email !== user.email) {
@@ -218,7 +218,7 @@ const updateUserProfile = async (req, res) => {
         }
 
         user.profileImageUrl = profileImageUrl || user.profileImageUrl;
-
+        user.name = name;
         const updatedUser = await user.save();
 
         res.json({
