@@ -5,7 +5,8 @@ import TaskStatusTabs from '@/shared/components/task/TaskStatusTabs';
 import TaskCard from '@/shared/components/cards/TaskCard';
 import Loading from '@/shared/components/ui/Loading';
 import EmptyState from '@/shared/components/ui/EmptyState';
-import { ListChecks } from 'lucide-react';
+import ConfirmModal from '@/shared/components/ui/ConfirmModal';
+import { ListChecks, Trash } from 'lucide-react';
 import Button from '@/shared/components/ui/Button';
 import useManageTasks from '@/features/admin/hooks/useManageTasks';
 
@@ -15,9 +16,12 @@ const ManageTaskPage = () => {
     tabs,
     filterStatus,
     setFilterStatus,
+    onDelete,
+    setOnDelete,
     isLoading,
     handleCreate,
     handleEdit,
+    handleDelete,
     handleView,
   } = useManageTasks();
 
@@ -68,6 +72,10 @@ const ManageTaskPage = () => {
                 todoChecklist={item.todoChecklist || {}}
                 onClick={() => handleEdit(item)}
                 onView={() => handleView(item)}
+                onDelete={()=>setOnDelete({
+                  id:item._id,
+                  isOpen:true,
+                })}
               />
             ))}
           </div>
@@ -79,6 +87,20 @@ const ManageTaskPage = () => {
             icon={<ListChecks className='text-4xl text-slate-500 mb-3' />}
           />
         )}
+
+      <ConfirmModal
+        isOpen={onDelete.isOpen}
+        onClose={() => setOnDelete({isOpen:false})}
+        isLoading={isLoading}
+        title="Delete Task"
+        message="Are you sure you want to delete this task? This action cannot be undone."
+        cancelText="Cancel"
+        confirmText="Delete"
+        maxWidth="xl"
+        confirmButtonVariant="danger"
+        confirmIcon={<Trash size={18} />}
+        onConfirm={handleDelete}
+      />
       </div>
     </DashboardLayout>
   );

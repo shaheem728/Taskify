@@ -4,7 +4,6 @@ import toast from 'react-hot-toast';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
     createTask,
-    deleteTask,
     fetchTaskById,
     updateTask,
 } from '@/features/admin/api/adminAPI';
@@ -20,7 +19,6 @@ const useTaskForm = ({ taskId }) => {
     const [taskData, setTaskData] = useState(INITIAL_TASK_DATA);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
     const queryClient = useQueryClient()
 
     const handleValueChange = useCallback((key, value) => {
@@ -86,32 +84,6 @@ const useTaskForm = ({ taskId }) => {
     };
 
 
-    // Delete Task By Id
-    const deleteMutation = useMutation({
-        mutationFn: () => deleteTask(taskId),
-
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ["task"],
-            });
-
-            toast.success("Task deleted successfully");
-            setOpenDeleteAlert(false);
-            navigate("/admin/tasks");
-        },
-
-        onError: (error) => {
-            console.error("Error deleting task:", error);
-            toast.error("Failed to delete task");
-        },
-    });
-
-    const handleDelete = () => {
-        if (!taskId) return;
-
-        deleteMutation.mutate();
-    };
-
     const handleCancel = useCallback(() => navigate(-1), [navigate]);
     const handleBack = useCallback(() => navigate('/admin/tasks'), [navigate]);
 
@@ -120,11 +92,8 @@ const useTaskForm = ({ taskId }) => {
         error,
         loading,
         isLoading,
-        openDeleteAlert,
-        setOpenDeleteAlert,
         handleValueChange,
         handleSubmit,
-        handleDelete,
         handleCancel,
         handleBack,
     };

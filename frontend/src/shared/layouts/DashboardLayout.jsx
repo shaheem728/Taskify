@@ -19,7 +19,7 @@ const DashboardLayout = ({ children, activeMenu }) => {
                 <SideMenu activeMenu={activeMenu} />
               </div>
             </div>
-            <div className='grow min-w-0 mx-5'>{children}</div>
+            <div className='grow min-w-0 lg:mx-5 mx-5'>{children}</div>
           </div>
 
         )

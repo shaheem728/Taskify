@@ -22,6 +22,7 @@ export const INITIAL_TASK_DATA = {
 export const validateTaskData = (taskData) => {
     if (!taskData.title.trim()) return 'Title is required';
     if (!taskData.description.trim()) return 'Description is required';
+    if (!taskData.priority.trim()) return 'Priority is required';
     if (!taskData.dueDate) return 'Due date is required';
     if (!taskData.assignedTo?.length) return 'Task not assigned to any member';
     if (!taskData.todoChecklist?.length) return 'Add atleast one todo task';

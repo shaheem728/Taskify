@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import ProfilePhotoSelector from '@/shared/components/form/select/ProfilePhotoSelector'
+// import ProfilePhotoSelector from '@/shared/components/form/select/ProfilePhotoSelector'
 import Input from '@/shared/components/form/input/Input'
 import axiosInstance from '@/shared/api/axios'
 import { UserContext } from '@/shared/context/useContext'
@@ -9,10 +9,8 @@ import toast from 'react-hot-toast'
 const UpdateDetail = () => {
   const [error, setError] = useState(null)
   const { user, updateUser, setEditing, fetchUser } = useContext(UserContext)
-  console.log("user=",user)
   const [name,setName] = useState(user?.user?.name || 'user');
   const [email] = useState(user?.user?.email || 'user@gmail.com');
-  // const [profilePic, setProfilePic] = useState(user?.user?.profileImageUrl || null);
   //Close the panel
   const closePanel = () => {
     setEditing(false)

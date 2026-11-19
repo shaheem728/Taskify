@@ -1,12 +1,20 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchAllTasks } from '@/features/admin/api/adminAPI';
+import { fetchAllTasks, deleteTask } from '@/features/admin/api/adminAPI';
 import { buildStatusTabs } from '@/shared/utils/task.utils';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 const useManageTasks = () => {
   const navigate = useNavigate();
   const [filterStatus, setFilterStatus] = useState('All');
+   const queryClient = useQueryClient()
+    const [onDelete, setOnDelete] = useState(
+      {
+        id:null,
+        isOpen:false
+      }
+    );
 
   const {
     data,
@@ -33,6 +41,34 @@ const useManageTasks = () => {
     [navigate]
   );
 
+      // Delete Task By Id
+    const deleteMutation = useMutation({
+        mutationFn: () => deleteTask(onDelete.id),
+
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ["tasks"],
+            });
+
+            toast.success("Task deleted successfully");
+            setOnDelete({
+              id:null,
+              isOpen:false,
+            });
+        },
+
+        onError: (error) => {
+            console.error("Error deleting task:", error);
+            toast.error("Failed to delete task");
+        },
+    });
+
+    const handleDelete = () => {
+      if (onDelete.id === null || deleteMutation.isPending) return;
+
+      deleteMutation.mutate();
+    };
+
   const handleView = useCallback(
     (task) => navigate(`/admin/view-task/${task._id}`),
     [navigate]
@@ -43,9 +79,12 @@ const useManageTasks = () => {
     tabs,
     filterStatus,
     setFilterStatus,
+    onDelete,
+    setOnDelete,
     isLoading,
     handleCreate,
     handleEdit,
+    handleDelete,
     handleView,
   };
 };

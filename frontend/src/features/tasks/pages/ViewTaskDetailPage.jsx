@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { LuArrowLeft } from 'react-icons/lu';
+import Loading from '@/shared/components/ui/Loading';
 
 import DashboardLayout from '@/shared/layouts/DashboardLayout';
 import AssignedUserList from '@/shared/components/profile/AssignedUserList';
@@ -17,12 +18,14 @@ const ViewTaskDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
-    const { task, updateTodoStatus } = useTaskDetail(id, user?.user);
+    const { task, isLoading, updateTodoStatus } = useTaskDetail(id, user?.user);
 
     return (
         <DashboardLayout activeMenu={getActiveMenu(user?.role)}>
             <div className="mt-5">
-                {task && (
+           {isLoading ? (
+              <Loading /> 
+              ) : task && (
                     <div className="mt-4 flex flex-wrap">
                         <div className="form-card">
                             <div className="flex items-center justify-between">

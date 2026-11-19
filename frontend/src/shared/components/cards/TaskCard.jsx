@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import Progress from '@/shared/components/task/Progress';
-import AvatarGroup from '@/shared/components/profile/AvatarGroup';
+// import AvatarGroup from '@/shared/components/profile/AvatarGroup';
 import { LuEye, LuPaperclip } from 'react-icons/lu';
-import { SquarePen } from 'lucide-react';
+import { SquarePen, Trash } from 'lucide-react';
 import moment from "moment";
 import { UserContext } from '@/shared/context/useContext'
 import { Users } from 'lucide-react';
@@ -21,7 +21,8 @@ const TaskCard = ({
   completedTodoCount,
   todoChecklist,
   onClick,
-  onView
+  onView,
+  onDelete
 }) => {
   const getStatusTagColor = () => {
     switch (status) {
@@ -48,9 +49,22 @@ const TaskCard = ({
   const { user } = useContext(UserContext)
   return (
     <div className='bg-blue-50 rounded-xl py-4 shadow-md shadow-gray-100 border border-gray-200/50 w-auto '>
-      <div className='flex items-end gap-3 px-4'>
+      <div className='flex justify-between px-4'>
+        <div className='flex gap-3 '>
         <div className={`text-[11px] font-medium ${getStatusTagColor()} px-4 py-0.5 rounded`}>{status}</div>
         <div className={`text-[11px] font-medium ${getPriorityTagColor()} px-4 py-0.5 rounded`}>{priority}Priority</div>
+        </div>
+        <div>
+            {
+            user?.role === "admin" && <button
+              type='button'
+               className="p-1 rounded bg-gray-100 text-red-400 hover:text-red-500 hover:bg-red-200"
+              onClick={onDelete}>
+              <Trash size={16}/>
+            </button>
+          }
+        </div>
+         
       </div>
       <div className={`px-4 border-l-[3px] bg-white ${status === "In Progress"
         ? "border-cyan-500" : status === "Completed"
