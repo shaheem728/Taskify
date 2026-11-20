@@ -27,7 +27,7 @@ const ManageTaskPage = () => {
 
   return (
     <DashboardLayout activeMenu="Manage Tasks">
-      <div className='my-5'>
+      <div className='m-5'>
         <div className='flex flex-col lg:flex-row lg:items-center justify-between'>
           <div className='flex items-center justify-between gap-3 w-full'>
             <h2 className='text-xl font-medium'>My Task</h2>

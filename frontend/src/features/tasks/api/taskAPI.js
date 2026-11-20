@@ -8,7 +8,7 @@ export const getTaskById = async (taskId) => {
 
 /** PUT the whole todo checklist. Resolves with the updated task (or null). */
 export const updateTaskTodoChecklist = async (taskId, todoChecklist) => {
-    const { data } = await axiosInstance.put(`/api/tasks/${taskId}/todo`, {
+    const { data } = await axiosInstance.patch(`/api/tasks/${taskId}/todo`, {
         todoChecklist,
     });
     return data?.task ?? null;

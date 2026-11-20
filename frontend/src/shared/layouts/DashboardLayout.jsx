@@ -15,11 +15,11 @@ const DashboardLayout = ({ children, activeMenu }) => {
               <UpdateDetail />
             </div>
             <div className='hidden md:block w-64 shrink-0 ml-4 mt-2'>
-              <div className='fixed top-[70px] w-64 z-20'>
+              <div className='fixed lg:top-[70px] w-64 z-20'>
                 <SideMenu activeMenu={activeMenu} />
               </div>
             </div>
-            <div className='grow min-w-0 lg:mx-5 mx-5'>{children}</div>
+            <div className='grow '>{children}</div>
           </div>
 
         )

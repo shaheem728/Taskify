@@ -67,7 +67,7 @@ const ReportsPage = () => {
 
   return (
     <DashboardLayout activeMenu="Reports">
-      <div className="my-6">
+      <div className="m-5">
         {/* Page Header */}
         <div className="flex flex-col gap-1 mb-8">
           <div className="flex items-center gap-2.5">

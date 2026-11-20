@@ -41,7 +41,7 @@ export const createTask = async (payload) => {
 }
 
 export const updateTask = async (taskId, payload) => {
-    const { data } = await axiosInstance.put(`/api/tasks/${taskId}`, payload);
+    const { data } = await axiosInstance.patch(`/api/tasks/${taskId}`, payload);
     return data
 }
 

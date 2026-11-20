@@ -66,7 +66,7 @@ const TodoListInput = ({ todoList, setTodoList }) => {
             {todoList.map((item, index) => (
                 <div
                     key={index}
-                    className={`flex justify-between px-3 py-2 rounded-md mb-3 mt-2 ${
+                    className={`flex justify-between lg:flex-row flex-col space-y-1 px-3 py-2 rounded-md mb-3 mt-2 ${
                         styles[item.status] || styles.Pending
                     }`}
                 >
@@ -92,10 +92,10 @@ const TodoListInput = ({ todoList, setTodoList }) => {
                         </p>
                     )}
 
-                    <div className="flex items-center gap-3">
+                    <div className="flex lg:flex-row flex-col lg:items-center items-end justify-end lg:gap-3 gap-1">
                         {/* Updated By */}
                         {item.updateBy && (
-                            <div className="flex items-center gap-2 ml-4">
+                            <div className="flex items-center lg:gap-2 lg:ml-4">
                                 <div className="flex">
                                     <span className="flex items-center gap-1.5 text-sm font-medium text-gray-800">
                                         <User size={15} />
@@ -104,7 +104,7 @@ const TodoListInput = ({ todoList, setTodoList }) => {
                                 </div>
 
                                 <span
-                                    className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${
+                                    className={`px-2 py-1 rounded-full text-xs lg:font-medium capitalize ${
                                         item.updateBy?.role === "admin"
                                             ? "bg-purple-100 text-purple-700 dark:bg-purple-500/10 dark:text-purple-400"
                                             : "bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400"
@@ -116,11 +116,12 @@ const TodoListInput = ({ todoList, setTodoList }) => {
                         )}
 
                         {/* Status */}
-                        <span className={`text-sm ml-3 ${styles[item.status] || styles.Pending}`}>
+                        <span className={`text-sm lg:ml-3 ${styles[item.status] || styles.Pending}`}>
                             {item.status}
                         </span>
 
                         {/* Edit / Save / Cancel */}
+                        <div className='flex lg:gap-2 gap-0.5'>
                         {editingIndex === index ? (
                             <>
                                 <button
@@ -161,6 +162,7 @@ const TodoListInput = ({ todoList, setTodoList }) => {
                         >
                             <Trash2 size={18} className="text-red-500" />
                         </button>
+                        </div>
                     </div>
                 </div>
             ))}

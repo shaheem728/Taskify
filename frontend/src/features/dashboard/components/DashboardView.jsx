@@ -26,7 +26,7 @@ const DashboardView = ({ hero, dashboard, onSeeMore }) => {
     } = dashboard;
 
     return (
-        <>
+        <div className='mx-5'>
             <div className='card my-5'>
                 {hero}
                 <DashboardStats taskDistribution={taskDistribution} />
@@ -74,7 +74,7 @@ const DashboardView = ({ hero, dashboard, onSeeMore }) => {
                     )}
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

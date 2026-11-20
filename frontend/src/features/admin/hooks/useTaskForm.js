@@ -18,7 +18,6 @@ const useTaskForm = ({ taskId }) => {
     const navigate = useNavigate();
     const [taskData, setTaskData] = useState(INITIAL_TASK_DATA);
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
     const queryClient = useQueryClient()
 
     const handleValueChange = useCallback((key, value) => {
@@ -70,7 +69,6 @@ const useTaskForm = ({ taskId }) => {
     // Save Task
     const handleSubmit = () => {
         const validationError = validateTaskData(taskData);
-
         setError(validationError || "");
 
         if (validationError) return;
@@ -83,14 +81,12 @@ const useTaskForm = ({ taskId }) => {
         });
     };
 
-
     const handleCancel = useCallback(() => navigate(-1), [navigate]);
     const handleBack = useCallback(() => navigate('/admin/tasks'), [navigate]);
 
     return {
         taskData,
         error,
-        loading,
         isLoading,
         handleValueChange,
         handleSubmit,

@@ -18,7 +18,6 @@ const CreateTaskPage = () => {
   const {
     taskData,
     error,
-    loading,
     isLoading,
     handleValueChange,
     handleSubmit,
@@ -30,18 +29,17 @@ const CreateTaskPage = () => {
 
   return (
     <DashboardLayout activeMenu="Manage Tasks">
-      <div className="w-full px-3 sm:px-5 lg:px-6 py-4">
+      <div className="w-full px-3 sm:px-5 lg:px-6 py-4 ">
         <div className="grid grid-cols-1">
           <div className="form-card w-full min-w-0">
 
             {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center justify-between gap-3">
               <h2 className="text-lg sm:text-xl font-medium">
                 {taskId ? 'Update Task' : 'Create Task'}
               </h2>
 
               {taskId && (
-                <div className="flex items-center">
                   <button
                     type="button"
                     className="flex items-center gap-1.5 text-[13px] font-medium text-muted bg-slate-50 rounded px-3 py-2 border border-slate-200"
@@ -50,7 +48,6 @@ const CreateTaskPage = () => {
                     <LuArrowLeft className="text-base" />
                     Back
                   </button>
-                </div>
               )}
             </div>
 
@@ -175,7 +172,7 @@ const CreateTaskPage = () => {
               <button
                 className="cancel-btn w-full sm:w-auto"
                 onClick={handleCancel}
-                disabled={loading}
+                disabled={isLoading}
               >
                 CANCEL
               </button>
@@ -183,7 +180,7 @@ const CreateTaskPage = () => {
               <button
                 className="add-btn w-full sm:w-auto"
                 onClick={handleSubmit}
-                disabled={loading}
+                disabled={isLoading}
               >
                 {taskId ? 'UPDATE TASK' : 'CREATE TASK'}
               </button>

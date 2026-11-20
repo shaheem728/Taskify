@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@/shared/components/ui/Button';
 
 const FilterBar = ({ search, onSearchChange, onApply, onClear, canClear }) => (
-    <div className="mt-4 lg:mx-10 flex flex-col gap-3 rounded-xl border border-gray-200 bg-white p-4 md:flex-row md:items-end">
+    <div className="mt-4  flex flex-col gap-3 rounded-xl border border-gray-200 bg-white p-4 md:flex-row md:items-end">
         <div className="flex-1">
             <label className="mb-1 block text-sm text-gray-600">Search</label>
             <input

@@ -35,10 +35,14 @@ export const buildTaskPayload = (taskData, currentTask = null) => {
     return {
         ...taskData,
         dueDate: new Date(taskData.dueDate).toISOString(),
-        todoChecklist: taskData.todoChecklist?.map((item) => ({
+        todoChecklist: taskData.todoChecklist?.map((item) => {
+        const previousTodo = previousTodos.find((todo) => todo.text === item.text);
+        return {
             text: item.text,
-            status: previousTodos.find((todo) => todo.text === item.text)?.status || 'Pending',
-        })),
+            status: item.status || previousTodo?.status || 'Pending',
+            updateBy: item.updateBy || previousTodo?.updateBy || null,
+        };
+}),
     };
 };
 

@@ -22,7 +22,7 @@ const ViewTaskDetailPage = () => {
 
     return (
         <DashboardLayout activeMenu={getActiveMenu(user?.role)}>
-            <div className="mt-5">
+            <div className="lg:m-5 m-2.5">
            {isLoading ? (
               <Loading /> 
               ) : task && (
@@ -39,7 +39,9 @@ const ViewTaskDetailPage = () => {
                                     >
                                         <LuArrowLeft className="text-base" /> Back
                                     </button>
+                                    <div className='hidden lg:flex'>
                                     <TaskStatusBadge status={task.status} />
+                                    </div>
                                 </div>
                             </div>
 

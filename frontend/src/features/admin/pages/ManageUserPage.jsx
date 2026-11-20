@@ -23,7 +23,7 @@ const ManageUserPage = () => {
   return (
     <>
       <DashboardLayout activeMenu="Team Members">
-        <div className='mt-5 mb-10'>
+        <div className='m-5'>
           <div className='flex md:flex-row md:items-center justify-between'>
             <h2 className='text-xl md:text-xl font-medium'>Team Members</h2>
             <Button
@@ -45,7 +45,7 @@ const ManageUserPage = () => {
           {isLoading ? (
             <Loading />
           ) : filters.filteredUsers.length > 0 ? (
-            <div className="mt-4 lg:mx-10">
+            <div className="mt-4">
               <UserTable
                 users={filters.filteredUsers}
                 onDelete={deleteModal.handleOpen}
