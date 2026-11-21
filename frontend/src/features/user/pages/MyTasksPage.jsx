@@ -5,6 +5,7 @@ import TaskStatusTabs from '@/shared/components/task/TaskStatusTabs';
 import TaskCard from '@/shared/components/cards/TaskCard';
 import Loading from '@/shared/components/ui/Loading';
 import useMyTasks from '@/features/user/hooks/useMyTasks';
+import {  FileCheck } from 'lucide-react';
 
 const MyTasksPage = () => {
   const {
@@ -18,9 +19,21 @@ const MyTasksPage = () => {
 
   return (
     <DashboardLayout activeMenu="My Tasks">
-      <div className='my-5'>
-        <div className='flex flex-col lg:flex-row lg:items-center justify-between'>
-          <h2 className='text-xl font-medium'>My Task</h2>
+      <div className='m-5'>
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-lg bg-primary  text-white">
+                  <FileCheck className="text-2xl" />
+                </div>
+                <div>
+                  <h2 className="text-xl md:text-2xl font-semibold text-slate-900">
+                   My Task
+                  </h2>
+                  <p className="text-sm text-slate-500">
+                   Manage assigned tasks and keep their statuses up to date.
+                  </p>
+                </div>
+              </div>
+        <div className='flex my-2'>
           {tabs?.[0]?.count > 0 && (
             <TaskStatusTabs
               tabs={tabs}

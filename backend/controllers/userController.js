@@ -12,7 +12,7 @@ const createUser = async (req, res) => {
     session.startTransaction();
 
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, designation } = req.body;
 
         if (!name || !email || !password) {
             return res.status(400).json({ message: "Name, email, and password are required" });
@@ -42,6 +42,7 @@ const createUser = async (req, res) => {
         const [user] = await User.create([{
             name,
             email,
+            designation,
             password: hashedPassword,
             role: 'member',
         }], { session });
@@ -62,6 +63,7 @@ const createUser = async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            designation: user.designation,
             role: user.role,
             organizationId,
         });

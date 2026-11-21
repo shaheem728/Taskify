@@ -26,7 +26,7 @@ const DashboardView = ({ hero, dashboard, onSeeMore }) => {
     } = dashboard;
 
     return (
-        <div className='mx-5'>
+        <div className='lg:mx-5 mx-2'>
             <div className='card my-5'>
                 {hero}
                 <DashboardStats taskDistribution={taskDistribution} />
@@ -56,8 +56,8 @@ const DashboardView = ({ hero, dashboard, onSeeMore }) => {
                         />
                     )}
                 </div>
-
-                <div className='md:col-span-2 card'>
+            </div>
+                  <div className='flex flex-col w-full card my-4'>
                     <div className='flex items-center justify-between'>
                         <h5 className='text-lg'>Recent Tasks</h5>
                         <button className='card-btn' onClick={onSeeMore}>
@@ -73,7 +73,6 @@ const DashboardView = ({ hero, dashboard, onSeeMore }) => {
                         />
                     )}
                 </div>
-            </div>
         </div>
     );
 };

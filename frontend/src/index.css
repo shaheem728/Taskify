@@ -30,7 +30,7 @@
 }
 
 .card {
-    @apply bg-white shadow-md shadow-gray-100 rounded-2xl p-6 border border-gray-200/50;
+    @apply bg-white shadow-md shadow-gray-100 rounded-2xl lg:p-6 p-3 border border-gray-200/50;
 }
 
 .card-btn {

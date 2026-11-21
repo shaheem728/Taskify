@@ -19,14 +19,14 @@ const getPriorityBadgeColor = (priority)=>{
   }
 }
  return (
-    <div className='overflow-x-auto p-0 rounded-lg mt-3'>
-      <table className='min-w-full'>
+    <div className='overflow-x-auto  rounded-lg mt-3'>
+      <table className='min-w-full whitespace-nowrap'>
         <thead> 
         <tr className='text-left'>
           <th className='py-3 px-4 text-gray-800 font-medium text-[13px]'>Name</th>
           <th className='py-3 px-4 text-gray-800 font-medium text-[13px]'>Status</th>
           <th className='py-3 px-4 text-gray-800 font-medium text-[13px]'>Priority</th>
-          <th className='py-3 px-4 text-gray-800 font-medium text-[13px] hidden md:table-cell'>Created On</th>
+          <th className='py-3 px-4 text-gray-800 font-medium text-[13px]'>Created On</th>
         </tr>
         </thead>
         <tbody>
@@ -39,7 +39,7 @@ const getPriorityBadgeColor = (priority)=>{
               <td className='py-4 px-4'>
                 <span className={`px-2 py-1 text-xs rounded inline-block ${getPriorityBadgeColor(task.priority)}`}>{task.priority}</span>
               </td>
-              <td className='py-4 px-4 text-gray-700 text-[13px]  text-nowrap hidden md:table-cell'>{task.createdAt ? moment(task.createdAt).format('Do MM YYYY'):'N/A'}</td>
+              <td className='py-4 px-4 text-gray-700 text-[13px]  text-nowrap '>{task.createdAt ? moment(task.createdAt).format('Do MM YYYY'):'N/A'}</td>
             </tr>
           ))}
         </tbody>

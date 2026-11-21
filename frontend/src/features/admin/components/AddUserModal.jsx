@@ -16,6 +16,16 @@ const AddUserModal = ({ isOpen, onClose, formData, errors, submitting, onChange,
                 onChange={onChange('name')}
                 required
             />
+            {errors.designation && <p className='text-xs text-red-500 mb-1'>{errors.designation}</p>}
+            <AuthInput
+                label='Designation'
+                type='text'
+                className='bg-white'
+                placeholder='intern'
+                value={formData.designation}
+                onChange={onChange('designation')}
+                required
+            />
             {errors.email && <p className='text-xs text-red-500 mb-1'>{errors.email}</p>}
             <AuthInput
                 label='Email Address'

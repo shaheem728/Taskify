@@ -33,7 +33,7 @@ const SideMenu = ({ activeMenu }) => {
   }, [user])
 
   return (
-    <div className='w-64 h-[calc(100vh-85px)] bg-blue-50 border border-gray-200/50 rounded-3xl z-10 flex flex-col justify-between overflow-hidden shadow-sm'>
+    <div className='w-64 lg:h-[calc(100vh-85px)] h-[90vh] bg-blue-50 border border-gray-200/50 rounded-3xl z-10 flex flex-col justify-between overflow-hidden shadow-sm'>
       <div className='overflow-y-auto flex-1'>
         <div className='p-5 border-b border-gray-200/50 mb-3'>
           <div className='flex flex-col bg-gray-200  p-10 rounded-2xl items-center gap-2.5 text-gray-800'>

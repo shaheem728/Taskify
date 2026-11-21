@@ -71,7 +71,7 @@ const ReportsPage = () => {
         {/* Page Header */}
         <div className="flex flex-col gap-1 mb-8">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-lime-100 text-lime-800 border border-lime-200">
+            <div className="p-2 rounded-lg bg-primary  text-white">
               <LuFileSpreadsheet className="text-2xl" />
             </div>
             <div>

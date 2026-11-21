@@ -121,7 +121,7 @@ const createTask = async (req, res) => {
     }
 };
 //@desc Update task detail
-//@route PUT /api/tasks/:id
+//@route PATCH /api/tasks/:id
 //@access Private
 const updateTask = async (req, res) => {
     try {
@@ -193,7 +193,7 @@ const deleteTask = async (req, res) => {
 };
 
 //@desc Update task status
-//@route PUT /api/tasks/:id/todo
+//@route PATCH /api/tasks/:id/todo
 //@access Private
 const updateTaskCheklist = async (req, res) => {
     try {
@@ -345,7 +345,7 @@ const getUserDashboardData = async (req, res) => {
 };
 
 //@desc Upadate task status
-//@roue PUT /api/tasks/:id/status
+//@roue PATCH /api/tasks/:id/status
 //@access Private
 const updateTaskStatus = async (req, res) => {
     try {
@@ -369,7 +369,7 @@ const updateTaskStatus = async (req, res) => {
 };
 
 //@desc Update task checklist
-//@route PUT /api/tasks/:id/todo
+//@route PATCH /api/tasks/:id/todo
 //@access Private
 const updateTaskChecklist = async (req, res) => {
     try {

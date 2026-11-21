@@ -12,6 +12,7 @@ const UserSchema = new mongoose.Schema(
             default: "/uploads/default-avatar.png",
         },
         role: { type: String, enum: ['admin', 'member'], default: 'member' },
+        designation: { type: String, default: 'intern' },
     },
     { timestamps: true }
 )

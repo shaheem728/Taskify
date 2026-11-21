@@ -1,12 +1,11 @@
 import React from 'react';
 import DashboardLayout from '@/shared/layouts/DashboardLayout';
-import { FaPlus } from 'react-icons/fa6';
 import TaskStatusTabs from '@/shared/components/task/TaskStatusTabs';
 import TaskCard from '@/shared/components/cards/TaskCard';
 import Loading from '@/shared/components/ui/Loading';
 import EmptyState from '@/shared/components/ui/EmptyState';
 import ConfirmModal from '@/shared/components/ui/ConfirmModal';
-import { ListChecks, Trash } from 'lucide-react';
+import { ListChecks, Trash, FileCheck, Plus  } from 'lucide-react';
 import Button from '@/shared/components/ui/Button';
 import useManageTasks from '@/features/admin/hooks/useManageTasks';
 
@@ -28,21 +27,31 @@ const ManageTaskPage = () => {
   return (
     <DashboardLayout activeMenu="Manage Tasks">
       <div className='m-5'>
-        <div className='flex flex-col lg:flex-row lg:items-center justify-between'>
-          <div className='flex items-center justify-between gap-3 w-full'>
-            <h2 className='text-xl font-medium'>My Task</h2>
-
+            <div className='flex flex-col lg:flex-row lg:items-center justify-between'>
+            <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-lg bg-primary  text-white">
+                  <FileCheck className="text-2xl" />
+                </div>
+                <div>
+                  <h2 className="text-xl md:text-2xl font-semibold text-slate-900">
+                   Task Management
+                  </h2>
+                  <p className="text-sm text-slate-500">
+                    Create tasks and assign them to team members.
+                  </p>
+                </div>
+              </div>
             <Button
               onClick={handleCreate}
-              leftIcon={<FaPlus className="text-lg" />}
+              leftIcon={<Plus size={16}/>}
+              className='ml-auto'
             >
-              New Task
+                  New Task
             </Button>
           </div>
-        </div>
 
         {tabs?.[0]?.count > 0 && (
-          <div className='flex items-center gap-3 my-3'>
+          <div className='flex justify-between items-center lg:gap-3 gap-2 my-3'>
             <TaskStatusTabs
               tabs={tabs}
               activeTab={filterStatus}

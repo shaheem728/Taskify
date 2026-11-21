@@ -1,16 +1,17 @@
 import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
+import { Edit } from "lucide-react";
 import { assets } from "@/features/assets/images/assets";
 
-const UserTable = ({ users = [], onDelete }) => {
+const UserTable = ({ users = [], onDelete, onEdit }) => {
     return (
         <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
             <div className="overflow-x-auto">
-                <table className="w-full min-w-[760px] border-collapse text-left">
+                <table className="w-full  border-collapse text-left">
                     <thead>
                         <tr className="border-b border-gray-200 bg-gray-50/80 text-md font-semibold text-gray-500">
                             <th scope="col" className="w-16 px-4 py-3 font-semibold">
-                                No.
+                                Sl.No
                             </th>
                             <th
                                 scope="col"
@@ -20,6 +21,9 @@ const UserTable = ({ users = [], onDelete }) => {
                             </th>
                             <th scope="col" className="pl-10 px-4 py-3 font-semibold">
                                 Email
+                            </th>
+                            <th scope="col" className=" px-4 py-3 font-semibold">
+                                Designation
                             </th>
                             <th scope="col" className="pl-25 px-4 py-3 font-semibold">
                                 Task summary
@@ -48,10 +52,7 @@ const UserTable = ({ users = [], onDelete }) => {
 
 export default UserTable;
 
-const UserRow = ({ user, index, onDelete }) => {
-    const avatar =
-        user?.profileImageUrl?.length > 1 ? user.profileImageUrl : assets.profile_pic;
-
+const UserRow = ({ user, index, onDelete, onEdit }) => {
     return (
         <tr className="group transition-colors hover:bg-blue-50/40">
             {/* No. */}
@@ -62,7 +63,7 @@ const UserRow = ({ user, index, onDelete }) => {
             {/* Member */}
             <td className="sticky left-0 z-10 bg-white px-4 py-3 transition-colors group-hover:bg-blue-50 md:static md:bg-transparent md:group-hover:bg-transparent">
                 <div className="flex  items-center gap-3">
-                    <p className="max-w-[160px] truncate text-md font-medium text-gray-800">
+                    <p className=" truncate text-md font-medium text-gray-800">
                         {user?.name}
                     </p>
                 </div>
@@ -71,11 +72,20 @@ const UserRow = ({ user, index, onDelete }) => {
             {/* Email */}
             <td className="px-4 py-3">
                 <p
-                    className="max-w-[240px] truncate text-md text-gray-500"
+                    className=" truncate text-md text-gray-500"
                     title={user?.email}
                 >
                     {user?.email}
                 </p>
+            </td>
+
+            {/* designation */}
+            <td className="px-4 py-3">
+               <div className="flex  items-center ">
+                    <p className=" truncate text-md  text-gray-500">
+                        {user?.designation}
+                    </p>
+                </div>
             </td>
 
             {/* Task summary */}
@@ -97,7 +107,17 @@ const UserRow = ({ user, index, onDelete }) => {
 
             {/* Action */}
             <td className="px-4 py-3">
-                <div className="flex justify-center">
+                <div className="flex gap-2 justify-center">
+                    <button
+                        type="button"
+                        onClick={() => onEdit?.(user)}
+                        title="Edit member"
+                        aria-label={`Edit ${user?.name}`}
+                        className="hidden  h-9 w-9 items-center justify-center rounded-md border border-primary/10 bg-primary/20 text-primary transition hover:bg-primary/80 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                        <Edit size={16} />
+                    </button>
+               
                     <button
                         type="button"
                         onClick={() => onDelete?.(user)}

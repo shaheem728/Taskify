@@ -4,7 +4,7 @@ import EmptyState from '@/shared/components/ui/EmptyState';
 import Loading from '@/shared/components/ui/Loading';
 import Button from '@/shared/components/ui/Button';
 import UserTable from '@/features/admin/components/UserTable';
-import { FaPlus } from 'react-icons/fa6';
+import { Plus } from 'lucide-react';
 import useUsers from '@/features/admin/hooks/useUsers';
 import useUserFilters from '@/features/admin/hooks/useUserFilters';
 import useCreateUserForm from '@/features/admin/hooks/useCreateUserForm';
@@ -12,6 +12,7 @@ import useDeleteUser from '@/features/admin/hooks/useDeleteUser';
 import FilterBar from '@/features/admin/components/FilterBar';
 import AddUserModal from '@/features/admin/components/AddUserModal';
 import DeleteUserModal from '@/features/admin/components/DeleteUserModal';
+import { User } from 'lucide-react';
 
 
 const ManageUserPage = () => {
@@ -24,11 +25,24 @@ const ManageUserPage = () => {
     <>
       <DashboardLayout activeMenu="Team Members">
         <div className='m-5'>
-          <div className='flex md:flex-row md:items-center justify-between'>
-            <h2 className='text-xl md:text-xl font-medium'>Team Members</h2>
+          <div className='flex flex-col lg:flex-row lg:items-center justify-between'>
+            <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-lg bg-primary  text-white">
+                  <User className="text-2xl" />
+                </div>
+                <div>
+                  <h2 className="text-xl md:text-2xl font-semibold text-slate-900">
+                    Team Members
+                  </h2>
+                  <p className="text-sm text-slate-500">
+                    Add and manage team members efficiently.
+                  </p>
+                </div>
+              </div>
             <Button
               onClick={createForm.handleOpen}
-              leftIcon={<FaPlus className="text-lg" />}
+              leftIcon={<Plus size={16}/>}
+              className='ml-auto'
             >
               New Member
             </Button>
@@ -45,10 +59,11 @@ const ManageUserPage = () => {
           {isLoading ? (
             <Loading />
           ) : filters.filteredUsers.length > 0 ? (
-            <div className="mt-4">
+            <div className="mt-5">
               <UserTable
                 users={filters.filteredUsers}
                 onDelete={deleteModal.handleOpen}
+                onEdit={''}
               />
             </div>
           ) : (

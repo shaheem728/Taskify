@@ -42,10 +42,10 @@ const CustomBarChart = ({ data }) => {
         return null
     }
     return (
-        <div className='bg-white mt-6'>
+        <div className='mt-6 mr-15'>
             <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={data}>
-                    <CartesianGrid stroke='none' />
+                <BarChart data={data} >
+                    <CartesianGrid stroke='none'/>
                     <XAxis
                         dataKey="priority"
                         tick={{ fontSize: 12, fill: "#555" }}

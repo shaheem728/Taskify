@@ -52,7 +52,7 @@ const TaskCard = ({
       <div className='flex justify-between px-4'>
         <div className='flex gap-3 '>
         <div className={`text-[11px] font-medium ${getStatusTagColor()} px-4 py-0.5 rounded`}>{status}</div>
-        <div className={`text-[11px] font-medium ${getPriorityTagColor()} px-4 py-0.5 rounded`}>{priority}Priority</div>
+        <div className={`text-[11px] font-medium text-white ${getPriorityTagColor()} px-4 py-0.5 rounded`}>{priority}Priority</div>
         </div>
         <div>
             {
