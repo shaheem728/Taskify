@@ -63,7 +63,7 @@ const ManageUserPage = () => {
               <UserTable
                 users={filters.filteredUsers}
                 onDelete={deleteModal.handleOpen}
-                onEdit={''}
+                onEdit={createForm.handleUpdate}
               />
             </div>
           ) : (
@@ -82,6 +82,7 @@ const ManageUserPage = () => {
 
       <AddUserModal
         isOpen={createForm.isOpen}
+        isEdit={createForm.isEdit}
         onClose={createForm.handleClose}
         formData={createForm.formData}
         errors={createForm.errors}

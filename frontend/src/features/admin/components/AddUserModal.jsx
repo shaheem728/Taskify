@@ -3,8 +3,8 @@ import Modal from '@/shared/components/ui/Modal';
 import AuthInput from '@/shared/components/form/input/AuthInput';
 import Button from '@/shared/components/ui/Button';
 
-const AddUserModal = ({ isOpen, onClose, formData, errors, submitting, onChange, onSubmit }) => (
-    <Modal isOpen={isOpen} onClose={onClose} title="Add New Member" maxWidth="md">
+const AddUserModal = ({ isOpen, isEdit, onClose, formData, errors, submitting, onChange, onSubmit }) => (
+    <Modal isOpen={isOpen} onClose={onClose} title={`${isEdit? 'Update' : 'Add New'} Member`} maxWidth="md">
         <form onSubmit={onSubmit} className='space-y-4'>
             {errors.name && <p className='text-xs text-red-500 mb-1'>{errors.name}</p>}
             <AuthInput
@@ -52,7 +52,7 @@ const AddUserModal = ({ isOpen, onClose, formData, errors, submitting, onChange,
                     Cancel
                 </Button>
                 <Button type='submit' isLoading={submitting} disabled={submitting}>
-                    Create User
+                   {`${isEdit ?'Update':'Create'}`}
                 </Button>
             </div>
         </form>

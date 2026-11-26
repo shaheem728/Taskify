@@ -40,7 +40,7 @@ const Navbar = ({ activeMenu }) => {
       )}
 
       {openSideMenu && (
-        <div className="fixed top-[60px] left-4 block lg:hidden z-40">
+        <div className="fixed top-[54px] left-1 block lg:hidden z-40">
           <SideMenu activeMenu={activeMenu} />
         </div>
       )}

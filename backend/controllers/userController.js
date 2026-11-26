@@ -76,6 +76,75 @@ const createUser = async (req, res) => {
 };
 
 
+//@desc Update a exist member in the admin's organization
+//@route PATCH /api/auth/update
+//@access Private (Admin only)
+const updateUser = async (req, res) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+        const user = await User.findById(req.params.id).select("-password");
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const { name, email, password, designation } = req.body;
+
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: "Name, email, and password are required" });
+        }
+
+        // Validate that admin belongs to an organization
+        const organizationId = req.user.organizationId;
+        if (!organizationId) {
+            await session.abortTransaction();
+            session.endSession();
+            return res.status(400).json({ message: "Admin is not associated with any organization" });
+        }
+
+        // 1. Check if user already exists
+        // Check if the new email is already used by another user
+        if (email && email !== user.email) {
+            const emailExists = await User.findOne({ email: email }).session(session);
+            if (emailExists) {
+                return res.status(400).json({ message: 'Email already in use by another user' });
+            }
+        }
+
+        // 2. Hash password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        // 3. Update user
+        user.name = name;
+        user.email = email;
+        user.designation = designation;
+        user.password = hashedPassword;
+        
+        const updatedUser = await user.save();
+         
+        // Commit transaction
+        await session.commitTransaction();
+        session.endSession();
+
+        // 5. Return response
+        return res.status(201).json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            designation: updatedUser.designation,
+            role: updatedUser.role,
+            organizationId,
+        });
+
+    } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+        return res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
+
 //@desc Get all users (Admin only)
 //@route Get/api/users/
 //@access Private (Admin)
@@ -154,4 +223,4 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = { createUser, deleteUser, getUser, getUserById };
+module.exports = { createUser, updateUser, deleteUser, getUser, getUserById };

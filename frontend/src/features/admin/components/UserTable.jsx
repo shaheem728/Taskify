@@ -1,7 +1,6 @@
 import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { Edit } from "lucide-react";
-import { assets } from "@/features/assets/images/assets";
 
 const UserTable = ({ users = [], onDelete, onEdit }) => {
     return (
@@ -36,7 +35,7 @@ const UserTable = ({ users = [], onDelete, onEdit }) => {
 
                     <tbody className="divide-y divide-gray-100">
                         {users.map((user, index) => (
-                            <UserRow key={user._id} user={user} index={index} onDelete={onDelete} />
+                            <UserRow key={user._id} user={user} index={index} onDelete={onDelete} onEdit={onEdit} />
                         ))}
                     </tbody>
                 </table>
@@ -113,7 +112,7 @@ const UserRow = ({ user, index, onDelete, onEdit }) => {
                         onClick={() => onEdit?.(user)}
                         title="Edit member"
                         aria-label={`Edit ${user?.name}`}
-                        className="hidden  h-9 w-9 items-center justify-center rounded-md border border-primary/10 bg-primary/20 text-primary transition hover:bg-primary/80 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="flex h-9 w-9 items-center justify-center rounded-md  text-gray-400 transition hover:bg-primary/80 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary"
                     >
                         <Edit size={16} />
                     </button>
@@ -123,7 +122,7 @@ const UserRow = ({ user, index, onDelete, onEdit }) => {
                         onClick={() => onDelete?.(user)}
                         title="Delete member"
                         aria-label={`Delete ${user?.name}`}
-                        className="flex h-9 w-9 items-center justify-center rounded-md border border-red-100 bg-red-50 text-red-500 transition hover:bg-red-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-300"
+                        className="flex h-9 w-9 items-center justify-center rounded-md  text-gray-400 transition hover:bg-red-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-300"
                     >
                         <FaTrashAlt className="text-sm" />
                     </button>

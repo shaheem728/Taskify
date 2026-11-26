@@ -1,4 +1,4 @@
-export const EMPTY_USER_FORM = { name: '', email: '', designation:'', password: '' };
+export const EMPTY_USER_FORM = { id: '', name: '', email: '', designation:'', password: '' };
 export const EMPTY_USER_FILTERS = { search: '' };
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

@@ -6,9 +6,16 @@ export const fetchAllUsers = async () => {
     const { data } = await axiosInstance.get(`/api/users/`)
     return data
 }
+
 // Creates a new user (Admin only)
 export const createUser = async (userData) => {
     const response = await axiosInstance.post(`/api/users/create`, userData)
+    return response
+}
+
+// Creates a new user (Admin only)
+export const updateUser = async (userData) => {
+    const response = await axiosInstance.patch(`/api/users/update/${userData.id}`, userData)
     return response
 }
 
