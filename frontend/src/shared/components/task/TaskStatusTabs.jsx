@@ -7,7 +7,7 @@ const TaskStatusTabs = ({tabs,activeTab,setActiveTab}) => {
                 tabs.map((tab, index) => (
                     <button
                     key={tab.label}
-                    className={`relative px-1 md:px-4 py-2 text-md font-medium ${
+                    className={`relative px-2 lg:px-4 py-2 text-md font-medium ${
                         activeTab === tab.label? 'text-primary':'text-gray-500 hover:text-gray-700'}cursor-pointer`}
                         onClick={()=>setActiveTab(tab.label)}>
                        <div className='flex items-center' >
