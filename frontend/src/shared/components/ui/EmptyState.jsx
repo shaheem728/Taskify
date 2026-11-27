@@ -24,7 +24,7 @@ const EmptyState = ({
 
     return (
         <div
-            className={`flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-300 bg-white text-center ${sizePadding[size]} ${className || ''}`}
+            className={`flex flex-col items-center justify-center  text-center ${sizePadding[size]} ${className || ''}`}
             {...rest}
         >
             {icon || defaultIcon}

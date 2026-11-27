@@ -20,7 +20,7 @@ const MyTasksPage = () => {
   return (
     <DashboardLayout activeMenu="My Tasks">
       <div className='m-5'>
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5 mb-8">
                 <div className="p-2 rounded-lg bg-primary  text-white">
                   <FileCheck className="text-2xl" />
                 </div>
@@ -28,20 +28,21 @@ const MyTasksPage = () => {
                   <h2 className="text-xl md:text-2xl font-semibold text-slate-900">
                    My Task
                   </h2>
-                  <p className="text-sm text-slate-500">
+                  <p className="lg:text-sm text-xs text-slate-700">
                    Manage assigned tasks and keep their statuses up to date.
                   </p>
                 </div>
               </div>
-        <div className='flex my-2'>
+        {/* <div className='flex my-2'> */}
           {tabs?.[0]?.count > 0 && (
+            <div className='flex justify-center  lg:items-start items-center lg:gap-3 gap-1  my-3 shadow bg-white rounded-lg w-fit px-1'>
             <TaskStatusTabs
               tabs={tabs}
               activeTab={filterStatus}
               setActiveTab={setFilterStatus}
             />
-          )}
-        </div>
+          </div>)}
+        {/* </div> */}
 
         {isLoading ? (
           <Loading />
@@ -66,8 +67,8 @@ const MyTasksPage = () => {
             ))}
           </div>
         ) : (
-          <div className='flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-300 bg-white py-16 mt-4 text-center'>
-            <LuFileSpreadsheet className='text-4xl text-slate-300 mb-3' />
+          <div className='flex flex-col items-center justify-center  py-16 mt-4 text-center'>
+            <LuFileSpreadsheet className='text-4xl text-slate-400 mb-3' />
             <h3 className='text-base font-medium text-slate-700'>No tasks found</h3>
             <p className='text-sm text-slate-500 mt-1'>
               {filterStatus === 'All'

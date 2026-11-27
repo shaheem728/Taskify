@@ -135,7 +135,7 @@ const UserRow = ({ user, index, onDelete, onEdit }) => {
 const StatBadge = ({ label, count, status }) => {
     const styles = {
         "In Progress": "text-cyan-700 bg-cyan-50 border-cyan-100",
-        Completed: "text-indigo-700 bg-indigo-50 border-indigo-100",
+        Completed: "text-emerald-700 bg-emerald-50 border-emerald-100",
         Pending: "text-violet-700 bg-violet-50 border-violet-100",
     };
 

@@ -25,7 +25,7 @@ const ManageUserPage = () => {
     <>
       <DashboardLayout activeMenu="Team Members">
         <div className='m-5'>
-          <div className='flex flex-col lg:flex-row lg:items-center justify-between'>
+          <div className='flex flex-col lg:flex-row lg:items-center justify-between mb-8'>
             <div className="flex items-center gap-2.5">
                 <div className="p-2 rounded-lg bg-primary  text-white">
                   <User className="text-2xl" />
@@ -34,7 +34,7 @@ const ManageUserPage = () => {
                   <h2 className="text-xl md:text-2xl font-semibold text-slate-900">
                     Team Members
                   </h2>
-                  <p className="text-sm text-slate-500">
+                  <p className="lg:text-sm text-xs  text-slate-700">
                     Add and manage team members efficiently.
                   </p>
                 </div>

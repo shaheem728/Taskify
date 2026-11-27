@@ -26,8 +26,8 @@ const ManageTaskPage = () => {
 
   return (
     <DashboardLayout activeMenu="Manage Tasks">
-      <div className='m-5'>
-            <div className='flex flex-col lg:flex-row lg:items-center justify-between space-y-2'>
+      <div className='m-4'>
+            <div className='flex flex-col lg:flex-row lg:items-center justify-between space-y-2 mb-8'>
             <div className="flex items-center gap-2.5">
                 <div className="p-2 rounded-lg bg-primary  text-white">
                   <FileCheck className="text-2xl" />
@@ -36,7 +36,7 @@ const ManageTaskPage = () => {
                   <h2 className="text-xl md:text-2xl font-semibold text-slate-900">
                    Task Management
                   </h2>
-                  <p className="text-sm text-slate-500">
+                  <p className="lg:text-sm text-xs text-slate-700 ">
                     Create tasks and assign them to team members.
                   </p>
                 </div>
@@ -51,7 +51,7 @@ const ManageTaskPage = () => {
           </div>
 
         {tabs?.[0]?.count > 0 && (
-          <div className='flex justify-center  lg:items-start items-center lg:gap-3  my-3 shadow bg-white rounded-lg lg:w-fit px-1'>
+          <div className='flex justify-center  lg:items-start items-center lg:gap-3 gap-1  my-3 shadow bg-white rounded-lg w-fit px-1'>
             <TaskStatusTabs
               tabs={tabs}
               activeTab={filterStatus}

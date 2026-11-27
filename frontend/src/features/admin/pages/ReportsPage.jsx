@@ -78,7 +78,7 @@ const ReportsPage = () => {
               <h2 className="text-xl md:text-2xl font-semibold text-slate-900">
                 Reports & Exports
               </h2>
-              <p className="text-sm text-slate-500">
+              <p className="lg:text-sm text-xs text-slate-700">
                 Generate and download real-time Excel spreadsheets for tasks and member performance.
               </p>
             </div>
