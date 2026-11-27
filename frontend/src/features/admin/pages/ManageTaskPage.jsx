@@ -26,8 +26,8 @@ const ManageTaskPage = () => {
 
   return (
     <DashboardLayout activeMenu="Manage Tasks">
-      <div className='m-4'>
-            <div className='flex flex-col lg:flex-row lg:items-center justify-between space-y-2 mb-8'>
+      <div className='m-5'>
+            <div className='flex flex-col lg:flex-row lg:items-center justify-between space-y-4 mb-8'>
             <div className="flex items-center gap-2.5">
                 <div className="p-2 rounded-lg bg-primary  text-white">
                   <FileCheck className="text-2xl" />
@@ -44,20 +44,20 @@ const ManageTaskPage = () => {
             <Button
               onClick={handleCreate}
               leftIcon={<Plus size={16}/>}
-              className='ml-auto'
+              className='w-fit'
             >
                   New Task
             </Button>
           </div>
 
         {tabs?.[0]?.count > 0 && (
-          <div className='flex justify-center  lg:items-start items-center lg:gap-3 gap-1  my-3 shadow bg-white rounded-lg w-fit px-1'>
-            <TaskStatusTabs
-              tabs={tabs}
-              activeTab={filterStatus}
-              setActiveTab={setFilterStatus}
-            />
-          </div>
+        <div className='w-full max-w-3xl mt-10'>
+        <TaskStatusTabs
+          tabs={tabs}
+          activeTab={filterStatus}
+          setActiveTab={setFilterStatus}
+        />
+      </div>
         )}
 
         {isLoading ? (

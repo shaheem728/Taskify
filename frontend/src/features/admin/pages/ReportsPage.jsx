@@ -109,7 +109,7 @@ const ReportsPage = () => {
                         </span>
                       </div>
                     </div>
-                    <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+                    <span className="lg:flex hidden text-xs font-medium px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
                       {report.badge}
                     </span>
                   </div>
@@ -134,7 +134,7 @@ const ReportsPage = () => {
                 </div>
 
                 <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-xs text-slate-400 font-mono">
+                  <span className="text-xs text-slate-400 font-mono lg:flex hidden">
                     {report.filename}
                   </span>
                   <Button

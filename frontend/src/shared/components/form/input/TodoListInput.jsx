@@ -95,7 +95,7 @@ const TodoListInput = ({ todoList, setTodoList }) => {
                     <div className="flex lg:flex-row flex-col lg:items-center items-end justify-end lg:gap-3 gap-1">
                         {/* Updated By */}
                         {item.updateBy && (
-                            <div className="flex items-center lg:gap-2 lg:ml-4">
+                            <div className="flex items-center gap-2 ">
                                 <div className="flex">
                                     <span className="flex items-center gap-1.5 text-sm font-medium text-gray-800">
                                         <User size={15} />
@@ -121,7 +121,7 @@ const TodoListInput = ({ todoList, setTodoList }) => {
                         </span>
 
                         {/* Edit / Save / Cancel */}
-                        <div className='flex lg:gap-2 gap-0.5'>
+                        <div className='flex  gap-2'>
                         {editingIndex === index ? (
                             <>
                                 <button

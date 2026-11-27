@@ -33,16 +33,16 @@ const MyTasksPage = () => {
                   </p>
                 </div>
               </div>
-        {/* <div className='flex my-2'> */}
+   
           {tabs?.[0]?.count > 0 && (
-            <div className='flex justify-center  lg:items-start items-center lg:gap-3 gap-1  my-3 shadow bg-white rounded-lg w-fit px-1'>
+        <div className='w-full max-w-3xl mt-10'>
             <TaskStatusTabs
               tabs={tabs}
               activeTab={filterStatus}
               setActiveTab={setFilterStatus}
             />
           </div>)}
-        {/* </div> */}
+       
 
         {isLoading ? (
           <Loading />

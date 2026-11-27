@@ -25,7 +25,7 @@ const ManageUserPage = () => {
     <>
       <DashboardLayout activeMenu="Team Members">
         <div className='m-5'>
-          <div className='flex flex-col lg:flex-row lg:items-center justify-between mb-8'>
+          <div className='flex flex-col lg:flex-row lg:items-center justify-between space-y-4 mb-8'>
             <div className="flex items-center gap-2.5">
                 <div className="p-2 rounded-lg bg-primary  text-white">
                   <User className="text-2xl" />
@@ -42,7 +42,7 @@ const ManageUserPage = () => {
             <Button
               onClick={createForm.handleOpen}
               leftIcon={<Plus size={16}/>}
-              className='ml-auto'
+              className='w-fit'
             >
               New Member
             </Button>
